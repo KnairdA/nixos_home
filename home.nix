@@ -11,13 +11,21 @@
 
     packages = with pkgs; [
       rxvt_unicode
-      pcmanfm gvfs lxmenu-data shared_mime_info
+    # UI fonts
+      iosevka
+    # file viewers
       zathura
       sxiv
       mpv
-      iosevka
-      tdesktop
+    # file management
+      pcmanfm gvfs lxmenu-data shared_mime_info
       veracrypt
+    # communication
+      tdesktop
+    # UI dev utilities (CLI utilities are added in project specific nix-shells)
+      paraview
+      hotspot
+      qcachegrind
     ];
 
     # required to enable auto-mounting in pcmanfm
