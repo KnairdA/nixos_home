@@ -15,10 +15,10 @@ customTabTheme = (theme xmonadTheme)
   { fontName      = "xft:Iosevka Medium-12"
   , decoHeight    = 20
   , activeTextColor     = "#222222"
-  , activeColor         = "#aadb0f"
+  , activeColor         = "#909737"
   , inactiveTextColor   = "#999999"
   , inactiveColor       = "#161616"
-  , activeBorderColor   = "#aadb0f"
+  , activeBorderColor   = "#909737"
   , inactiveBorderColor = "#161616" }
 
 availableLayouts = smartBorders $ tabs ||| tilesLM ||| tilesRM ||| tilesTM ||| tilesBM

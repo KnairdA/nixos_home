@@ -74,6 +74,20 @@
 
   xresources.extraConfig = builtins.readFile ./conf/urxvt.Xresources;
 
+  gtk = {
+    enable = true;
+
+    theme = {
+      name    = "oomox";
+      package = import ./pkgs/oomox-gtk-theme.nix;
+    };
+
+    gtk2.extraConfig = ''
+      style "vimfix" { bg[NORMAL] = "#161616" }
+      widget "vim-main-window.*GtkForm" style "vimfix"
+    '';
+  };
+
   programs.rofi = {
     enable = true;
     location = "top";
