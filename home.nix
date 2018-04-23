@@ -130,4 +130,6 @@
     enable = true;
     enableAdobeFlash = true;
   };
+
+  home.file.".config/zathura/zathurarc".text = builtins.readFile ./conf/pwmt/zathurarc;
 }
