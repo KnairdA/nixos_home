@@ -1,48 +1,51 @@
-with import <nixpkgs-unstable> {};
+{ stdenv, pkgs, pkgs-unstable, theme, ... }:
 
 stdenv.mkDerivation rec {
   name = "oomox-gtk-theme";
 
-  src = fetchFromGitHub {
+  src = pkgs.fetchFromGitHub {
     repo   = "oomox-gtk-theme";
     owner  = "themix-project";
     rev    = "aa9081b2899d7e8ba8ae47543173d2d9f0f13921";
     sha256 = "1q4nksnkhdpfpgcbfqbmnkjrmwxa6zv3wy43zlas2agssjkcm4x9";
   };
 
-  nativeBuildInputs = [ sass sassc librsvg glib libxml2 gdk_pixbuf bc ];
-  propagatedUserEnvPkgs = [ gtk-engine-murrine ];
+  nativeBuildInputs = with pkgs; [ librsvg glib libxml2 gdk_pixbuf bc pkgs-unstable.sass pkgs-unstable.sassc ];
+  propagatedUserEnvPkgs = with pkgs; [ gtk-engine-murrine ];
 
-  config = ''
-    ACCENT_BG=aadb0f
-    BG=d8d8d8
-    FG=101010
-    BTN_BG=f5f5f5
-    BTN_FG=111111
-    CARET1_FG=101010
-    CARET2_FG=101010
-    CARET_SIZE=0.04
-    GRADIENT=0.0
-    GTK3_GENERATE_DARK=False
-    HDR_BTN_BG=161616
-    HDR_BTN_FG=aadb0f
-    MATERIA_STYLE_COMPACT=True
-    MENU_BG=909737
-    MENU_FG=1a1a1a
-    SEL_BG=aadb0f
-    SEL_FG=101010
-    TXT_BG=ffffff
-    TXT_FG=101010
-    WM_BORDER_FOCUS=909737
-    WM_BORDER_UNFOCUS=909737
-    ROUNDNESS=0
-    SPACING=1
+  config = with theme; ''
+    ACCENT_BG=${accent_bg}
+    BG=${bg}
+    FG=${fg}
+    BTN_BG=${btn_bg}
+    BTN_FG=${btn_fg}
+    CARET1_FG=${caret1_fg}
+    CARET2_FG=${caret2_fg}
+    HDR_BTN_BG=${hdr_btn_bg}
+    HDR_BTN_FG=${hdr_btn_fg}
+    MENU_BG=${menu_bg}
+    MENU_FG=${menu_fg}
+    SEL_BG=${sel_bg}
+    SEL_FG=${sel_fg}
+    TXT_BG=${txt_bg}
+    TXT_FG=${txt_fg}
+    WM_BORDER_FOCUS=${wm_border_focus}
+    WM_BORDER_UNFOCUS=${wm_border_unfocus}
+    GTK3_GENERATE_DARK=${if gtk3_generate_dark then "True" else "False"}
+    CARET_SIZE=${toString caret_size}
+    GRADIENT=${toString gradient}
+    ROUNDNESS=${toString roundness}
+    SPACING=${toString spacing}
+  '';
+
+  postPatch = ''
+    patchShebangs .
   '';
 
   installPhase = ''
-    cd oomox-gtk-theme-bb6169b10b12e8e9672ba828fa503d885b5041d5
+    cd oomox-gtk-theme-*
     HOME="$out/share/themes/oomox"
-    ./change_color.sh -m all --target-dir "$out/share/themes" --output oomox <(echo -e "${config}")
+    ./change_color.sh --make-opts all --target-dir "$out/share/themes" --output oomox <(echo -e "${config}")
   '';
 
   meta = {
