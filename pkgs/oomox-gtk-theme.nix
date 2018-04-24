@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    description = "oomox-gtk-theme is a customizable fork of Numix-gtk-theme.";
+    description = "oomox-gtk-theme is a customizable fork of numix-gtk-theme.";
     homepage = https://github.com/themix-project/oomox-gtk-theme;
     license = stdenv.lib.licenses.gpl3;
     platforms = stdenv.lib.platforms.all;

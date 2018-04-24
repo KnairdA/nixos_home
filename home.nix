@@ -111,6 +111,15 @@
       package = oomox-gtk-theme;
     };
 
+    iconTheme = let
+      oomox-archdroid-icon-theme = pkgs.callPackage ./pkgs/oomox-archdroid-icon-theme.nix {
+        color = "909737";
+      };
+    in {
+      name    = "oomox-archdroid";
+      package = oomox-archdroid-icon-theme;
+    };
+
     gtk2.extraConfig = ''
       style "vimfix" { bg[NORMAL] = "#161616" }
       widget "vim-main-window.*GtkForm" style "vimfix"
