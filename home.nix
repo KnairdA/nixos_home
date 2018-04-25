@@ -10,20 +10,22 @@
     keyboard.layout = "de";
 
     packages = with pkgs; [
+    # terminals
       rxvt_unicode
+      kitty
     # UI fonts
       iosevka
     # file viewers
       zathura
       sxiv
       mpv
+      paraview
     # file management
       pcmanfm gvfs lxmenu-data shared_mime_info
       veracrypt
     # communication
       tdesktop
     # UI dev utilities (CLI utilities are added in project specific nix-shells)
-      paraview
       hotspot
       qcachegrind
       gitg
@@ -42,6 +44,8 @@
       set guioptions-=m
       2match SpecialKeyTab /\t/
     '';
+
+    file.".config/kitty/kitty.conf".source = ./conf/kitty.conf;
   };
 
   programs.git = {

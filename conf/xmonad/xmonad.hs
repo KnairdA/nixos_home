@@ -36,7 +36,7 @@ main = xmonad $ ewmh defaultConfig
   , borderWidth         = 3
   , normalBorderColor   = "#161616"
   , focusedBorderColor  = "#909737"
-  , terminal            = "urxvt"
+  , terminal            = "kitty"
   , handleEventHook     = handleEventHook defaultConfig <+> fullscreenEventHook
   , layoutHook          = availableLayouts
   }
@@ -45,7 +45,7 @@ main = xmonad $ ewmh defaultConfig
   `additionalKeysP`
 -- application launchers
   [ ("M-p"           , spawn "rofi -show combi")
-  , ("M-<Return>"    , spawn "urxvt")
+  , ("M-<Return>"    , spawn "kitty")
   , ("M-<Backspace>" , spawn "vim -g")
 -- actual window management
   , ("M-<Left>"      , prevWS)

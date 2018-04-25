@@ -14,5 +14,3 @@ set  completion-highlight-fg  "#161616"
 
 set  recolor-lightcolor       "#161616"
 set  recolor-darkcolor        "#ffffff"
-
-set  recolor
