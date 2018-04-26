@@ -13,8 +13,6 @@
     # terminals
       rxvt_unicode
       kitty
-    # UI fonts
-      iosevka
     # file viewers
       zathura
       sxiv
@@ -122,6 +120,11 @@
     in {
       name    = "oomox-archdroid";
       package = oomox-archdroid-icon-theme;
+    };
+
+    font = {
+      name    = "Iosevka 10";
+      package = pkgs.iosevka;
     };
 
     gtk2.extraConfig = ''
