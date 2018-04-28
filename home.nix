@@ -24,6 +24,7 @@
     # communication
       tdesktop
     # UI dev utilities (CLI utilities are added in project specific nix-shells)
+      zeal
       hotspot
       qcachegrind
       gitg

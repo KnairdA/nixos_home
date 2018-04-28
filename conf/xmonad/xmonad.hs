@@ -42,6 +42,8 @@ windowBringerDmenuConfig = def { menuCommand  = "rofi"
 
 scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratchterm")
                    (customFloating $ RationalRect (1/6) (1/6) (2/3) (2/3))
+              , NS "zeal" "zeal" (className =? "Zeal")
+                  (customFloating $ RationalRect (1/20) (1/20) (18/20) (18/20))
               , NS "telegram" "telegram-desktop" (className =? "TelegramDesktop")
                    (customFloating $ RationalRect (1/6) (1/6) (2/3) (2/3)) ]
 
@@ -81,6 +83,7 @@ main = xmonad $ ewmh
   , ("M-S-w k"       , shiftToPrev >> prevWS)
 -- scratchpads
   , ("M-s t"         , namedScratchpadAction scratchpads "terminal")
+  , ("M-s h"         , namedScratchpadAction scratchpads "zeal")
   , ("M-s m"         , namedScratchpadAction scratchpads "telegram")
 -- system control
   , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
