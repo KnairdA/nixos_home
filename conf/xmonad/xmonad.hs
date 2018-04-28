@@ -77,8 +77,9 @@ main = xmonad $ ewmh
   , ("M-a"           , gotoMenuConfig  windowBringerDmenuConfig)
   , ("M-S-a"         , bringMenuConfig windowBringerDmenuConfig)
 -- workspace management
-  , ("M-w j"         , nextWS)
-  , ("M-w k"         , prevWS)
+  , ("M-w p"         , toggleWS' ["NSP"])
+  , ("M-w j"         , moveTo Next NonEmptyWS)
+  , ("M-w k"         , moveTo Prev NonEmptyWS)
   , ("M-S-w j"       , shiftToNext >> nextWS)
   , ("M-S-w k"       , shiftToPrev >> prevWS)
 -- scratchpads
