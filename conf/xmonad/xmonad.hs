@@ -13,6 +13,7 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.CycleWS
 import XMonad.Actions.WindowBringer
+import XMonad.Actions.GroupNavigation
 
 import System.Exit
 
@@ -41,7 +42,7 @@ windowBringerDmenuConfig = def { menuCommand  = "rofi"
 
 scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratchterm")
                    (customFloating $ RationalRect (1/6) (1/6) (2/3) (2/3))
-              , NS "telegram" "telegram-desktop" (title =? "Telegram")
+              , NS "telegram" "telegram-desktop" (className =? "TelegramDesktop")
                    (customFloating $ RationalRect (1/6) (1/6) (2/3) (2/3)) ]
 
 main = xmonad $ ewmh
@@ -53,7 +54,8 @@ main = xmonad $ ewmh
   , terminal            = "kitty"
   , handleEventHook     = handleEventHook defaultConfig <+> fullscreenEventHook
   , layoutHook          = availableLayouts
-  , manageHook          = namedScratchpadManageHook scratchpads }
+  , manageHook          = namedScratchpadManageHook scratchpads
+  , logHook             = historyHook }
   `removeKeysP`
   [ "M-S-<Return>", "M-q", "M-S-q", "M-S-c" ]
   `additionalKeysP`
@@ -63,17 +65,20 @@ main = xmonad $ ewmh
 -- application launchers
   , ("M-p"           , spawn "rofi -show combi")
   , ("M-<Return>"    , spawn "kitty")
-  , ("M-<Backspace>" , spawn "vim -g")
--- actual window management
-  , ("M-<Left>"      , prevWS)
-  , ("M-<Right>"     , nextWS)
-  , ("M-S-<Left>"    , shiftToPrev >> prevWS)
-  , ("M-S-<Right>"   , shiftToNext >> nextWS)
-  , ("M-S-m"         , windows swapMaster)
+  , ("M-S-<Return>"  , spawn "vim -g")
+-- window management
+  , ("M-q"           , windows $ shift "NSP")
   , ("M-S-q"         , kill)
+  , ("M-S-m"         , windows swapMaster)
+  , ("M-<Backspace>" , nextMatch History (return True))
 -- window bringer
   , ("M-a"           , gotoMenuConfig  windowBringerDmenuConfig)
   , ("M-S-a"         , bringMenuConfig windowBringerDmenuConfig)
+-- workspace management
+  , ("M-w j"         , nextWS)
+  , ("M-w k"         , prevWS)
+  , ("M-S-w j"       , shiftToNext >> nextWS)
+  , ("M-S-w k"       , shiftToPrev >> prevWS)
 -- scratchpads
   , ("M-s t"         , namedScratchpadAction scratchpads "terminal")
   , ("M-s m"         , namedScratchpadAction scratchpads "telegram")
