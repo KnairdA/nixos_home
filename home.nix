@@ -44,6 +44,8 @@
     '';
 
     file.".config/kitty/kitty.conf".source = ./conf/kitty.conf;
+
+    file.".config/user-dirs.dirs".source = ./conf/xdg/user-dirs.dirs;
   };
 
   programs.git = {
