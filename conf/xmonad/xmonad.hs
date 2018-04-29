@@ -16,6 +16,7 @@ import XMonad.Actions.WindowBringer
 import XMonad.Actions.GroupNavigation
 
 import System.Exit
+import Data.Maybe
 
 customTabTheme = (theme xmonadTheme)
   { fontName      = "xft:Iosevka Medium-12"
@@ -78,10 +79,10 @@ main = xmonad $ ewmh
   , ("M-S-a"         , bringMenuConfig windowBringerDmenuConfig)
 -- workspace management
   , ("M-w p"         , toggleWS' ["NSP"])
-  , ("M-w j"         , moveTo Next NonEmptyWS)
-  , ("M-w k"         , moveTo Prev NonEmptyWS)
-  , ("M-S-w j"       , shiftToNext >> nextWS)
-  , ("M-S-w k"       , shiftToPrev >> prevWS)
+  , ("M-w j"         , moveTo Next nonEmptyWS)
+  , ("M-w k"         , moveTo Prev nonEmptyWS)
+  , ("M-S-w j"       , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
+  , ("M-S-w k"       , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
 -- scratchpads
   , ("M-s t"         , namedScratchpadAction scratchpads "terminal")
   , ("M-s h"         , namedScratchpadAction scratchpads "zeal")
@@ -92,3 +93,7 @@ main = xmonad $ ewmh
   , ("M-c m"         , spawn "amixer sset Master toggle") ]
   `additionalKeys`
   [ ((noModMask, xK_Menu) , namedScratchpadAction scratchpads "terminal") ]
+
+nonEmptyWS = WSIs $ return (\w -> nonNSP w && nonEmpty w)
+  where nonNSP (Workspace tag _ _) = tag /= "NSP"
+        nonEmpty = isJust . stack
