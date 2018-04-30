@@ -42,14 +42,21 @@ availableLayouts = smartBorders $ tabs ||| tilesLM ||| tilesRM ||| tilesTM ||| t
 windowBringerDmenuConfig = def { menuCommand  = "rofi"
                                , menuArgs     = [ "-p", "win", "-dmenu", "-i" ] }
 
+floatRectFull   = RationalRect (1/20) (1/20) (18/20) (18/20)
+floatRectCenter = RationalRect (1/6)  (1/6)  (2/3)   (2/3)
+floatRectBottom = RationalRect 0      (1/3)  1       (2/3)
+floatRectTop    = RationalRect 0      0      1       (2/3)
+floatRectLeft   = RationalRect 0      0      (1/2)   1
+floatRectRight  = RationalRect (1/2)  0      (1/2)   1
+
 scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratchterm")
-                   (customFloating $ RationalRect (1/6) (1/6) (2/3) (2/3))
+                   (customFloating floatRectCenter)
               , NS "browser" "firefox" (className =? "Firefox")
-                   (customFloating $ RationalRect 0 0 1 (2/3))
+                   (customFloating floatRectTop)
               , NS "zeal" "zeal" (className =? "Zeal")
-                   (customFloating $ RationalRect (1/20) (1/20) (18/20) (18/20))
+                   (customFloating floatRectFull)
               , NS "telegram" "telegram-desktop" (className =? "TelegramDesktop")
-                   (customFloating $ RationalRect (1/6) (1/6) (2/3) (2/3)) ]
+                   (customFloating floatRectCenter) ]
 
 main = xmonad $ ewmh
               $ defaultConfig
@@ -93,10 +100,12 @@ main = xmonad $ ewmh
   , ("M-s h"         , namedScratchpadAction scratchpads "zeal")
   , ("M-s m"         , namedScratchpadAction scratchpads "telegram")
 -- floating placement
-  , ("M-f j"         , withFocused $ snapFloatingBottom)
-  , ("M-f k"         , withFocused $ snapFloatingTop)
-  , ("M-f h"         , withFocused $ snapFloatingRight)
-  , ("M-f l"         , withFocused $ snapFloatingLeft)
+  , ("M-f f"         , withFocused $ placeFloating floatRectFull)
+  , ("M-f c"         , withFocused $ placeFloating floatRectCenter)
+  , ("M-f j"         , withFocused $ placeFloating floatRectBottom)
+  , ("M-f k"         , withFocused $ placeFloating floatRectTop)
+  , ("M-f h"         , withFocused $ placeFloating floatRectLeft)
+  , ("M-f l"         , withFocused $ placeFloating floatRectRight)
 -- system control
   , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
@@ -104,11 +113,9 @@ main = xmonad $ ewmh
   `additionalKeys`
   [ ((noModMask, xK_Menu) , namedScratchpadAction scratchpads "terminal") ]
 
-snapFloatingBottom = windows . (flip XMonad.StackSet.float $ RationalRect 0     (1/3) 1     (2/3))
-snapFloatingTop    = windows . (flip XMonad.StackSet.float $ RationalRect 0     0     1     (2/3))
-snapFloatingRight  = windows . (flip XMonad.StackSet.float $ RationalRect 0     0     (1/2) 1    )
-snapFloatingLeft   = windows . (flip XMonad.StackSet.float $ RationalRect (1/2) 0     (1/2) 1    )
-
 nonEmptyWS = WSIs $ return (\w -> nonNSP w && nonEmpty w)
   where nonNSP (Workspace tag _ _) = tag /= "NSP"
         nonEmpty = isJust . stack
+
+placeFloating :: RationalRect -> Window -> X ()
+placeFloating rect = windows . (flip XMonad.StackSet.float $ rect)
