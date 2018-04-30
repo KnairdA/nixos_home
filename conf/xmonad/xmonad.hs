@@ -1,7 +1,8 @@
 import XMonad
 import XMonad.Util.EZConfig
-import XMonad.Hooks.EwmhDesktops
 import XMonad.StackSet
+
+import XMonad.Hooks.EwmhDesktops
 
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
@@ -43,8 +44,10 @@ windowBringerDmenuConfig = def { menuCommand  = "rofi"
 
 scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratchterm")
                    (customFloating $ RationalRect (1/6) (1/6) (2/3) (2/3))
+              , NS "browser" "firefox" (className =? "Firefox")
+                   (customFloating $ RationalRect 0 0 1 (2/3))
               , NS "zeal" "zeal" (className =? "Zeal")
-                  (customFloating $ RationalRect (1/20) (1/20) (18/20) (18/20))
+                   (customFloating $ RationalRect (1/20) (1/20) (18/20) (18/20))
               , NS "telegram" "telegram-desktop" (className =? "TelegramDesktop")
                    (customFloating $ RationalRect (1/6) (1/6) (2/3) (2/3)) ]
 
@@ -60,7 +63,7 @@ main = xmonad $ ewmh
   , manageHook          = namedScratchpadManageHook scratchpads
   , logHook             = historyHook }
   `removeKeysP`
-  [ "M-S-<Return>", "M-q", "M-S-q", "M-S-c" ]
+  [ "M-S-<Return>", "M-q", "M-S-q", "M-S-c", "M-<Space>" ]
   `additionalKeysP`
 -- xmonad session control
   [ ("C-M1-<Escape>"    , io (exitWith ExitSuccess))
@@ -78,6 +81,7 @@ main = xmonad $ ewmh
   , ("M-a"           , gotoMenuConfig  windowBringerDmenuConfig)
   , ("M-S-a"         , bringMenuConfig windowBringerDmenuConfig)
 -- workspace management
+  , ("M-w l"         , sendMessage NextLayout)
   , ("M-w p"         , toggleWS' ["NSP"])
   , ("M-w j"         , moveTo Next nonEmptyWS)
   , ("M-w k"         , moveTo Prev nonEmptyWS)
@@ -85,14 +89,25 @@ main = xmonad $ ewmh
   , ("M-S-w k"       , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
 -- scratchpads
   , ("M-s t"         , namedScratchpadAction scratchpads "terminal")
+  , ("M-s b"         , namedScratchpadAction scratchpads "browser")
   , ("M-s h"         , namedScratchpadAction scratchpads "zeal")
   , ("M-s m"         , namedScratchpadAction scratchpads "telegram")
+-- floating placement
+  , ("M-f j"         , withFocused $ snapFloatingBottom)
+  , ("M-f k"         , withFocused $ snapFloatingTop)
+  , ("M-f h"         , withFocused $ snapFloatingRight)
+  , ("M-f l"         , withFocused $ snapFloatingLeft)
 -- system control
   , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
   , ("M-c m"         , spawn "amixer sset Master toggle") ]
   `additionalKeys`
   [ ((noModMask, xK_Menu) , namedScratchpadAction scratchpads "terminal") ]
+
+snapFloatingBottom = windows . (flip XMonad.StackSet.float $ RationalRect 0     (1/3) 1     (2/3))
+snapFloatingTop    = windows . (flip XMonad.StackSet.float $ RationalRect 0     0     1     (2/3))
+snapFloatingRight  = windows . (flip XMonad.StackSet.float $ RationalRect 0     0     (1/2) 1    )
+snapFloatingLeft   = windows . (flip XMonad.StackSet.float $ RationalRect (1/2) 0     (1/2) 1    )
 
 nonEmptyWS = WSIs $ return (\w -> nonNSP w && nonEmpty w)
   where nonNSP (Workspace tag _ _) = tag /= "NSP"
