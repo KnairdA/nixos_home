@@ -45,7 +45,8 @@ availableLayouts = smartBorders $ tabs ||| tilesLM ||| tilesRM ||| tilesTM ||| t
 windowBringerDmenuConfig = def { menuCommand  = "rofi"
                                , menuArgs     = [ "-p", "win", "-dmenu", "-i" ] }
 
-floatRectFull   = RationalRect (1/20) (1/20) (18/20) (18/20)
+floatRectFull   = RationalRect 0      0      1       1
+floatRectLarge  = RationalRect (1/20) (1/20) (18/20) (18/20)
 floatRectCenter = RationalRect (1/6)  (1/6)  (2/3)   (2/3)
 floatRectBottom = RationalRect 0      (1/3)  1       (2/3)
 floatRectTop    = RationalRect 0      0      1       (2/3)
@@ -57,7 +58,7 @@ scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratch
               , NS "browser" "firefox" (className =? "Firefox")
                    (customFloating floatRectTop)
               , NS "documentation" "zeal" (className =? "Zeal")
-                   (customFloating floatRectFull)
+                   (customFloating floatRectLarge)
               , NS "messaging" "telegram-desktop" (className =? "TelegramDesktop")
                    (customFloating floatRectCenter) ]
 
@@ -88,7 +89,8 @@ keybindings =
   , ("M-m"           , namedScratchpadAction scratchpads "messaging") ] ++
 -- workspace selection
   [ (p ++ [k]        , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']
-                                      , (p, f) <- [ ("M-", greedyView), ("M-S-", shift) ] ] ++
+                                      , (p, f) <- [ ("M-"   , greedyView)
+                                                  , ("M-S-" , shift) ] ] ++
 -- workspace management
   [ ("M-s l"         , sendMessage NextLayout)
   , ("M-s p"         , toggleWS' ["NSP"])
@@ -99,6 +101,7 @@ keybindings =
 -- floating placement
   , ("M-w t"         , withFocused $ windows . sink)
   , ("M-w f"         , withFocused $ placeFloating floatRectFull)
+  , ("M-w S-c"       , withFocused $ placeFloating floatRectLarge)
   , ("M-w c"         , withFocused $ placeFloating floatRectCenter)
   , ("M-w j"         , withFocused $ placeFloating floatRectBottom)
   , ("M-w k"         , withFocused $ placeFloating floatRectTop)
