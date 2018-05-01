@@ -18,6 +18,7 @@
       sxiv
       mpv
       paraview
+      libreoffice
     # file management
       pcmanfm gvfs lxmenu-data shared_mime_info
       veracrypt
@@ -33,6 +34,7 @@
     # required to enable auto-mounting in pcmanfm
     sessionVariables = {
       GIO_EXTRA_MODULES = [ "${pkgs.gvfs}/lib/gio/modules" ];
+      SAL_USE_VCLPLUGIN = "gtk";
     };
 
     # vim is configured globally for all users but common is the only GUI user
@@ -63,6 +65,8 @@
     defaultCacheTtlSsh  = 120;
     enableScDaemon      = false;
   };
+
+  services.syncthing.enable = true;
 
   xsession = {
     enable = true;
