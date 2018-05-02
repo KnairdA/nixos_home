@@ -125,7 +125,7 @@ customEventHook = do
 
 customLogHook = do
   historyHook
-  customizeBorderWhen isFloat "#aadb0f" 6
+  customizeBorderWhen (isFloat <&&> isNotFullscreen) "#aadb0f" 6
 
 main = xmonad $ ewmh
               $ defaultConfig
@@ -149,8 +149,14 @@ nonEmptyWS = WSIs $ return (\w -> nonNSP w && nonEmpty w)
 placeFloating :: RationalRect -> Window -> X ()
 placeFloating rect = windows . (flip XMonad.StackSet.float $ rect)
 
+isNotFullscreen :: Query Bool
+isNotFullscreen = ask >>= (\w -> liftX $ do wa <- withDisplay $ (\d -> io $ getWindowAttributes d w)
+                                            sr <- fmap (screenRect . screenDetail . current) (gets windowset)
+                                            return $ not (fromIntegral (wa_width  wa) == rect_width  sr &&
+                                                          fromIntegral (wa_height wa) == rect_height sr))
+
 isFloat :: Query Bool
-isFloat = ask >>= (\w -> liftX $ withWindowSet $ \ws -> return $ M.member w (floating ws))
+isFloat = ask >>= (\w -> liftX $ withWindowSet $ \ws -> return $ (M.member w (floating ws)))
 
 customizeBorderWhen :: Query Bool -> String -> Dimension -> X ()
 customizeBorderWhen q color width = withFocused $ \w -> runQuery q w >>= flip when (setWindowBorder' color width w)
