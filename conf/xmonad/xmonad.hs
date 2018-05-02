@@ -15,9 +15,12 @@ import XMonad.Actions.SpawnOn
 import XMonad.Actions.CycleWS
 import XMonad.Actions.WindowBringer
 import XMonad.Actions.GroupNavigation
+import XMonad.Actions.FloatKeys
 
 import System.Exit
 import Data.Maybe
+import Control.Monad (when)
+import qualified Data.Map as M
 
 workspaces :: [WorkspaceId]
 workspaces = map show [1 .. 9 :: Int]
@@ -48,19 +51,19 @@ windowBringerDmenuConfig = def { menuCommand  = "rofi"
 floatRectFull   = RationalRect 0      0      1       1
 floatRectLarge  = RationalRect (1/20) (1/20) (18/20) (18/20)
 floatRectCenter = RationalRect (1/6)  (1/6)  (2/3)   (2/3)
-floatRectBottom = RationalRect 0      (1/3)  1       (2/3)
-floatRectTop    = RationalRect 0      0      1       (2/3)
-floatRectLeft   = RationalRect 0      0      (1/2)   1
-floatRectRight  = RationalRect (1/2)  0      (1/2)   1
+floatRectBottom = RationalRect (1/20) (1/3)  (18/20) (2/3)
+floatRectTop    = RationalRect (1/20) 0      (18/20) (2/3)
+floatRectLeft   = RationalRect 0      (1/20) (1/2)   (18/20)
+floatRectRight  = RationalRect (1/2)  (1/20) (1/2)   (18/20)
 
 scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratchterm")
-                   (customFloating floatRectCenter)
+                   (customFloating floatRectTop)
               , NS "browser" "firefox" (className =? "Firefox")
                    (customFloating floatRectTop)
               , NS "documentation" "zeal" (className =? "Zeal")
                    (customFloating floatRectLarge)
               , NS "messaging" "telegram-desktop" (className =? "TelegramDesktop")
-                   (customFloating floatRectCenter) ]
+                   (customFloating floatRectTop) ]
 
 keybindings =
 -- xmonad session control
@@ -100,17 +103,29 @@ keybindings =
   , ("M-S-s k"       , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
 -- floating placement
   , ("M-w t"         , withFocused $ windows . sink)
-  , ("M-w f"         , withFocused $ placeFloating floatRectFull)
+  , ("M-w f"         , withFocused $ placeFloating floatRectFull )
   , ("M-w S-c"       , withFocused $ placeFloating floatRectLarge)
   , ("M-w c"         , withFocused $ placeFloating floatRectCenter)
-  , ("M-w j"         , withFocused $ placeFloating floatRectBottom)
-  , ("M-w k"         , withFocused $ placeFloating floatRectTop)
-  , ("M-w h"         , withFocused $ placeFloating floatRectLeft)
-  , ("M-w l"         , withFocused $ placeFloating floatRectRight)
+  , ("M-w j"         , do withFocused $ placeFloating floatRectBottom
+                          withFocused $ keysMoveWindow (0, 7))
+  , ("M-w k"         , do withFocused $ placeFloating floatRectTop
+                          withFocused $ keysMoveWindow (0,-6))
+  , ("M-w h"         , do withFocused $ placeFloating floatRectLeft
+                          withFocused $ keysMoveWindow (-6,0))
+  , ("M-w l"         , do withFocused $ placeFloating floatRectRight
+                          withFocused $ keysMoveWindow ( 7,0))
 -- system control
   , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
   , ("M-c m"         , spawn "amixer sset Master toggle") ]
+
+customEventHook = do
+  handleEventHook defaultConfig
+  fullscreenEventHook
+
+customLogHook = do
+  historyHook
+  customizeBorderWhen isFloat "#aadb0f" 6
 
 main = xmonad $ ewmh
               $ defaultConfig
@@ -120,10 +135,10 @@ main = xmonad $ ewmh
   , focusedBorderColor  = "#909737"
   , keys                = \c -> mkKeymap c keybindings
   , startupHook         = return () >> checkKeymap defaultConfig keybindings
-  , handleEventHook     = handleEventHook defaultConfig <+> fullscreenEventHook
+  , handleEventHook     = customEventHook
   , layoutHook          = availableLayouts
   , manageHook          = namedScratchpadManageHook scratchpads
-  , logHook             = historyHook }
+  , logHook             = customLogHook }
   `additionalKeys`
   [ ((noModMask, xK_Menu) , namedScratchpadAction scratchpads "terminal") ]
 
@@ -133,3 +148,16 @@ nonEmptyWS = WSIs $ return (\w -> nonNSP w && nonEmpty w)
 
 placeFloating :: RationalRect -> Window -> X ()
 placeFloating rect = windows . (flip XMonad.StackSet.float $ rect)
+
+isFloat :: Query Bool
+isFloat = ask >>= (\w -> liftX $ withWindowSet $ \ws -> return $ M.member w (floating ws))
+
+customizeBorderWhen :: Query Bool -> String -> Dimension -> X ()
+customizeBorderWhen q color width = withFocused $ \w -> runQuery q w >>= flip when (setWindowBorder' color width w)
+
+setWindowBorder' :: String -> Dimension -> Window -> X ()
+setWindowBorder' color width window = do
+  XConf { display = d } <- ask
+  ~(Just pixel) <- io $ initColor d color
+  io $ setWindowBorder      d window pixel
+  io $ setWindowBorderWidth d window width
