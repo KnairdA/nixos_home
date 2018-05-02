@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
     repo   = "oomox-gtk-theme";
     owner  = "themix-project";
     rev    = "aa9081b2899d7e8ba8ae47543173d2d9f0f13921";
-    sha256 = "1q4nksnkhdpfpgcbfqbmnkjrmwxa6zv3wy43zlas2agssjkcm4x9";
+    sha256 = "1yxhd6d61npx43qwa6gyvrwmivv42k3d6qn54q276aihwxlbgj4r";
   };
 
   nativeBuildInputs = with pkgs; [ librsvg glib libxml2 gdk_pixbuf bc pkgs-unstable.sass pkgs-unstable.sassc ];
@@ -42,10 +42,13 @@ stdenv.mkDerivation rec {
     patchShebangs .
   '';
 
-  installPhase = ''
-    cd oomox-gtk-theme-*
+  buildPhase = ''
     HOME="$out/share/themes/oomox"
     ./change_color.sh --make-opts all --target-dir "$out/share/themes" --output oomox <(echo -e "${config}")
+  '';
+
+  installPhase = ''
+    cd oomox-gtk-theme-*
   '';
 
   meta = {

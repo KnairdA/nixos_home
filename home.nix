@@ -31,9 +31,10 @@
       gitg
     ];
 
-    # required to enable auto-mounting in pcmanfm
     sessionVariables = {
+      # required to enable auto-mounting in pcmanfm
       GIO_EXTRA_MODULES = [ "${pkgs.gvfs}/lib/gio/modules" ];
+      # use GTK theme in libreoffice
       SAL_USE_VCLPLUGIN = "gtk";
     };
 
