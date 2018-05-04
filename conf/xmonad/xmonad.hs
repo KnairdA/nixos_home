@@ -48,22 +48,26 @@ availableLayouts = smartBorders $ tabs ||| tilesLM ||| tilesRM ||| tilesTM ||| t
 windowBringerDmenuConfig = def { menuCommand  = "rofi"
                                , menuArgs     = [ "-p", "win", "-dmenu", "-i" ] }
 
-floatRectFull   = hideScreenBorder $ RationalRect 0      0      1       1
-floatRectLarge  = hideScreenBorder $ RationalRect (1/20) (1/20) (18/20) (18/20)
-floatRectCenter = hideScreenBorder $ RationalRect (1/6)  (1/6)  (2/3)   (2/3)
-floatRectBottom = hideScreenBorder $ RationalRect (1/20) (1/3)  (18/20) (2/3)
-floatRectTop    = hideScreenBorder $ RationalRect (1/20) 0      (18/20) (2/3)
-floatRectLeft   = hideScreenBorder $ RationalRect 0      (1/20) (1/2)   (18/20)
-floatRectRight  = hideScreenBorder $ RationalRect (1/2)  (1/20) (1/2)   (18/20)
+floatRectTop    h = hideScreenBorder $ RationalRect (1/20) 0      (18/20) h
+floatRectBottom h = hideScreenBorder $ RationalRect (1/20) (1-h)  (18/20) h
+floatRectLeft   w = hideScreenBorder $ RationalRect 0      (1/20) w       (18/20)
+floatRectRight  w = hideScreenBorder $ RationalRect (1-w)  (1/20) w       (18/20)
+
+dropUp        = floatRectBottom $ 2/3
+dropUpLarge   = floatRectBottom $ 18/20
+dropDown      = floatRectTop    $ 2/3
+dropDownLarge = floatRectTop    $ 18/20
+sideBarLeft   = floatRectLeft   $ 1/2
+sideBarRight  = floatRectRight  $ 1/2
 
 scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratchterm")
-                   (customFloating floatRectTop)
+                   (customFloating dropDown)
               , NS "browser" "firefox" (className =? "Firefox")
-                   (customFloating floatRectTop)
+                   (customFloating dropDown)
               , NS "documentation" "zeal" (className =? "Zeal")
-                   (customFloating floatRectLarge)
+                   (customFloating dropDown)
               , NS "messaging" "telegram-desktop" (className =? "TelegramDesktop")
-                   (customFloating floatRectRight) ]
+                   (customFloating sideBarRight) ]
 
 keybindings =
 -- xmonad session control
@@ -103,13 +107,13 @@ keybindings =
   , ("M-S-s k"       , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
 -- floating placement
   , ("M-w t"         , withFocused $ windows . sink)
-  , ("M-w f"         , withFocused $ placeFloating floatRectFull )
-  , ("M-w S-c"       , withFocused $ placeFloating floatRectLarge)
-  , ("M-w c"         , withFocused $ placeFloating floatRectCenter)
-  , ("M-w j"         , withFocused $ placeFloating floatRectBottom)
-  , ("M-w k"         , withFocused $ placeFloating floatRectTop)
-  , ("M-w h"         , withFocused $ placeFloating floatRectLeft)
-  , ("M-w l"         , withFocused $ placeFloating floatRectRight)
+  , ("M-w f"         , withFocused $ placeFloating $ RationalRect 0 0 1 1)
+  , ("M-w j"         , withFocused $ placeFloating dropUp)
+  , ("M-w S-j"       , withFocused $ placeFloating dropUpLarge)
+  , ("M-w k"         , withFocused $ placeFloating dropDown)
+  , ("M-w S-k"       , withFocused $ placeFloating dropDownLarge)
+  , ("M-w h"         , withFocused $ placeFloating sideBarLeft)
+  , ("M-w l"         , withFocused $ placeFloating sideBarRight)
 -- system control
   , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
