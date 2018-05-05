@@ -63,7 +63,7 @@ sideBarRight  = floatRectRight  $ 1/2
 scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratchterm")
                    (customFloating dropDown)
               , NS "browser" "firefox" (className =? "Firefox")
-                   (customFloating dropDown)
+                   (customFloating dropDownLarge)
               , NS "documentation" "zeal" (className =? "Zeal")
                    (customFloating dropDown)
               , NS "messaging" "telegram-desktop" (className =? "TelegramDesktop")
