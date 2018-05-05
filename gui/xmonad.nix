@@ -1,9 +1,19 @@
 { pkgs, ... }:
 
 {
-  xsession.windowManager.xmonad = {
+  xsession = {
     enable = true;
-    enableContribAndExtras = true;
-    config = ./conf/xmonad.hs;
+
+    pointerCursor = {
+      package = pkgs.vanilla-dmz;
+      name    = "Vanilla-DMZ-AA";
+      size    = 16;
+    };
+
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      config = ./conf/xmonad.hs;
+    };
   };
 }

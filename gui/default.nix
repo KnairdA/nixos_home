@@ -25,14 +25,6 @@
     '';
   };
 
-  xsession = {
-    enable = true;
-    initExtra = ''
-      xsetroot -cursor_name left_ptr
-      xset b off
-    '';
-  };
-
   imports = [
   # desktop environment
     ./xmonad.nix
