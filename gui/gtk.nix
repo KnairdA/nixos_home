@@ -50,5 +50,9 @@
       name    = "Iosevka 10";
       package = pkgs.iosevka;
     };
+
+    gtk3.extraConfig = {
+      gtk-decoration-layout = "";
+    };
   };
 }
