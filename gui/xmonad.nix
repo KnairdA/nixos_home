@@ -1,6 +1,11 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ./gtk.nix
+    ./rofi.nix
+  ];
+
   xsession = {
     enable = true;
 
