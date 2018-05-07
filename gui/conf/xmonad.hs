@@ -120,7 +120,7 @@ keybindings =
   , ("M-c m"         , spawn "amixer sset Master toggle") ]
 
 customEventHook = do
-  handleEventHook defaultConfig
+  handleEventHook def
   fullscreenEventHook
 
 customLogHook = do
@@ -128,13 +128,13 @@ customLogHook = do
   customizeBorderWhen (isFloat <&&> isNotFullscreen) "#aadb0f" 6
 
 main = xmonad $ ewmh
-              $ defaultConfig
+              $ def
   { modMask             = mod4Mask -- super key as modifier
   , borderWidth         = 3
   , normalBorderColor   = "#161616"
   , focusedBorderColor  = "#909737"
   , keys                = \c -> mkKeymap c keybindings
-  , startupHook         = return () >> checkKeymap defaultConfig keybindings
+  , startupHook         = return () >> checkKeymap def keybindings
   , handleEventHook     = customEventHook
   , layoutHook          = availableLayouts
   , manageHook          = namedScratchpadManageHook scratchpads
