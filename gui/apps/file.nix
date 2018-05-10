@@ -2,7 +2,9 @@
 
 {
   home = {
-    packages = with pkgs; [
+    packages = let
+      custom-sxiv = import ./sxiv.nix pkgs;
+    in with pkgs; [
     # browser
       pcmanfm
     # automounting
@@ -11,7 +13,7 @@
       veracrypt
     # viewers
       evince
-      sxiv
+      custom-sxiv
       mpv
       libreoffice
     ];
