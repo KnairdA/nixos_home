@@ -76,7 +76,7 @@ keybindings =
 -- application launchers
   , ("M-<Space>"     , spawn "rofi -show combi")
   , ("M-<Return>"    , spawn "kitty")
-  , ("M-S-<Return>"  , spawn "vim -g")
+  , ("M-S-<Return>"  , spawn "nvim-qt")
 -- window management
   , ("M-q"           , windows $ shift "NSP")
   , ("M-S-q"         , kill)
