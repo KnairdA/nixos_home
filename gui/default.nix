@@ -3,7 +3,7 @@
 {
   imports = [
     ./xmonad.nix
-    ./terminal.nix
+    ./kitty.nix
     ./vim.nix
   # applications grouped by purpose
     ./apps/file.nix

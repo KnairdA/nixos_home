@@ -6,9 +6,7 @@
     file.".gvimrc".text = ''
       set guifont=Iosevka\ 10
       set linespace=2
-      set guioptions=agim
-      set guioptions-=m
-      2match SpecialKeyTab /\t/
+      set guioptions=agi
     '';
   };
 

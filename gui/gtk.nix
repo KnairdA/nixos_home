@@ -55,4 +55,9 @@
       gtk-decoration-layout = "";
     };
   };
+
+  qt = {
+    enable      = true;
+    useGtkTheme = true;
+  };
 }
