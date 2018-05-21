@@ -14,9 +14,11 @@
       nvim-gui = import ./pkgs/nvim-gui.nix pkgs;
     in [
       nvim-gui
+      pkgs.xclip # required to access clipboard in nvim-gui
     ];
 
     file.".config/nvim/ginit.vim".text = ''
+      set title
       Guifont! Iosevka:h10
     '';
   };
