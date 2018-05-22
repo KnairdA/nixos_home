@@ -50,6 +50,8 @@
     extraConfig = ''
       rofi.modi: combi
       rofi.combi-modi: windowcd,drun,ssh
+      rofi.terminal: kitty
+      rofi.ssh-command: {terminal} {ssh-client} {host}
     '';
   };
 }
