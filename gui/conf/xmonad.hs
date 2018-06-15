@@ -3,6 +3,7 @@ import XMonad.Util.EZConfig
 import XMonad.StackSet
 
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.InsertPosition
 
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
@@ -141,7 +142,7 @@ main = xmonad $ ewmh
   , startupHook         = return () >> checkKeymap def keybindings
   , handleEventHook     = customEventHook
   , layoutHook          = availableLayouts
-  , manageHook          = namedScratchpadManageHook scratchpads
+  , manageHook          = insertPosition Below Newer <+> namedScratchpadManageHook scratchpads
   , logHook             = customLogHook }
   `additionalKeys`
   [ ((noModMask, xK_Menu) , namedScratchpadAction scratchpads "terminal") ]
