@@ -17,25 +17,25 @@
       color8     #F2F2F2
       # red
       color1     #8C3346
-      color9     #ff0000
+      color9     #FF0000
       # green
-      color2     #aadb0f
+      color2     #AADB0F
       color10    #909636
       # yellow
       color3     #E4E093
-      color11    #ffff00
+      color11    #FFFF00
       # blue
       color4     #352F6A
-      color12    #0000ff
+      color12    #0000FF
       # magenta
-      color5     #ce5c00
-      color13    #f57900
+      color5     #CE5C00
+      color13    #F57900
       # cyan
-      color6     #89b6e2
-      color14    #46a4ff
+      color6     #89B6E2
+      color14    #46A4FF
       # white
       color7     #F2F2F2
-      color15    #ffffff
+      color15    #FFFFFF
     '';
   };
 }

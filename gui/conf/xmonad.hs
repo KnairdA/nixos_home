@@ -3,6 +3,7 @@ import XMonad.Util.EZConfig
 import XMonad.StackSet
 
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.InsertPosition
 
 import XMonad.Layout.NoBorders
@@ -128,6 +129,11 @@ customEventHook = do
   handleEventHook def
   fullscreenEventHook
 
+customManageHook = composeOne
+  [ transience
+  , isDialog  -?> doCenterFloat
+  , pure True -?> insertPosition Below Newer <+> namedScratchpadManageHook scratchpads ]
+
 customLogHook = do
   historyHook
   customizeBorderWhen (isFloat <&&> isNotFullscreen) "#aadb0f" 6
@@ -141,9 +147,9 @@ main = xmonad $ ewmh
   , keys                = \c -> mkKeymap c keybindings
   , startupHook         = return () >> checkKeymap def keybindings
   , handleEventHook     = customEventHook
-  , layoutHook          = availableLayouts
-  , manageHook          = insertPosition Below Newer <+> namedScratchpadManageHook scratchpads
-  , logHook             = customLogHook }
+  , manageHook          = customManageHook
+  , logHook             = customLogHook
+  , layoutHook          = availableLayouts }
   `additionalKeys`
   [ ((noModMask, xK_Menu) , namedScratchpadAction scratchpads "terminal") ]
 
