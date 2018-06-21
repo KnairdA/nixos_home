@@ -14,7 +14,7 @@
       foreground #F2F2F2
       # black
       color0     #161616
-      color8     #F2F2F2
+      color8     #000000
       # red
       color1     #8C3346
       color9     #FF0000
