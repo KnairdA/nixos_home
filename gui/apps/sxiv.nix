@@ -8,6 +8,6 @@ pkgs.callPackage ../pkgs/sxiv.nix {
     win_fs = "#999999";
     sel    = "#aadb0f";
     bar_bg = "#161616";
-    bar_fg = "#909737";
+    bar_fg = "#909636";
   };
 }

@@ -33,10 +33,10 @@ customTabTheme = (theme xmonadTheme)
   { fontName      = "xft:Iosevka Medium-12"
   , decoHeight    = 20
   , activeTextColor     = "#222222"
-  , activeColor         = "#909737"
+  , activeColor         = "#909636"
   , inactiveTextColor   = "#999999"
   , inactiveColor       = "#161616"
-  , activeBorderColor   = "#909737"
+  , activeBorderColor   = "#909636"
   , inactiveBorderColor = "#161616" }
 
 availableLayouts = id
@@ -143,7 +143,7 @@ main = xmonad $ ewmh
   { modMask             = mod4Mask -- super key as modifier
   , borderWidth         = 3
   , normalBorderColor   = "#161616"
-  , focusedBorderColor  = "#909737"
+  , focusedBorderColor  = "#909636"
   , keys                = \c -> mkKeymap c keybindings
   , startupHook         = return () >> checkKeymap def keybindings
   , handleEventHook     = customEventHook
@@ -192,4 +192,4 @@ hideScreenBorder :: RationalRect -> RationalRect
 hideScreenBorder (RationalRect x0 y0 w h) = RationalRect (x0-(bw/sw)) (y0-(bw/sh)) (w+((2*bw)/sw)) (h+((2*bw+1)/sh))
   where bw = 6
         sw = 1280
-        sh = 1024
+        sh = 768

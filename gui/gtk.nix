@@ -18,7 +18,7 @@
           caret2_fg  = "101010";
           hdr_btn_bg = "161616";
           hdr_btn_fg = "aadb0f";
-          menu_bg    = "909737";
+          menu_bg    = "909636";
           menu_fg    = "1a1a1a";
           sel_bg     = "aadb0f";
           sel_fg     = "101010";
@@ -27,8 +27,8 @@
           gradient   = 0.0;
           roundness  = 0;
           spacing    = 1;
-          wm_border_focus   = "909737";
-          wm_border_unfocus = "909737";
+          wm_border_focus   = "909636";
+          wm_border_unfocus = "909636";
           gtk3_generate_dark = false;
         };
       };
@@ -39,7 +39,7 @@
 
     iconTheme = let
       oomox-archdroid-icon-theme = pkgs.callPackage ./pkgs/oomox-archdroid-icon-theme.nix {
-        color = "909737";
+        color = "909636";
       };
     in {
       name    = "oomox-archdroid";
