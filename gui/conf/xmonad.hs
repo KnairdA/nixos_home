@@ -130,9 +130,12 @@ customEventHook = do
   fullscreenEventHook
 
 customManageHook = composeOne
-  [ transience
-  , isDialog  -?> doCenterFloat
+  [ hasRole "GtkFileChooserDialog" -?> doRectFloat dropDown
+  , isDialog                       -?> doCenterFloat
+  , transience
   , pure True -?> insertPosition Below Newer <+> namedScratchpadManageHook scratchpads ]
+  where
+    hasRole x = stringProperty "WM_WINDOW_ROLE" =? x
 
 customLogHook = do
   historyHook
