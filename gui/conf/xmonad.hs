@@ -125,6 +125,11 @@ keybindings =
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
   , ("M-c m"         , spawn "amixer sset Master toggle") ]
 
+mousebindings :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
+mousebindings (XConfig {XMonad.modMask = modMask}) = M.fromList
+  [ ((modMask .|. shiftMask, button1), \w -> XMonad.focus w >> mouseMoveWindow w)
+  , ((modMask .|. shiftMask, button3), \w -> XMonad.focus w >> mouseResizeWindow w) ]
+
 customEventHook = do
   handleEventHook def
   fullscreenEventHook
@@ -148,6 +153,7 @@ main = xmonad $ ewmh
   , normalBorderColor   = "#161616"
   , focusedBorderColor  = "#909636"
   , keys                = \c -> mkKeymap c keybindings
+  , mouseBindings       = mousebindings
   , startupHook         = return () >> checkKeymap def keybindings
   , handleEventHook     = customEventHook
   , manageHook          = customManageHook
