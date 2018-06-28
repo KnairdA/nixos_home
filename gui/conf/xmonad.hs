@@ -77,6 +77,7 @@ keybindings =
 -- xmonad session control
   [ ("C-M1-<Escape>"    , io (exitWith ExitSuccess))
   , ("C-M1-<Backspace>" , spawn "xmonad --restart")
+  , ("C-M1-l"           , spawn "i3lock -c 000000")
 -- application launchers
   , ("M-<Space>"     , spawn "rofi -show combi")
   , ("M-<Return>"    , spawn "kitty")

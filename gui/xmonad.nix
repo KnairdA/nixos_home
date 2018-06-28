@@ -21,4 +21,9 @@
       config = ./conf/xmonad.hs;
     };
   };
+
+  home.packages = [
+  # lockscreen
+    pkgs.i3lock
+  ];
 }
