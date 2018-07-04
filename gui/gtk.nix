@@ -51,8 +51,15 @@
       package = pkgs.iosevka;
     };
 
-    gtk3.extraConfig = {
-      gtk-decoration-layout = "";
+    gtk3 = {
+      extraConfig = {
+        gtk-decoration-layout = "";
+      };
+      extraCss = ''
+        menubar, .menubar {
+          -GtkWidget-window-dragging: false;
+        }
+      '';
     };
   };
 

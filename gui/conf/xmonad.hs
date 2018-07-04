@@ -73,7 +73,7 @@ scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratch
               , NS "messaging" "telegram-desktop" (className =? "TelegramDesktop")
                    (customFloating sideBarRight) ]
 
-keybindings =
+customKeybindings =
 -- xmonad session control
   [ ("C-M1-<Escape>"    , io (exitWith ExitSuccess))
   , ("C-M1-<Backspace>" , spawn "xmonad --restart")
@@ -126,8 +126,7 @@ keybindings =
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
   , ("M-c m"         , spawn "amixer sset Master toggle") ]
 
-mousebindings :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
-mousebindings (XConfig {XMonad.modMask = modMask}) = M.fromList
+customMousebindings (XConfig {XMonad.modMask = modMask}) = M.fromList
   [ ((modMask .|. shiftMask, button1), \w -> XMonad.focus w >> mouseMoveWindow w)
   , ((modMask .|. shiftMask, button3), \w -> XMonad.focus w >> mouseResizeWindow w) ]
 
@@ -153,9 +152,9 @@ main = xmonad $ ewmh
   , borderWidth         = 3
   , normalBorderColor   = "#161616"
   , focusedBorderColor  = "#909636"
-  , keys                = \c -> mkKeymap c keybindings
-  , mouseBindings       = mousebindings
-  , startupHook         = return () >> checkKeymap def keybindings
+  , keys                = \c -> mkKeymap c customKeybindings
+  , mouseBindings       = customMousebindings
+  , startupHook         = return () >> checkKeymap def customKeybindings
   , handleEventHook     = customEventHook
   , manageHook          = customManageHook
   , logHook             = customLogHook
