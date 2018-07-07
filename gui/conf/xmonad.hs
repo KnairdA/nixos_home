@@ -82,6 +82,7 @@ customKeybindings =
   , ("M-<Space>"     , spawn "rofi -show combi")
   , ("M-<Return>"    , spawn "kitty")
   , ("M-S-<Return>"  , spawn "nvim-qt")
+  , ("<Print>"       , spawn "xfce4-screenshooter")
 -- window management
   , ("M-q"           , windows $ shift "NSP")
   , ("M-S-q"         , kill)

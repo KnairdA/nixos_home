@@ -23,9 +23,11 @@
     };
   };
 
-  home.packages = [
+  home.packages = with pkgs; [
   # lockscreen
-    pkgs.i3lock
+    i3lock
+  # screenshooter
+    xfce4-12.xfce4-screenshooter
   ];
 
   services.screen-locker = {
