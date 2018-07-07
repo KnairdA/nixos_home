@@ -121,6 +121,9 @@ customKeybindings =
   , ("M-w S-k"       , withFocused $ placeFloating dropDownLarge)
   , ("M-w h"         , withFocused $ placeFloating sideBarLeft)
   , ("M-w l"         , withFocused $ placeFloating sideBarRight)
+-- system information
+  , ("M-i t"         , spawn "notify-send \"`date +%T`\" \"`date +\"%Y-%m-%d\"`\"")
+  , ("M-i b"         , spawn "notify-send Battery \"`acpi | cut -c 10-`\"")
 -- system control
   , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")

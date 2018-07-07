@@ -4,6 +4,7 @@
   imports = [
     ./gtk.nix
     ./rofi.nix
+    ./twmn.nix
   ];
 
   xsession = {
