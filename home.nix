@@ -7,7 +7,7 @@
   };
 
   imports = [
-    ./gui/default.nix
+    ./host/current.nix
   ];
 
   home = {
