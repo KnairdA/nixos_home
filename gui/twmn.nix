@@ -33,10 +33,10 @@
     font_size=15
     foreground_color=#111111
     height=20
-    in_animation=5
+    in_animation=6
     in_animation_duration=500
     opacity=100
-    out_animation=6
+    out_animation=5
     out_animation_duration=500
     position=bottom_right
     screen=0
