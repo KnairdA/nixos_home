@@ -21,10 +21,12 @@ import XMonad.Actions.WindowBringer
 import XMonad.Actions.GroupNavigation
 import XMonad.Actions.FloatKeys
 
-import System.Exit
 import Data.Maybe
 import Control.Monad (when)
 import qualified Data.Map as M
+
+import System.Exit
+import System.Posix.Unistd
 
 workspaces :: [WorkspaceId]
 workspaces = map show [1 .. 9 :: Int]
@@ -73,7 +75,13 @@ scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratch
               , NS "messaging" "telegram-desktop" (className =? "TelegramDesktop")
                    (customFloating sideBarRight) ]
 
-customKeybindings =
+hostSpecificKeybindings host = case host of
+  "asterix" -> [ ("M-i b" , spawn "notify-send Battery \"`acpi | cut -c 10-`\"")
+               , ("M-i c" , spawn "notify-send \"`acpi --thermal | awk '{print $4}'`°C\" \"`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM\"") ]
+  "obelix"  -> [ ("M-i g" , spawn "notify-send GPU \"`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`\"") ]
+  _         -> [ ]
+
+commonKeybindings =
 -- xmonad session control
   [ ("C-M1-<Escape>"    , io (exitWith ExitSuccess))
   , ("C-M1-<Backspace>" , spawn "xmonad --restart")
@@ -124,12 +132,12 @@ customKeybindings =
   , ("M-w l"         , withFocused $ placeFloating sideBarRight)
 -- system information
   , ("M-i t"         , spawn "notify-send \"`date +%T`\" \"`date +\"%Y-%m-%d\"`\"")
-  , ("M-i b"         , spawn "notify-send Battery \"`acpi | cut -c 10-`\"")
-  , ("M-i c"         , spawn "notify-send \"`acpi --thermal | awk '{print $4}'`°C\" \"`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM\"")
 -- system control
   , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
   , ("M-c m"         , spawn "amixer sset Master toggle") ]
+
+customKeybindings host = commonKeybindings ++ (hostSpecificKeybindings host)
 
 customMousebindings (XConfig {XMonad.modMask = modMask}) = M.fromList
   [ ((modMask .|. shiftMask, button1), \w -> XMonad.focus w >> mouseMoveWindow w)
@@ -151,21 +159,23 @@ customLogHook = do
   historyHook
   customizeBorderWhen (isFloat <&&> isNotFullscreen) "#aadb0f" 6
 
-main = xmonad $ ewmh
-              $ def
-  { modMask             = mod4Mask -- super key as modifier
-  , borderWidth         = 3
-  , normalBorderColor   = "#161616"
-  , focusedBorderColor  = "#909636"
-  , keys                = \c -> mkKeymap c customKeybindings
-  , mouseBindings       = customMousebindings
-  , startupHook         = return () >> checkKeymap def customKeybindings
-  , handleEventHook     = customEventHook
-  , manageHook          = customManageHook
-  , logHook             = customLogHook
-  , layoutHook          = availableLayouts }
-  `additionalKeys`
-  [ ((noModMask, xK_Menu) , namedScratchpadAction scratchpads "terminal") ]
+main = do
+  host <- fmap nodeName getSystemID
+  xmonad $ ewmh
+         $ def
+    { modMask             = mod4Mask -- super key as modifier
+    , borderWidth         = 3
+    , normalBorderColor   = "#161616"
+    , focusedBorderColor  = "#909636"
+    , keys                = \c -> mkKeymap c (customKeybindings host)
+    , mouseBindings       = customMousebindings
+    , startupHook         = return () >> checkKeymap def (customKeybindings host)
+    , handleEventHook     = customEventHook
+    , manageHook          = customManageHook
+    , logHook             = customLogHook
+    , layoutHook          = availableLayouts }
+    `additionalKeys`
+    [ ((noModMask, xK_Menu) , namedScratchpadAction scratchpads "terminal") ]
 
 nonEmptyWS = WSIs $ return (\w -> nonNSP w && nonEmpty w)
   where nonNSP (Workspace tag _ _) = tag /= "NSP"
