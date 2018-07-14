@@ -76,9 +76,12 @@ scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratch
                    (customFloating sideBarRight) ]
 
 hostSpecificKeybindings host = case host of
-  "asterix" -> [ ("M-i b" , spawn "notify-send Battery \"`acpi | cut -c 10-`\"")
-               , ("M-i c" , spawn "notify-send \"`acpi --thermal | awk '{print $4}'`°C\" \"`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM\"") ]
-  "obelix"  -> [ ("M-i g" , spawn "notify-send GPU \"`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`\"") ]
+  "asterix" -> [ ("M-i b" , showNotification "Battery"
+                                             "`acpi | cut -c 10-`")
+               , ("M-i c" , showNotification "`acpi --thermal | awk '{print $4}'`°C"
+                                             "`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM") ]
+  "obelix"  -> [ ("M-i g" , showNotification "GPU"
+                                             "`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`") ]
   _         -> [ ]
 
 commonKeybindings =
@@ -131,8 +134,8 @@ commonKeybindings =
   , ("M-w h"         , withFocused $ placeFloating sideBarLeft)
   , ("M-w l"         , withFocused $ placeFloating sideBarRight)
 -- system information
-  , ("M-i t"         , spawn "notify-send \"`date +%T`\" \"`date +\"%Y-%m-%d\"`\"")
-  , ("M-i l"         , spawn "notify-send Load \"`cut -c -14 /proc/loadavg`\"")
+  , ("M-i t"         , showNotification "`date +%T`" "`date +\"%Y-%m-%d\"`")
+  , ("M-i l"         , showNotification "Load" "`cut -c -14 /proc/loadavg`")
 -- system control
   , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
@@ -218,3 +221,5 @@ hideScreenBorder (RationalRect x0 y0 w h) = RationalRect (x0-(bw/sw)) (y0-(bw/sh
   where bw = 6
         sw = 1280
         sh = 768
+
+showNotification title text = spawn ("notify-send \"" ++ title ++ "\" \"" ++ text ++ "\"")
