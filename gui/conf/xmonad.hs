@@ -132,6 +132,7 @@ commonKeybindings =
   , ("M-w l"         , withFocused $ placeFloating sideBarRight)
 -- system information
   , ("M-i t"         , spawn "notify-send \"`date +%T`\" \"`date +\"%Y-%m-%d\"`\"")
+  , ("M-i l"         , spawn "notify-send Load \"`cut -c -14 /proc/loadavg`\"")
 -- system control
   , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
