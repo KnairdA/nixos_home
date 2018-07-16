@@ -20,6 +20,8 @@
     file.".config/nvim/ginit.vim".text = ''
       set title
       Guifont! Iosevka:h10
+
+      autocmd FocusGained * :checktime
     '';
   };
 
