@@ -8,7 +8,9 @@ import XMonad.Hooks.InsertPosition
 
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
+import XMonad.Layout.MultiColumns
 import XMonad.Layout.ToggleLayouts
+import XMonad.Layout.Reflect
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 
@@ -47,24 +49,24 @@ availableLayouts = id
   $ toggleLayouts tabs tiles
   where
     tabs  = tabbed shrinkText customTabTheme
-    tiles = mkToggle (single MIRROR) $ Tall 1 delta ratio
-    ratio = 1/2
-    delta = 3/100
+    tiles = mkToggle (single REFLECTX)
+          $ mkToggle (single MIRROR)
+          $ multiCol [1, 2, 0] 1 (1/24) (1/3)
 
 windowBringerDmenuConfig = def { menuCommand  = "rofi"
                                , menuArgs     = [ "-p", "win", "-dmenu", "-i" ] }
 
-floatRectTop    h = hideScreenBorder $ RationalRect (1/20) 0      (18/20) h
-floatRectBottom h = hideScreenBorder $ RationalRect (1/20) (1-h)  (18/20) h
-floatRectLeft   w = hideScreenBorder $ RationalRect 0      (1/20) w       (18/20)
-floatRectRight  w = hideScreenBorder $ RationalRect (1-w)  (1/20) w       (18/20)
+floatRectTop    h = RationalRect (1/20) 0      (18/20) h
+floatRectBottom h = RationalRect (1/20) (1-h)  (18/20) h
+floatRectLeft   w = RationalRect 0      (1/20) w       (18/20)
+floatRectRight  w = RationalRect (1-w)  (1/20) w       (18/20)
 
 dropUp        = floatRectBottom $ 2/3
 dropUpLarge   = floatRectBottom $ 18/20
 dropDown      = floatRectTop    $ 2/3
 dropDownLarge = floatRectTop    $ 18/20
-sideBarLeft   = floatRectLeft   $ 1/2
-sideBarRight  = floatRectRight  $ 1/2
+sideBarLeft   = floatRectLeft   $ 1/3
+sideBarRight  = floatRectRight  $ 1/3
 
 scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratchterm")
                    (customFloating dropDown)
@@ -84,7 +86,7 @@ hostSpecificKeybindings host = case host of
                                              "`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`") ]
   _         -> [ ]
 
-commonKeybindings =
+commonKeybindings host =
 -- xmonad session control
   [ ("C-M1-<Escape>"    , io (exitWith ExitSuccess))
   , ("C-M1-<Backspace>" , spawn "xmonad --restart")
@@ -115,24 +117,28 @@ commonKeybindings =
   [ (p ++ [k]        , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']
                                       , (p, f) <- [ ("M-"   , greedyView)
                                                   , ("M-S-" , shift) ] ] ++
--- workspace management
-  [ ("M-s l"         , sendMessage ToggleLayout)
-  , ("M-s m"         , sendMessage $ XMonad.Layout.MultiToggle.Toggle MIRROR)
-  , ("M-s f"         , sendMessage $ XMonad.Layout.MultiToggle.Toggle NBFULL)
-  , ("M-s p"         , toggleWS' ["NSP"])
+  [ ("M-s p"         , toggleWS' ["NSP"])
+-- workspace movement
   , ("M-s j"         , moveTo  Next nonEmptyWS)
   , ("M-s k"         , moveTo  Prev nonEmptyWS)
   , ("M-S-s j"       , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
   , ("M-S-s k"       , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
+-- workspace layout management
+  , ("M-s l"         , sendMessage ToggleLayout)
+  , ("M-s +"         , sendMessage $ IncMasterN   1)
+  , ("M-s -"         , sendMessage $ IncMasterN (-1))
+  , ("M-s m"         , sendMessage $ XMonad.Layout.MultiToggle.Toggle REFLECTX)
+  , ("M-s r"         , sendMessage $ XMonad.Layout.MultiToggle.Toggle MIRROR)
+  , ("M-s f"         , sendMessage $ XMonad.Layout.MultiToggle.Toggle NBFULL)
 -- floating placement
   , ("M-w t"         , withFocused $ windows . sink)
-  , ("M-w f"         , withFocused $ placeFloating $ RationalRect 0 0 1 1)
-  , ("M-w j"         , withFocused $ placeFloating dropUp)
-  , ("M-w S-j"       , withFocused $ placeFloating dropUpLarge)
-  , ("M-w k"         , withFocused $ placeFloating dropDown)
-  , ("M-w S-k"       , withFocused $ placeFloating dropDownLarge)
-  , ("M-w h"         , withFocused $ placeFloating sideBarLeft)
-  , ("M-w l"         , withFocused $ placeFloating sideBarRight)
+  , ("M-w f"         , withFocused $ placeFloating host $ RationalRect 0 0 1 1)
+  , ("M-w j"         , withFocused $ placeFloating host dropUp)
+  , ("M-w S-j"       , withFocused $ placeFloating host dropUpLarge)
+  , ("M-w k"         , withFocused $ placeFloating host dropDown)
+  , ("M-w S-k"       , withFocused $ placeFloating host dropDownLarge)
+  , ("M-w h"         , withFocused $ placeFloating host sideBarLeft)
+  , ("M-w l"         , withFocused $ placeFloating host sideBarRight)
 -- system information
   , ("M-i t"         , showNotification "`date +%T`" "`date +\"%Y-%m-%d\"`")
   , ("M-i l"         , showNotification "Load" "`cut -c -14 /proc/loadavg`")
@@ -141,7 +147,7 @@ commonKeybindings =
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
   , ("M-c m"         , spawn "amixer sset Master toggle") ]
 
-customKeybindings host = commonKeybindings ++ (hostSpecificKeybindings host)
+customKeybindings host = concatMap ($ host) [commonKeybindings, hostSpecificKeybindings]
 
 customMousebindings (XConfig {XMonad.modMask = modMask}) = M.fromList
   [ ((modMask .|. shiftMask, button1), \w -> XMonad.focus w >> mouseMoveWindow w)
@@ -185,8 +191,8 @@ nonEmptyWS = WSIs $ return (\w -> nonNSP w && nonEmpty w)
   where nonNSP (Workspace tag _ _) = tag /= "NSP"
         nonEmpty = isJust . stack
 
-placeFloating :: RationalRect -> Window -> X ()
-placeFloating rect = windows . (flip XMonad.StackSet.float $ rect)
+placeFloating :: String -> RationalRect -> Window -> X ()
+placeFloating host rect = windows . (flip XMonad.StackSet.float $ (hideScreenBorder host rect))
 
 windowSize w = do
   r <- withDisplay $ (\d -> io $ getWindowAttributes d w)
@@ -216,10 +222,17 @@ setWindowBorder' color width window = do
   io $ setWindowBorderWidth d window width
 
 -- ugly hack to hide window border at screen boundary
-hideScreenBorder :: RationalRect -> RationalRect
-hideScreenBorder (RationalRect x0 y0 w h) = RationalRect (x0-(bw/sw)) (y0-(bw/sh)) (w+((2*bw)/sw)) (h+((2*bw+1)/sh))
+hideScreenBorder :: String -> RationalRect -> RationalRect
+hideScreenBorder host (RationalRect x0 y0 w h) = RationalRect (x0-(bw/sw)) (y0-(bw/sh)) (w+((2*bw)/sw)) (h+((2*bw+1)/sh))
   where bw = 6
-        sw = 1280
-        sh = 768
+        sw = screenWidthOn  host
+        sh = screenHeightOn host
+
+screenWidthOn  host = case host of
+  "obelix"  -> 1920
+  "asterix" -> 1280
+screenHeightOn host = case host of
+  "obelix"  -> 1200
+  "asterix" -> 768
 
 showNotification title text = spawn ("notify-send \"" ++ title ++ "\" \"" ++ text ++ "\"")
