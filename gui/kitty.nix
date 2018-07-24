@@ -6,7 +6,7 @@
 
     file.".config/kitty/kitty.conf".text = ''
       font_family Iosevka
-      font_size   10
+      font_size   9
       font_size_delta 1
       adjust_line_height 110%
 
