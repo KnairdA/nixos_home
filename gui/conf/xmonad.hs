@@ -71,13 +71,13 @@ sideBarLeft   = floatRectLeft   $ 1/3
 sideBarRight  = floatRectRight  $ 1/3
 
 scratchpads host =
-  [ NS "terminal"      "kitty --class=scratchterm" (className =? "scratchterm")
+  [ NS "terminal"      "kitty --class=scratchterm"                             (className =? "scratchterm")
        (customFloating $ hideScreenBorder host dropDown)
-  , NS "browser"       "firefox"                   (className =? "Firefox")
+  , NS "browser"       "firefox --no-remote -P scratchpad --class scratchfire" (className =? "scratchfire")
        (customFloating $ hideScreenBorder host dropDownLarge)
-  , NS "documentation" "zeal"                      (className =? "Zeal")
+  , NS "documentation" "zeal"                                                  (className =? "Zeal")
        (customFloating $ hideScreenBorder host dropDown)
-  , NS "messaging"     "telegram-desktop"          (className =? "TelegramDesktop")
+  , NS "messaging"     "telegram-desktop"                                      (className =? "TelegramDesktop")
        (customFloating $ hideScreenBorder host sideBarRight) ]
 
 hostSpecificKeybindings host = case host of
