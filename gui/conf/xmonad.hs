@@ -9,10 +9,10 @@ import XMonad.Hooks.InsertPosition
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
 import XMonad.Layout.MultiColumns
-import XMonad.Layout.ToggleLayouts
 import XMonad.Layout.Reflect
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
+import XMonad.Layout.TwoPane
 
 import XMonad.Util.Themes
 import XMonad.Util.NamedScratchpad
@@ -46,12 +46,14 @@ customTabTheme = (theme xmonadTheme)
 availableLayouts = id
   . smartBorders
   . mkToggle (single NBFULL)
-  $ toggleLayouts tabs tiles
+  $ tabs ||| tiles ||| two
   where
     tabs  = tabbed shrinkText customTabTheme
     tiles = mkToggle (single REFLECTX)
           $ mkToggle (single MIRROR)
-          $ multiCol [1, 2, 0] 1 (1/24) (1/3)
+          $ multiCol [1, 2, 0] 1 delta (1/3)
+    two   = TwoPane delta (1/2)
+    delta = 1/24
 
 windowBringerDmenuConfig = def { menuCommand  = "rofi"
                                , menuArgs     = [ "-p", "win", "-dmenu", "-i" ] }
@@ -125,7 +127,7 @@ commonKeybindings host =
   , ("M-S-s j"       , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
   , ("M-S-s k"       , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
 -- workspace layout management
-  , ("M-s l"         , sendMessage ToggleLayout)
+  , ("M-s l"         , sendMessage NextLayout)
   , ("M-s +"         , sendMessage $ IncMasterN   1)
   , ("M-s -"         , sendMessage $ IncMasterN (-1))
   , ("M-s m"         , sendMessage $ XMonad.Layout.MultiToggle.Toggle REFLECTX)
