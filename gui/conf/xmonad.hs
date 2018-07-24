@@ -68,14 +68,15 @@ dropDownLarge = floatRectTop    $ 18/20
 sideBarLeft   = floatRectLeft   $ 1/3
 sideBarRight  = floatRectRight  $ 1/3
 
-scratchpads = [ NS "terminal" "kitty --class=scratchterm" (className =? "scratchterm")
-                   (customFloating dropDown)
-              , NS "browser" "firefox" (className =? "Firefox")
-                   (customFloating dropDownLarge)
-              , NS "documentation" "zeal" (className =? "Zeal")
-                   (customFloating dropDown)
-              , NS "messaging" "telegram-desktop" (className =? "TelegramDesktop")
-                   (customFloating sideBarRight) ]
+scratchpads host =
+  [ NS "terminal"      "kitty --class=scratchterm" (className =? "scratchterm")
+       (customFloating $ hideScreenBorder host dropDown)
+  , NS "browser"       "firefox"                   (className =? "Firefox")
+       (customFloating $ hideScreenBorder host dropDownLarge)
+  , NS "documentation" "zeal"                      (className =? "Zeal")
+       (customFloating $ hideScreenBorder host dropDown)
+  , NS "messaging"     "telegram-desktop"          (className =? "TelegramDesktop")
+       (customFloating $ hideScreenBorder host sideBarRight) ]
 
 hostSpecificKeybindings host = case host of
   "asterix" -> [ ("M-i b" , showNotification "Battery"
@@ -110,9 +111,9 @@ commonKeybindings host =
   , ("M-a"           , gotoMenuConfig  windowBringerDmenuConfig)
   , ("M-S-a"         , bringMenuConfig windowBringerDmenuConfig)
 -- scratchpads
-  , ("M-b"           , namedScratchpadAction scratchpads "browser")
-  , ("M-d"           , namedScratchpadAction scratchpads "documentation")
-  , ("M-m"           , namedScratchpadAction scratchpads "messaging") ] ++
+  , ("M-b"           , namedScratchpadAction (scratchpads host) "browser")
+  , ("M-d"           , namedScratchpadAction (scratchpads host) "documentation")
+  , ("M-m"           , namedScratchpadAction (scratchpads host) "messaging") ] ++
 -- workspace selection
   [ (p ++ [k]        , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']
                                       , (p, f) <- [ ("M-"   , greedyView)
@@ -157,11 +158,11 @@ customEventHook = do
   handleEventHook def
   fullscreenEventHook
 
-customManageHook = composeOne
+customManageHook host = composeOne
   [ hasRole "GtkFileChooserDialog" -?> doRectFloat dropDown
   , isDialog                       -?> doCenterFloat
   , transience
-  , pure True -?> insertPosition Below Newer <+> namedScratchpadManageHook scratchpads ]
+  , pure True -?> insertPosition Below Newer <+> namedScratchpadManageHook (scratchpads host) ]
   where
     hasRole x = stringProperty "WM_WINDOW_ROLE" =? x
 
@@ -181,11 +182,11 @@ main = do
     , mouseBindings       = customMousebindings
     , startupHook         = return () >> checkKeymap def (customKeybindings host)
     , handleEventHook     = customEventHook
-    , manageHook          = customManageHook
+    , manageHook          = customManageHook host
     , logHook             = customLogHook
     , layoutHook          = availableLayouts }
     `additionalKeys`
-    [ ((noModMask, xK_Menu) , namedScratchpadAction scratchpads "terminal") ]
+    [ ((noModMask, xK_Menu) , namedScratchpadAction (scratchpads host) "terminal") ]
 
 nonEmptyWS = WSIs $ return (\w -> nonNSP w && nonEmpty w)
   where nonNSP (Workspace tag _ _) = tag /= "NSP"
