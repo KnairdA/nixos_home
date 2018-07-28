@@ -8,10 +8,7 @@
     ];
   };
 
-  programs.firefox = {
-    enable = true;
-    enableAdobeFlash = true;
-  };
+  programs.firefox.enable = true;
 
   services.syncthing.enable = true;
 }
