@@ -56,10 +56,13 @@ availableLayouts = id
     tabs   = name "tabs"  $ tabbed shrinkText customTabTheme
     tiles  = name "tiles" $ id
                           . mkToggle (single REFLECTX)
-                          . mkToggle (single MIRROR)
+                          . mkToggle (single REFLECTY)
                           $ multiCol [1, 2, 0] 1 delta (1/3)
     two    = name "two"   $ TwoPane delta (1/2)
-    frame  = name "frame" $ OneBig (2/3) (4/5)
+    frame  = name "frame" $ id
+                          . mkToggle (single REFLECTX)
+                          . mkToggle (single REFLECTY)
+                          $ OneBig (2/3) (4/5)
     delta  = 1/24
     name n = renamed [Replace n]
 
@@ -145,8 +148,8 @@ commonKeybindings host =
   , ("M-s l"         , sendMessage NextLayout)
   , ("M-s +"         , sendMessage $ IncMasterN   1)
   , ("M-s -"         , sendMessage $ IncMasterN (-1))
-  , ("M-s m"         , sendMessage $ Toggle REFLECTX)
-  , ("M-s r"         , sendMessage $ Toggle MIRROR)
+  , ("M-s y"         , sendMessage $ Toggle REFLECTY)
+  , ("M-s x"         , sendMessage $ Toggle REFLECTX)
   , ("M-s f"         , sendMessage $ Toggle NBFULL)
 -- floating placement
   , ("M-w t"         , withFocused $ windows . S.sink)
