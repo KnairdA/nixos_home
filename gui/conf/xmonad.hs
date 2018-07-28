@@ -153,7 +153,6 @@ commonKeybindings host =
   , ("M-s f"         , sendMessage $ Toggle NBFULL)
 -- floating placement
   , ("M-w t"         , withFocused $ windows . S.sink)
-  , ("M-w f"         , withFocused $ placeFloating host $ S.RationalRect 0 0 1 1)
   , ("M-w j"         , withFocused $ placeFloating host dropUp)
   , ("M-w S-j"       , withFocused $ placeFloating host dropUpLarge)
   , ("M-w k"         , withFocused $ placeFloating host dropDown)
