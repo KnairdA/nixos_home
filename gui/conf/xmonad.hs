@@ -62,6 +62,7 @@ availableLayouts = id
     frame  = name "frame" $ id
                           . mkToggle (single REFLECTX)
                           . mkToggle (single REFLECTY)
+                          . reflectVert
                           $ OneBig (2/3) (4/5)
     delta  = 1/24
     name n = renamed [Replace n]
