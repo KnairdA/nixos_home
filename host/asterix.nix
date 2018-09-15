@@ -3,6 +3,7 @@
 {
   imports = [
     ../gui/default.nix
+    ../gui/autorandr.nix
   ];
 
   home.packages = let

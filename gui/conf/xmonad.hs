@@ -27,6 +27,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.WindowBringer
 import XMonad.Actions.GroupNavigation
 import XMonad.Actions.FloatKeys
+import XMonad.Actions.UpdatePointer
 
 import Data.Maybe
 import Control.Monad (when)
@@ -136,7 +137,7 @@ commonKeybindings host =
   , ("M-m"           , namedScratchpadAction (scratchpads host) "messaging") ] ++
 -- workspace selection
   [ (p ++ [k]        , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']
-                                      , (p, f) <- [ ("M-"   , S.greedyView)
+                                      , (p, f) <- [ ("M-"   , S.view)
                                                   , ("M-S-" , S.shift) ] ] ++
   [ ("M-s p"         , toggleWS' ["NSP"])
 -- workspace movement
@@ -188,6 +189,7 @@ customManageHook host = composeOne
 
 customLogHook = do
   historyHook
+  updatePointer (0.5, 0.5) (0, 0)
   customizeBorderWhen (isFloat <&&> isNotFullscreen) "#aadb0f" 6
 
 main = do
