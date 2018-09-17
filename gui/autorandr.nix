@@ -39,4 +39,6 @@
       };
     };
   };
+
+  xsession.initExtra = "${pkgs.autorandr}/bin/autorandr --change";
 }
