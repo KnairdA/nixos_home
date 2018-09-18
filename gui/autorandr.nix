@@ -33,7 +33,7 @@
           HDMI3 = {
             enable   = true;
             mode     = "1280x1024";
-            position = "1366x0";
+            position = "1372x0";
           };
         };
       };
