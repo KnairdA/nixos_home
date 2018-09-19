@@ -21,6 +21,17 @@
     extraConfig.core.editor = "vim";
   };
 
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "automatix" = {
+        hostname = "kummerlaender.eu";
+        port = 222;
+        user = "common";
+      };
+    };
+  };
+
   services.gpg-agent = {
     enable = true;
     defaultCacheTtl     = 120;
