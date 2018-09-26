@@ -7,9 +7,9 @@
   ];
 
   home.packages = let
-  # only asterix has a 3g modem
-    modem-manager-gui = import ../gui/pkgs/modem-manager-gui.nix pkgs;
+    mypkgs = import (fetchTarball "https://pkgs.kummerlaender.eu/nixexprs.tar.gz") { };
   in [
-    modem-manager-gui
+  # only asterix has a 3g modem
+    mypkgs.modem-manager-gui
   ];
 }

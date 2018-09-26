@@ -1,49 +1,42 @@
 { pkgs, ... }:
 
-{
+let
+  mypkgs = import (fetchTarball "https://pkgs.kummerlaender.eu/nixexprs.tar.gz") { };
+in {
   gtk = {
     enable = true;
 
-    theme = let
-      oomox-gtk-theme = pkgs.callPackage ./pkgs/oomox-gtk-theme.nix {
-        pkgs-unstable = import <nixpkgs-unstable> {};
-        theme = {
-          accent_bg  = "aadb0f";
-          bg         = "d8d8d8";
-          fg         = "101010";
-          btn_bg     = "f5f5f5";
-          btn_fg     = "111111";
-          caret_size = 0.04;
-          caret1_fg  = "101010";
-          caret2_fg  = "101010";
-          hdr_btn_bg = "161616";
-          hdr_btn_fg = "aadb0f";
-          menu_bg    = "909636";
-          menu_fg    = "1a1a1a";
-          sel_bg     = "aadb0f";
-          sel_fg     = "101010";
-          txt_bg     = "ffffff";
-          txt_fg     = "101010";
-          gradient   = 0.0;
-          roundness  = 0;
-          spacing    = 1;
-          wm_border_focus   = "909636";
-          wm_border_unfocus = "909636";
-          gtk3_generate_dark = false;
-        };
+    theme = {
+      name = "oomox";
+      package = mypkgs.oomox-gtk-theme {
+        accent_bg  = "aadb0f";
+        bg         = "d8d8d8";
+        fg         = "101010";
+        btn_bg     = "f5f5f5";
+        btn_fg     = "111111";
+        caret_size = 0.04;
+        caret1_fg  = "101010";
+        caret2_fg  = "101010";
+        hdr_btn_bg = "161616";
+        hdr_btn_fg = "aadb0f";
+        menu_bg    = "909636";
+        menu_fg    = "1a1a1a";
+        sel_bg     = "aadb0f";
+        sel_fg     = "101010";
+        txt_bg     = "ffffff";
+        txt_fg     = "101010";
+        gradient   = 0.0;
+        roundness  = 0;
+        spacing    = 1;
+        wm_border_focus   = "909636";
+        wm_border_unfocus = "909636";
+        gtk3_generate_dark = false;
       };
-    in {
-      name    = "oomox";
-      package = oomox-gtk-theme;
     };
 
-    iconTheme = let
-      oomox-archdroid-icon-theme = pkgs.callPackage ./pkgs/oomox-archdroid-icon-theme.nix {
-        color = "909636";
-      };
-    in {
+    iconTheme = {
       name    = "oomox-archdroid";
-      package = oomox-archdroid-icon-theme;
+      package = mypkgs.oomox-archdroid-icon-theme "909636";
     };
 
     font = {

@@ -1,10 +1,7 @@
 { pkgs, ... }:
 
 let
-  custom_nvim = pkgs.neovim.override {
-    vimAlias  = false;
-    configure = (import /etc/nixos/pkgs/vim/custom.nix { pkgs = pkgs; });
-  };
+  mypkgs = import (fetchTarball "https://pkgs.kummerlaender.eu/nixexprs.tar.gz") { };
 in pkgs.neovim-qt.override {
-  neovim = custom_nvim;
+  neovim = mypkgs.custom-neovim;
 }
