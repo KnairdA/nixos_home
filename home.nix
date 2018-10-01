@@ -26,8 +26,11 @@
     matchBlocks = {
       "automatix" = {
         hostname = "kummerlaender.eu";
-        port = 222;
         user = "common";
+      };
+      "horst" = {
+        hostname = "172.23.20.188";
+        user = "urdzx";
       };
     };
   };
