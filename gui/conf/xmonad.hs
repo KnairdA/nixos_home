@@ -93,7 +93,7 @@ scratchpads host =
        (customFloating $ hideScreenBorder host dropDownLarge)
   , NS "documentation" "zeal"                                                  (className =? "Zeal")
        (customFloating $ hideScreenBorder host dropDown)
-  , NS "messaging"     "telegram-desktop"                                      (className =? "TelegramDesktop")
+  , NS "messaging"     "telegram-desktop"                                      ((className =? "TelegramDesktop") <&&> (title /=? "Media viewer"))
        (customFloating $ hideScreenBorder host sideBarRight) ]
 
 windowBringerDmenuConfig = def { menuCommand  = "rofi"
@@ -181,11 +181,13 @@ customEventHook = do
 
 customManageHook host = composeOne
   [ hasRole "GtkFileChooserDialog" -?> doRectFloat dropDown
+  , isTelegramMediaViewer          -?> doFullFloat
   , isDialog                       -?> doCenterFloat
   , transience
   , pure True -?> insertPosition Below Newer <+> namedScratchpadManageHook (scratchpads host) ]
   where
     hasRole x = stringProperty "WM_WINDOW_ROLE" =? x
+    isTelegramMediaViewer = (className =? "TelegramDesktop") <&&> (title =? "Media viewer")
 
 customLogHook = do
   historyHook
