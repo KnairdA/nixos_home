@@ -26,9 +26,17 @@
   };
 
   gtk = {
-    gtk2.extraConfig = ''
-      style "vimfix" { bg[NORMAL] = "#161616" }
-      widget "vim-main-window.*GtkForm" style "vimfix"
+    gtk3.extraCss = ''
+      window#vim-main-window {
+          background-color: #161616;
+      }
     '';
+  };
+
+  programs.fish = {
+    enable = true;
+    shellAliases = {
+      nvim-qt = "nvim-qt --no-ext-tabline ^ /dev/null > /dev/null";
+    };
   };
 }
