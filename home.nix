@@ -39,7 +39,7 @@
     enable = true;
     defaultCacheTtl     = 120;
     enableSshSupport    = true;
-    defaultCacheTtlSsh  = 120;
+    defaultCacheTtlSsh  = 600;
     enableScDaemon      = false;
   };
 }
