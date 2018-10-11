@@ -181,12 +181,14 @@ customEventHook = do
 
 customManageHook host = composeOne
   [ hasRole "GtkFileChooserDialog" -?> doRectFloat dropDown
+  , isParaviewDialog               -?> doRectFloat dropDown
   , isTelegramMediaViewer          -?> doFullFloat
   , isDialog                       -?> doCenterFloat
   , transience
   , pure True -?> insertPosition Below Newer <+> namedScratchpadManageHook (scratchpads host) ]
   where
     hasRole x = stringProperty "WM_WINDOW_ROLE" =? x
+    isParaviewDialog      = (className =? "ParaView") <&&> isDialog
     isTelegramMediaViewer = (className =? "TelegramDesktop") <&&> (title =? "Media viewer")
 
 customLogHook = do
