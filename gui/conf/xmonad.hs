@@ -180,8 +180,8 @@ customEventHook = do
   fullscreenEventHook
 
 customManageHook host = composeOne
-  [ hasRole "GtkFileChooserDialog" -?> doRectFloat dropDown
-  , isParaviewDialog               -?> doRectFloat dropDown
+  [ hasRole "GtkFileChooserDialog" -?> doRectFloat $ hideScreenBorder host dropDown
+  , isParaviewDialog               -?> doRectFloat $ hideScreenBorder host dropDown
   , isTelegramMediaViewer          -?> doFullFloat
   , isDialog                       -?> doCenterFloat
   , transience
