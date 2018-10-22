@@ -17,6 +17,8 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.Renamed (Rename(..), renamed)
 import XMonad.Layout.LayoutCombinators
+import XMonad.Layout.LayoutModifier
+import XMonad.Layout.Monitor
 
 import XMonad.Util.Themes
 import XMonad.Util.NamedScratchpad
@@ -49,8 +51,9 @@ customTabTheme = (theme xmonadTheme)
   , activeBorderColor   = "#909636"
   , inactiveBorderColor = "#161616" }
 
-availableLayouts = id
+customLayoutHook host = id
   . smartBorders
+  . ModifiedLayout (hudMonitor host)
   . mkToggle (single NBFULL)
   $ tabs ||| tiles ||| two ||| frame
   where
@@ -95,6 +98,13 @@ scratchpads host =
        (customFloating $ hideScreenBorder host dropDown)
   , NS "messaging"     "telegram-desktop"                                      ((className =? "TelegramDesktop") <&&> (title /=? "Media viewer"))
        (customFloating $ hideScreenBorder host sideBarRight) ]
+
+hudMonitor host = monitor
+  { prop = Title "hud"
+  , XMonad.Layout.Monitor.name = "hud"
+  , rect = Rectangle ((screenWidthOn host) - 350) ((screenHeightOn host) - 250) 300 200
+  , opacity    = 0.8
+  , persistent = True }
 
 windowBringerDmenuConfig = def { menuCommand  = "rofi"
                                , menuArgs     = [ "-p", "win", "-dmenu", "-i" ] }
@@ -179,7 +189,7 @@ customEventHook = do
   handleEventHook def
   fullscreenEventHook
 
-customManageHook host = composeOne
+customManageHook host = manageMonitor (hudMonitor host) <+> composeOne
   [ hasRole "GtkFileChooserDialog" -?> doRectFloat $ hideScreenBorder host dropDown
   , isParaviewDialog               -?> doRectFloat $ hideScreenBorder host dropDown
   , isTelegramMediaViewer          -?> doFullFloat
@@ -210,7 +220,7 @@ main = do
     , handleEventHook     = customEventHook
     , manageHook          = customManageHook host
     , logHook             = customLogHook
-    , layoutHook          = availableLayouts }
+    , layoutHook          = customLayoutHook host }
     `additionalKeys`
     [ ((noModMask, xK_Menu) , namedScratchpadAction (scratchpads host) "terminal") ]
 
