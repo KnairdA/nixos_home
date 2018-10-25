@@ -19,6 +19,8 @@ import XMonad.Layout.Renamed (Rename(..), renamed)
 import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.Monitor
+import XMonad.Layout.BinarySpacePartition
+import XMonad.Layout.BorderResize
 
 import XMonad.Util.Themes
 import XMonad.Util.NamedScratchpad
@@ -55,7 +57,7 @@ customLayoutHook host = id
   . smartBorders
   . ModifiedLayout (hudMonitor host)
   . mkToggle (single NBFULL)
-  $ tabs ||| tiles ||| two ||| frame
+  $ tabs ||| tiles ||| two ||| frame ||| bsp
   where
     tabs   = name "tabs"  $ tabbed shrinkText customTabTheme
     tiles  = name "tiles" $ id
@@ -68,14 +70,16 @@ customLayoutHook host = id
                           . mkToggle (single REFLECTY)
                           . reflectVert
                           $ OneBig (2/3) (4/5)
+    bsp    = name "bsp"   $ borderResize (emptyBSP)
     delta  = 1/24
     name n = renamed [Replace n]
 
 -- layout names for layout selection dialog
-layoutNames = fromList [ ("Tabs"                    , "tabs")
-                       , ("Multi-column tiles"      , "tiles")
-                       , ("Two columns"             , "two")
-                       , ("One large framed window" , "frame") ]
+layoutNames = fromList [ ("0: Tabbed windows"          , "tabs")
+                       , ("1: Multi-column tiles"      , "tiles")
+                       , ("2: Two column stack"        , "two")
+                       , ("3: One large framed window" , "frame")
+                       , ("4: Binary space partition"  , "bsp") ]
 
 floatRectTop    h = S.RationalRect (1/20) 0      (18/20) h
 floatRectBottom h = S.RationalRect (1/20) (1-h)  (18/20) h
