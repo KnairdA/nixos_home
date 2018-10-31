@@ -11,5 +11,6 @@
   in [
   # only asterix has a 3g modem
     mypkgs.modem-manager-gui
+    pkgs.networkmanager_dmenu
   ];
 }

@@ -117,7 +117,8 @@ hostSpecificKeybindings host = case host of
   "asterix" -> [ ("M-i b" , showNotification "Battery"
                                              "`acpi | cut -c 10-`")
                , ("M-i c" , showNotification "`acpi --thermal | awk '{print $4}'`°C"
-                                             "`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM") ]
+                                             "`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM")
+               , ("M-c n" , spawn "networkmanager_dmenu") ]
   "obelix"  -> [ ("M-i g" , showNotification "GPU"
                                              "`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`") ]
   _         -> [ ]
