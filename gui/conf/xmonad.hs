@@ -182,7 +182,9 @@ commonKeybindings host =
 -- system control
   , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
-  , ("M-c m"         , spawn "amixer sset Master toggle") ]
+  , ("M-c m"         , spawn "amixer sset Master toggle")
+  , ("M-c s"         , spawn "systemctl suspend")
+  , ("M-c h"         , spawn "systemctl hibernate") ]
 
 customKeybindings host = concatMap ($ host) [commonKeybindings, hostSpecificKeybindings]
 
