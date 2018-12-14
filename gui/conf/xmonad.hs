@@ -292,8 +292,10 @@ hideScreenBorder host (S.RationalRect x0 y0 w h) = S.RationalRect (x0-(bw/sw)) (
         sh = screenHeightOn host
 
 screenWidthOn  host = case host of
-  "obelix"  -> 1920
-  "asterix" -> 1366
+  "obelix"   -> 1920
+  "majestix" -> 1680
+  "asterix"  -> 1366
 screenHeightOn host = case host of
-  "obelix"  -> 1200
-  "asterix" -> 768
+  "obelix"   -> 1200
+  "majestix" -> 1050
+  "asterix"  -> 768
