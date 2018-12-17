@@ -57,29 +57,29 @@ customLayoutHook host = id
   . smartBorders
   . ModifiedLayout (hudMonitor host)
   . mkToggle (single NBFULL)
-  $ tabs ||| tiles ||| two ||| frame ||| bsp
+  $ bsp ||| tabs ||| frame ||| tiles ||| two
   where
+    bsp    = name "bsp"   $ borderResize (emptyBSP)
     tabs   = name "tabs"  $ tabbed shrinkText customTabTheme
-    tiles  = name "tiles" $ id
-                          . mkToggle (single REFLECTX)
-                          . mkToggle (single REFLECTY)
-                          $ multiCol [1, 2, 0] 1 delta (1/3)
-    two    = name "two"   $ TwoPane delta (1/2)
     frame  = name "frame" $ id
                           . mkToggle (single REFLECTX)
                           . mkToggle (single REFLECTY)
                           . reflectVert
                           $ OneBig (2/3) (4/5)
-    bsp    = name "bsp"   $ borderResize (emptyBSP)
+    tiles  = name "tiles" $ id
+                          . mkToggle (single REFLECTX)
+                          . mkToggle (single REFLECTY)
+                          $ multiCol [1, 2, 0] 1 delta (1/3)
+    two    = name "two"   $ TwoPane delta (1/2)
     delta  = 1/24
     name n = renamed [Replace n]
 
 -- layout names for layout selection dialog
-layoutNames = fromList [ ("0: Tabbed windows"          , "tabs")
-                       , ("1: Multi-column tiles"      , "tiles")
-                       , ("2: Two column stack"        , "two")
-                       , ("3: One large framed window" , "frame")
-                       , ("4: Binary space partition"  , "bsp") ]
+layoutNames = fromList [ ("0: Binary space partition"  , "bsp")
+                       , ("1: Tabbed windows"          , "tabs")
+                       , ("2: One large framed window" , "frame")
+                       , ("3: Multi-column tiles"      , "tiles")
+                       , ("4: Two column stack"        , "two") ]
 
 floatRectTop    h = S.RationalRect (1/20) 0      (18/20) h
 floatRectBottom h = S.RationalRect (1/20) (1-h)  (18/20) h
