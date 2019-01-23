@@ -36,6 +36,7 @@ import XMonad.Actions.UpdatePointer
 import Data.Maybe
 import Control.Monad (when)
 import Data.Map (Map, fromList, member)
+import Data.List (unionBy)
 
 import System.Exit
 import System.Posix.Unistd
@@ -45,7 +46,7 @@ workspaces = map show [1 .. 9 :: Int]
 
 customTabTheme = (theme xmonadTheme)
   { fontName      = "xft:Iosevka Medium-12"
-  , decoHeight    = 20
+  , decoHeight    = 30
   , activeTextColor     = "#222222"
   , activeColor         = "#909636"
   , inactiveTextColor   = "#999999"
@@ -114,11 +115,11 @@ windowBringerDmenuConfig = def { menuCommand  = "rofi"
                                , menuArgs     = [ "-p", "win", "-dmenu", "-i" ] }
 
 hostSpecificKeybindings host = case host of
-  "asterix" -> [ ("M-i b" , showNotification "Battery"
-                                             "`acpi | cut -c 10-`")
-               , ("M-i c" , showNotification "`acpi --thermal | awk '{print $4}'`°C"
-                                             "`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM")
-               , ("M-c n" , spawn "networkmanager_dmenu") ]
+  "asterix" -> [ ("M-i b"   , showNotification "Battery"
+                                               "`acpi | cut -c 10-`")
+               , ("M-i c"   , showNotification "`acpi --thermal | awk '{print $4}'`°C"
+                                               "`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM")
+               , ("M-c n"   , spawn "networkmanager_dmenu") ]
   "athena"  -> [ ("M-i b" , showNotification "Battery"
                                              "`acpi | cut -c 10-`")
                , ("M-i c" , showNotification "`acpi --thermal | awk '{print $4}'`°C"
@@ -128,7 +129,8 @@ hostSpecificKeybindings host = case host of
                , ("<XF86MonBrightnessDown>" , spawn "xbacklight -dec 5")
                , ("<XF86AudioRaiseVolume>"  , spawn "amixer sset Master 10%+")
                , ("<XF86AudioLowerVolume>"  , spawn "amixer sset Master 10%-")
-               , ("<XF86AudioMute>"         , spawn "amixer sset Master toggle") ]
+               , ("<XF86AudioMute>"         , spawn "amixer sset Master toggle")
+               , ("<Print>"                 , namedScratchpadAction (scratchpads host) "terminal") ]
   "obelix"  -> [ ("M-i g" , showNotification "GPU"
                                              "`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`") ]
   _         -> [ ]
@@ -196,7 +198,9 @@ commonKeybindings host =
   , ("M-c s"         , spawn "systemctl suspend")
   , ("M-c h"         , spawn "systemctl hibernate") ]
 
-customKeybindings host = concatMap ($ host) [commonKeybindings, hostSpecificKeybindings]
+customKeybindings host = unionBy (\(keyA,_) (keyB,_) -> keyA == keyB)
+                                 (hostSpecificKeybindings host)
+                                 (commonKeybindings       host)
 
 customMousebindings (XConfig {XMonad.modMask = modMask}) = fromList
   [ ((modMask .|. shiftMask, button1), \w -> focus w >> mouseMoveWindow w)
