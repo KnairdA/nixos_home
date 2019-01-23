@@ -119,6 +119,16 @@ hostSpecificKeybindings host = case host of
                , ("M-i c" , showNotification "`acpi --thermal | awk '{print $4}'`°C"
                                              "`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM")
                , ("M-c n" , spawn "networkmanager_dmenu") ]
+  "athena"  -> [ ("M-i b" , showNotification "Battery"
+                                             "`acpi | cut -c 10-`")
+               , ("M-i c" , showNotification "`acpi --thermal | awk '{print $4}'`°C"
+                                             "`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM")
+               , ("M-c n" , spawn "networkmanager_dmenu")
+               , ("<XF86MonBrightnessUp>"   , spawn "xbacklight -inc 5")
+               , ("<XF86MonBrightnessDown>" , spawn "xbacklight -dec 5")
+               , ("<XF86AudioRaiseVolume>"  , spawn "amixer sset Master 10%+")
+               , ("<XF86AudioLowerVolume>"  , spawn "amixer sset Master 10%-")
+               , ("<XF86AudioMute>"         , spawn "amixer sset Master toggle") ]
   "obelix"  -> [ ("M-i g" , showNotification "GPU"
                                              "`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`") ]
   _         -> [ ]
@@ -295,7 +305,9 @@ screenWidthOn  host = case host of
   "obelix"   -> 1920
   "majestix" -> 1680
   "asterix"  -> 1366
+  "athena"   -> 2560
 screenHeightOn host = case host of
   "obelix"   -> 1200
   "majestix" -> 1050
   "asterix"  -> 768
+  "athena"   -> 1440
