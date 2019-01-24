@@ -8,7 +8,7 @@
 
   home.packages = with pkgs; [
     acpi
-    xorg.xbacklight 
+    xorg.xbacklight
   ];
 
   xresources.extraConfig = ''
