@@ -1,7 +1,10 @@
 { pkgs, ... }:
 
 {
-  home.packages = [ pkgs.networkmanager_dmenu ];
+  home.packages = with pkgs; [
+    networkmanager_dmenu
+    networkmanagerapplet
+  ];
 
   home.file.".config/networkmanager-dmenu/config.ini".text = ''
     [dmenu]

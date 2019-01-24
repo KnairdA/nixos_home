@@ -3,7 +3,7 @@
 {
   imports = [
     ../gui/default.nix
-    ../gui/networkmanager-dmenu.nix
+    ../gui/networkmanager.nix
   ];
 
   home.packages = with pkgs; [
