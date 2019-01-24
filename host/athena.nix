@@ -3,10 +3,10 @@
 {
   imports = [
     ../gui/default.nix
+    ../gui/networkmanager-dmenu.nix
   ];
 
   home.packages = with pkgs; [
-    networkmanager_dmenu
     acpi
     xorg.xbacklight 
   ];

@@ -4,12 +4,10 @@
   imports = [
     ../gui/default.nix
     ../gui/autorandr.nix
+    ../gui/networkmanager-dmenu.nix
   ];
 
-  home.packages = let
-    mypkgs = import (fetchTarball "https://pkgs.kummerlaender.eu/nixexprs.tar.gz") { };
-  in [
-    pkgs.networkmanager_dmenu
-    pkgs.acpi
+  home.packages = with pkgs; [
+    acpi
   ];
 }
