@@ -6,6 +6,8 @@
     networkmanagerapplet
   ];
 
+  services.network-manager-applet.enable = true;
+
   home.file.".config/networkmanager-dmenu/config.ini".text = ''
     [dmenu]
     dmenu_command  = rofi

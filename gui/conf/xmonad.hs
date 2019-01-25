@@ -4,6 +4,7 @@ import qualified XMonad.StackSet as S
 
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.InsertPosition
 
 import XMonad.Layout.Tabbed
@@ -230,6 +231,7 @@ customLogHook = do
 main = do
   host <- fmap nodeName getSystemID
   xmonad $ ewmh
+         $ docks
          $ def
     { modMask             = mod4Mask -- super key as modifier
     , borderWidth         = 3
