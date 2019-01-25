@@ -145,7 +145,7 @@ commonKeybindings host =
   , ("M-<Space>"     , spawn "rofi -show combi")
   , ("M-<Return>"    , spawn "kitty")
   , ("M-S-<Return>"  , spawn "nvim-qt --no-ext-tabline")
-  , ("<Print>"       , spawn "xfce4-screenshooter")
+  , ("<Print>"       , spawn "flameshot gui")
 -- window management
   , ("M-q"           , windows $ S.shift "NSP")
   , ("M-S-q"         , kill)
