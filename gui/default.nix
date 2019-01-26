@@ -5,6 +5,7 @@
     ./xmonad.nix
     ./kitty.nix
     ./vim.nix
+    ./zathura.nix
   # applications grouped by purpose
     ./apps/file.nix
     ./apps/web.nix
