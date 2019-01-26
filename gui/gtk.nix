@@ -31,6 +31,7 @@ in {
         wm_border_focus   = "909636";
         wm_border_unfocus = "909636";
         gtk3_generate_dark = false;
+        gtk2_hidpi = true;
       };
     };
 
