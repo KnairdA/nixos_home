@@ -37,8 +37,8 @@
       color7     #F2F2F2
       color15    #FFFFFF
 
-      map ctrl+shift+plus  change_font_size all +2.0
-      map ctrl+shift+minus change_font_size all -2.0
+      map ctrl+shift+plus  change_font_size all +1.0
+      map ctrl+shift+minus change_font_size all -1.0
       map ctrl+shift+0     change_font_size all 0
     '';
   };
