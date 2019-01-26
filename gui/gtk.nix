@@ -66,4 +66,9 @@ in {
     enable      = true;
     useGtkTheme = true;
   };
+
+  home.sessionVariables = {
+      GDK_SCALE = "2";
+      GDK_DPI_SCALE = "0.5";
+  };
 }
