@@ -1,8 +1,6 @@
 { pkgs, ... }:
 
 {
-  home.packages = [ pkgs.touchegg ];
-
   home.file.".config/touchegg/touchegg.conf".source = ./conf/touchegg.conf;
 
   systemd.user.services.touchegg = {
