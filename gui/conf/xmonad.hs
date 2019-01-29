@@ -149,13 +149,14 @@ commonKeybindings host =
 -- window management
   , ("M-q"           , windows $ S.shift "NSP")
   , ("M-S-q"         , kill)
+  , ("M-h"           , sendMessage Shrink)
+  , ("M-l"           , sendMessage Expand)
+  , ("M-<Backspace>" , nextMatch History (return True))
+-- window movement
   , ("M-j"           , windows S.focusDown)
   , ("M-k"           , windows S.focusUp)
   , ("M-S-j"         , windows S.swapDown)
   , ("M-S-k"         , windows S.swapUp)
-  , ("M-h"           , sendMessage Shrink)
-  , ("M-l"           , sendMessage Expand)
-  , ("M-<Backspace>" , nextMatch History (return True))
 -- window bringer
   , ("M-a"           , gotoMenuConfig  windowBringerDmenuConfig)
   , ("M-S-a"         , bringMenuConfig windowBringerDmenuConfig)
@@ -167,12 +168,12 @@ commonKeybindings host =
   [ (p ++ [k]        , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']
                                       , (p, f) <- [ ("M-"   , S.view)
                                                   , ("M-S-" , S.shift) ] ] ++
-  [ ("M-s p"         , toggleWS' ["NSP"])
+  [ ("C-<Backspace>" , toggleWS' ["NSP"])
 -- workspace movement
-  , ("M-s j"         , moveTo  Next nonEmptyWS)
-  , ("M-s k"         , moveTo  Prev nonEmptyWS)
-  , ("M-S-s j"       , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
-  , ("M-S-s k"       , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
+  , ("C-j"           , moveTo  Next nonEmptyWS)
+  , ("C-k"           , moveTo  Prev nonEmptyWS)
+  , ("C-S-j"         , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
+  , ("C-S-k"         , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
 -- workspace layout management
   , ("M-v"           , layoutMenu)
   , ("M-s l"         , sendMessage NextLayout)
@@ -234,7 +235,7 @@ main = do
          $ docks
          $ def
     { modMask             = mod4Mask -- super key as modifier
-    , borderWidth         = 3
+    , borderWidth         = 6
     , normalBorderColor   = "#161616"
     , focusedBorderColor  = "#909636"
     , keys                = \c -> mkKeymap c (customKeybindings host)
