@@ -16,6 +16,8 @@
 
   programs.git = {
     enable = true;
+    package = pkgs.gitAndTools.gitFull;
+
     userName  = "Adrian Kummerlaender";
     userEmail = "knairda@t-online.de";
     extraConfig.core.editor = "vim";
