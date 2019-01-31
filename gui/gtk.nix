@@ -31,7 +31,7 @@ in {
         wm_border_focus   = "909636";
         wm_border_unfocus = "909636";
         gtk3_generate_dark = false;
-        gtk2_hidpi = true;
+        gtk2_hidpi = false;
       };
     };
 
@@ -66,10 +66,5 @@ in {
   qt = {
     enable      = true;
     useGtkTheme = true;
-  };
-
-  home.sessionVariables = {
-    GDK_SCALE = "2";
-    GDK_DPI_SCALE = "0.5";
   };
 }

@@ -45,9 +45,9 @@ import System.Posix.Unistd
 workspaces :: [WorkspaceId]
 workspaces = map show [1 .. 9 :: Int]
 
-customTabTheme = (theme xmonadTheme)
+customTabTheme host = (theme xmonadTheme)
   { fontName      = "xft:Iosevka Medium-12"
-  , decoHeight    = 30
+  , decoHeight    = decoHeightOn host
   , activeTextColor     = "#222222"
   , activeColor         = "#909636"
   , inactiveTextColor   = "#999999"
@@ -62,7 +62,7 @@ customLayoutHook host = id
   $ bsp ||| tabs ||| frame ||| tiles ||| two
   where
     bsp    = name "bsp"   $ borderResize (emptyBSP)
-    tabs   = name "tabs"  $ tabbed shrinkText customTabTheme
+    tabs   = name "tabs"  $ tabbed shrinkText (customTabTheme host)
     frame  = name "frame" $ id
                           . mkToggle (single REFLECTX)
                           . mkToggle (single REFLECTY)
@@ -321,3 +321,8 @@ screenHeightOn host = case host of
   "majestix" -> 1050
   "asterix"  -> 768
   "athena"   -> 1440
+decoHeightOn host = case host of
+  "obelix"   -> 20
+  "majestix" -> 20
+  "asterix"  -> 20
+  "athena"   -> 30
