@@ -16,9 +16,8 @@
     Xft.rgba: rgb
   '';
 
-  xsession.pointerCursor.size = 48;
-
   home.file.".config/twmn/twmn.conf".text = ''
+    [gui]
     font_size=24
     height=32
   '';

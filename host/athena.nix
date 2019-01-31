@@ -3,8 +3,8 @@
 {
   imports = [
     ../gui/default.nix
-    ../gui/networkmanager.nix
     ../gui/hidpi.nix
+    ../gui/networkmanager.nix
     ../gui/stalonetray.nix
     ../gui/redshift.nix
     ../gui/touchegg.nix

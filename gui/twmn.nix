@@ -25,8 +25,6 @@
   };
 
   home.file.".config/twmn/twmn.conf".text = ''
-    [main]
-    duration=5000
     [gui]
     always_on_top=true
     background_color=#909737
@@ -40,7 +38,7 @@
     out_animation_duration=500
     position=bottom_right
     screen=0
-    font_size=15
-    height=20
+    [main]
+    duration=5000
   '';
 }
