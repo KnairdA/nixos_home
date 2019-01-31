@@ -238,7 +238,7 @@ main = do
          $ docks
          $ def
     { modMask             = mod4Mask -- super key as modifier
-    , borderWidth         = 6
+    , borderWidth         = borderWidthOn host
     , normalBorderColor   = "#161616"
     , focusedBorderColor  = "#909636"
     , keys                = \c -> mkKeymap c (customKeybindings host)
@@ -321,6 +321,11 @@ screenHeightOn host = case host of
   "majestix" -> 1050
   "asterix"  -> 768
   "athena"   -> 1440
+borderWidthOn host = case host of
+  "obelix"   -> 3
+  "majestix" -> 3
+  "asterix"  -> 3
+  "athena"   -> 6
 decoHeightOn host = case host of
   "obelix"   -> 20
   "majestix" -> 20
