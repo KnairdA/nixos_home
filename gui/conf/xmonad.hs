@@ -4,6 +4,7 @@ import qualified XMonad.StackSet as S
 
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.InsertPosition
 
 import XMonad.Layout.Tabbed
@@ -36,6 +37,7 @@ import XMonad.Actions.UpdatePointer
 import Data.Maybe
 import Control.Monad (when)
 import Data.Map (Map, fromList, member)
+import Data.List (unionBy)
 
 import System.Exit
 import System.Posix.Unistd
@@ -43,9 +45,9 @@ import System.Posix.Unistd
 workspaces :: [WorkspaceId]
 workspaces = map show [1 .. 9 :: Int]
 
-customTabTheme = (theme xmonadTheme)
+customTabTheme host = (theme xmonadTheme)
   { fontName      = "xft:Iosevka Medium-12"
-  , decoHeight    = 20
+  , decoHeight    = decoHeightOn host
   , activeTextColor     = "#222222"
   , activeColor         = "#909636"
   , inactiveTextColor   = "#999999"
@@ -60,7 +62,7 @@ customLayoutHook host = id
   $ bsp ||| tabs ||| frame ||| tiles ||| two
   where
     bsp    = name "bsp"   $ borderResize (emptyBSP)
-    tabs   = name "tabs"  $ tabbed shrinkText customTabTheme
+    tabs   = name "tabs"  $ tabbed shrinkText (customTabTheme host)
     frame  = name "frame" $ id
                           . mkToggle (single REFLECTX)
                           . mkToggle (single REFLECTY)
@@ -100,6 +102,8 @@ scratchpads host =
        (customFloating $ hideScreenBorder host dropDownLarge)
   , NS "documentation" "zeal"                                                  (className =? "Zeal")
        (customFloating $ hideScreenBorder host dropDown)
+  , NS "thesaurus"     "artha"                                                 (className =? "Artha")
+       (customFloating $ hideScreenBorder host sideBarLeft)
   , NS "messaging"     "telegram-desktop"                                      ((className =? "TelegramDesktop") <&&> (title /=? "Media viewer"))
        (customFloating $ hideScreenBorder host sideBarRight) ]
 
@@ -114,11 +118,11 @@ windowBringerDmenuConfig = def { menuCommand  = "rofi"
                                , menuArgs     = [ "-p", "win", "-dmenu", "-i" ] }
 
 hostSpecificKeybindings host = case host of
-  "asterix" -> [ ("M-i b" , showNotification "Battery"
-                                             "`acpi | cut -c 10-`")
-               , ("M-i c" , showNotification "`acpi --thermal | awk '{print $4}'`°C"
-                                             "`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM")
-               , ("M-c n" , spawn "networkmanager_dmenu") ]
+  "asterix" -> [ ("M-i b"   , showNotification "Battery"
+                                               "`acpi | cut -c 10-`")
+               , ("M-i c"   , showNotification "`acpi --thermal | awk '{print $4}'`°C"
+                                               "`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM")
+               , ("M-c n"   , spawn "networkmanager_dmenu") ]
   "athena"  -> [ ("M-i b" , showNotification "Battery"
                                              "`acpi | cut -c 10-`")
                , ("M-i c" , showNotification "`acpi --thermal | awk '{print $4}'`°C"
@@ -128,7 +132,8 @@ hostSpecificKeybindings host = case host of
                , ("<XF86MonBrightnessDown>" , spawn "xbacklight -dec 5")
                , ("<XF86AudioRaiseVolume>"  , spawn "amixer sset Master 10%+")
                , ("<XF86AudioLowerVolume>"  , spawn "amixer sset Master 10%-")
-               , ("<XF86AudioMute>"         , spawn "amixer sset Master toggle") ]
+               , ("<XF86AudioMute>"         , spawn "amixer sset Master toggle")
+               , ("<Print>"                 , namedScratchpadAction (scratchpads host) "terminal") ]
   "obelix"  -> [ ("M-i g" , showNotification "GPU"
                                              "`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`") ]
   _         -> [ ]
@@ -142,34 +147,36 @@ commonKeybindings host =
   , ("M-<Space>"     , spawn "rofi -show combi")
   , ("M-<Return>"    , spawn "kitty")
   , ("M-S-<Return>"  , spawn "nvim-qt --no-ext-tabline")
-  , ("<Print>"       , spawn "xfce4-screenshooter")
+  , ("<Print>"       , spawn "flameshot gui")
 -- window management
   , ("M-q"           , windows $ S.shift "NSP")
   , ("M-S-q"         , kill)
+  , ("M-h"           , sendMessage Shrink)
+  , ("M-l"           , sendMessage Expand)
+  , ("M-<Backspace>" , nextMatch History (return True))
+-- window movement
   , ("M-j"           , windows S.focusDown)
   , ("M-k"           , windows S.focusUp)
   , ("M-S-j"         , windows S.swapDown)
   , ("M-S-k"         , windows S.swapUp)
-  , ("M-h"           , sendMessage Shrink)
-  , ("M-l"           , sendMessage Expand)
-  , ("M-<Backspace>" , nextMatch History (return True))
 -- window bringer
   , ("M-a"           , gotoMenuConfig  windowBringerDmenuConfig)
   , ("M-S-a"         , bringMenuConfig windowBringerDmenuConfig)
 -- scratchpads
   , ("M-b"           , namedScratchpadAction (scratchpads host) "browser")
   , ("M-d"           , namedScratchpadAction (scratchpads host) "documentation")
+  , ("M-t"           , namedScratchpadAction (scratchpads host) "thesaurus")
   , ("M-m"           , namedScratchpadAction (scratchpads host) "messaging") ] ++
 -- workspace selection
   [ (p ++ [k]        , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']
                                       , (p, f) <- [ ("M-"   , S.view)
                                                   , ("M-S-" , S.shift) ] ] ++
-  [ ("M-s p"         , toggleWS' ["NSP"])
+  [ ("C-<Backspace>" , toggleWS' ["NSP"])
 -- workspace movement
-  , ("M-s j"         , moveTo  Next nonEmptyWS)
-  , ("M-s k"         , moveTo  Prev nonEmptyWS)
-  , ("M-S-s j"       , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
-  , ("M-S-s k"       , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
+  , ("C-j"           , moveTo  Next nonEmptyWS)
+  , ("C-k"           , moveTo  Prev nonEmptyWS)
+  , ("C-S-j"         , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
+  , ("C-S-k"         , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
 -- workspace layout management
   , ("M-v"           , layoutMenu)
   , ("M-s l"         , sendMessage NextLayout)
@@ -196,7 +203,9 @@ commonKeybindings host =
   , ("M-c s"         , spawn "systemctl suspend")
   , ("M-c h"         , spawn "systemctl hibernate") ]
 
-customKeybindings host = concatMap ($ host) [commonKeybindings, hostSpecificKeybindings]
+customKeybindings host = unionBy (\(keyA,_) (keyB,_) -> keyA == keyB)
+                                 (hostSpecificKeybindings host)
+                                 (commonKeybindings       host)
 
 customMousebindings (XConfig {XMonad.modMask = modMask}) = fromList
   [ ((modMask .|. shiftMask, button1), \w -> focus w >> mouseMoveWindow w)
@@ -226,9 +235,10 @@ customLogHook = do
 main = do
   host <- fmap nodeName getSystemID
   xmonad $ ewmh
+         $ docks
          $ def
     { modMask             = mod4Mask -- super key as modifier
-    , borderWidth         = 3
+    , borderWidth         = borderWidthOn host
     , normalBorderColor   = "#161616"
     , focusedBorderColor  = "#909636"
     , keys                = \c -> mkKeymap c (customKeybindings host)
@@ -311,3 +321,13 @@ screenHeightOn host = case host of
   "majestix" -> 1050
   "asterix"  -> 768
   "athena"   -> 1440
+borderWidthOn host = case host of
+  "obelix"   -> 3
+  "majestix" -> 3
+  "asterix"  -> 3
+  "athena"   -> 6
+decoHeightOn host = case host of
+  "obelix"   -> 20
+  "majestix" -> 20
+  "asterix"  -> 20
+  "athena"   -> 30

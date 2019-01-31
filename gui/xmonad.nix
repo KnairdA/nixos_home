@@ -13,7 +13,6 @@
     pointerCursor = {
       package = pkgs.vanilla-dmz;
       name    = "Vanilla-DMZ-AA";
-      size    = 16;
     };
 
     windowManager.xmonad = {
@@ -26,8 +25,6 @@
   home.packages = with pkgs; [
   # lockscreen
     i3lock
-  # screenshooter
-    xfce4-12.xfce4-screenshooter
   ];
 
   services.screen-locker = {
@@ -38,4 +35,6 @@
   programs.fish.shellAliases = {
     mph = "mpv --title hud";
   };
+
+  services.flameshot.enable = true;
 }

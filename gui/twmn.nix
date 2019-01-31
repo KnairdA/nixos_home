@@ -30,9 +30,7 @@
     background_color=#909737
     bounce=true
     font=Iosevka
-    font_size=15
     foreground_color=#111111
-    height=20
     in_animation=6
     in_animation_duration=500
     opacity=100
