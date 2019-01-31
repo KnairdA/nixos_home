@@ -13,7 +13,7 @@
     pointerCursor = {
       package = pkgs.vanilla-dmz;
       name    = "Vanilla-DMZ-AA";
-      size    = 48;
+      size    = 16;
     };
 
     windowManager.xmonad = {
