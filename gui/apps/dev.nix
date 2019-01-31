@@ -9,6 +9,8 @@
       qcachegrind
       gitg
       paraview
+    # language utilities
+      artha
     ];
   };
 }
