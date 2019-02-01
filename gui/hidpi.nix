@@ -1,11 +1,6 @@
 { pkgs, ... }:
 
 {
-  home.sessionVariables = {
-    GDK_SCALE = "2";
-    GDK_DPI_SCALE = "0.5";
-  };
-
   xresources.extraConfig = ''
     Xft.dpi: 160
     Xft.autohint: 0
@@ -15,6 +10,8 @@
     Xft.antialias: 1
     Xft.rgba: rgb
   '';
+
+  xsession.pointerCursor.size = 48;
 
   home.file.".config/twmn/twmn.conf".text = ''
     [gui]
