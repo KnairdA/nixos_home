@@ -3,6 +3,7 @@
 {
   imports = [
     ../gui/default.nix
-    ../gui/lowdpi.nix
   ];
+
+  custom.hidpi = false;
 }

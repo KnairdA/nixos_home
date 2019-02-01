@@ -1,6 +1,7 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
+  hidpi = config.custom.hidpi;
   mypkgs = import (fetchTarball "https://pkgs.kummerlaender.eu/nixexprs.tar.gz") { };
 in {
   gtk = {
@@ -27,7 +28,7 @@ in {
         txt_fg     = "101010";
         gradient   = 0.0;
         roundness  = 0;
-        spacing    = 5;
+        spacing    = if hidpi then 5 else 1;
         wm_border_focus   = "909636";
         wm_border_unfocus = "909636";
         gtk3_generate_dark = false;

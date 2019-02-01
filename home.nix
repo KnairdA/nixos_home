@@ -7,6 +7,7 @@
   };
 
   imports = [
+    ./custom.nix
     ./host/current.nix
   ];
 

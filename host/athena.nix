@@ -3,7 +3,6 @@
 {
   imports = [
     ../gui/default.nix
-    ../gui/hidpi.nix
     ../gui/networkmanager.nix
     ../gui/stalonetray.nix
     ../gui/redshift.nix
@@ -14,4 +13,6 @@
     acpi
     xorg.xbacklight
   ];
+
+  custom.hidpi = true;
 }

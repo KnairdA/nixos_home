@@ -1,6 +1,9 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
-{
+let
+  hidpi = config.custom.hidpi;
+
+in {
   imports = [
     ./gtk.nix
     ./rofi.nix
@@ -13,6 +16,7 @@
     pointerCursor = {
       package = pkgs.vanilla-dmz;
       name    = "Vanilla-DMZ-AA";
+      size    = if hidpi then 48 else 16;
     };
 
     windowManager.xmonad = {

@@ -1,6 +1,9 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
-{
+let
+  hidpi = config.custom.hidpi;
+
+in {
   home.packages = with pkgs; [
     twmn
     libnotify
@@ -30,6 +33,8 @@
     background_color=#909737
     bounce=true
     font=Iosevka
+    font_size=${if hidpi then "24" else "14"}
+    height=${if hidpi then "32" else "20"}
     foreground_color=#111111
     in_animation=6
     in_animation_duration=500

@@ -1,6 +1,11 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
-{
+let
+  hidpiExtraConfig = if config.custom.hidpi then ''
+    rofi.dpi: 160
+  '' else "";
+
+in {
   programs.rofi = {
     enable = true;
     location = "top";
@@ -52,6 +57,7 @@
       rofi.combi-modi: windowcd,drun,ssh
       rofi.terminal: kitty
       rofi.ssh-command: {terminal} {ssh-client} {host}
+      ${hidpiExtraConfig}
     '';
   };
 }
