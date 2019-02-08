@@ -42,4 +42,8 @@
       map ctrl+shift+0     change_font_size all 0
     '';
   };
+
+  programs.fish.shellAliases = {
+    icat = "kitty +kitten icat";
+  };
 }
