@@ -173,10 +173,10 @@ commonKeybindings host =
                                                   , ("M-S-" , S.shift) ] ] ++
   [ ("C-<Backspace>" , toggleWS' ["NSP"])
 -- workspace movement
-  , ("C-j"           , moveTo  Next nonEmptyWS)
-  , ("C-k"           , moveTo  Prev nonEmptyWS)
-  , ("C-S-j"         , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
-  , ("C-S-k"         , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
+  , ("M-s j"           , moveTo  Next nonEmptyWS)
+  , ("M-s k"           , moveTo  Prev nonEmptyWS)
+  , ("M-S-s j"         , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
+  , ("N-S-s k"         , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
 -- workspace layout management
   , ("M-v"           , layoutMenu)
   , ("M-s l"         , sendMessage NextLayout)
