@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  home.file.".config/touchegg/touchegg.conf".lines = let
+  home.file.".config/touchegg/touchegg.conf".text = let
     uictrl = pkgs.lib.callPackageWith pkgs ./pkgs/uictrl.nix { };
   in ''
     <touchégg>
