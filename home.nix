@@ -20,7 +20,7 @@
     package = pkgs.gitAndTools.gitFull;
 
     userName  = "Adrian Kummerlaender";
-    userEmail = "knairda@t-online.de";
+    userEmail = "adrian@kummerlaender.eu";
     extraConfig.core.editor = "vim";
   };
 
