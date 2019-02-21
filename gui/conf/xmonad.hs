@@ -145,6 +145,7 @@ commonKeybindings host =
   , ("C-M1-l"           , spawn "i3lock -c 000000")
 -- application launchers
   , ("M-<Space>"     , spawn "rofi -show combi")
+  , ("C-<Space>"     , spawn "tasker")
   , ("M-<Return>"    , spawn "kitty")
   , ("M-S-<Return>"  , spawn "nvim-qt --no-ext-tabline")
   , ("<Print>"       , spawn "flameshot gui")

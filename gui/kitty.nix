@@ -5,6 +5,8 @@
     packages = [ pkgs.kitty ];
 
     file.".config/kitty/kitty.conf".text = ''
+      allow_remote_control yes
+
       font_family Iosevka
       font_size   9
       font_size_delta 1

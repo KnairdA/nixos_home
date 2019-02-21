@@ -26,9 +26,13 @@ in {
     };
   };
 
-  home.packages = with pkgs; [
+  home.packages = let
+    tasker = pkgs.lib.callPackageWith pkgs ./pkgs/tasker.nix { };
+  in with pkgs; [
   # lockscreen
     i3lock
+  # task launcher
+    tasker
   ];
 
   services.screen-locker = {
