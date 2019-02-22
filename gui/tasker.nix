@@ -20,6 +20,18 @@ let
       terminal = false;
       command = "evince build/main.pdf";
     };
+    "olb_edit" = {
+      description = "OpenLB editor";
+      directory = "~/projects/contrib/openlb";
+      terminal = false;
+      command = "nix-shell --run 'nvim-qt --no-ext-tabline'";
+    };
+    "olb_shell" = {
+      description = "OpenLB shell";
+      directory = "~/projects/contrib/openlb";
+      terminal = true;
+      command = "nix-shell --command fish";
+    };
   };
 in {
   home.packages = pkgs.callPackage ./pkgs/tasker.nix { inherit pkgs; inherit tasks; };
