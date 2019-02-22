@@ -9,14 +9,13 @@ in {
     ./kitty.nix
     ./vim.nix
     ./zathura.nix
-  # desktop shortcuts for project specific tasks
-    ./tasker.nix
   # applications grouped by purpose
     ./apps/file.nix
     ./apps/web.nix
     ./apps/dev.nix
   ];
 
+# hidpi specific xorg flags
   xresources.extraConfig = pkgs.lib.mkIf hidpi ''
     Xft.dpi: 160
     Xft.autohint: 0
@@ -26,4 +25,10 @@ in {
     Xft.antialias: 1
     Xft.rgba: rgb
   '';
+
+# desktop shortcuts for project specific tasks
+  home.packages = pkgs.callPackage ./pkgs/tasker.nix {
+    inherit pkgs;
+    tasks = config.custom.tasks;
+  };
 }

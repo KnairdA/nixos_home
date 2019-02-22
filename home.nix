@@ -7,8 +7,12 @@
   };
 
   imports = [
+  # define options custom to this config
     ./custom.nix
+  # load host specific stuff
     ./host/current.nix
+  # task shortcuts common to all setups
+    ./tasks/default.nix
   ];
 
   home = {

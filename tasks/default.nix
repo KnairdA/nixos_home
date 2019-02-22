@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ ... }:
 
-let
-  tasks = {
+{
+  custom.tasks = {
     "bsc_edit" = {
       description = "Grid refinement BSc thesis editor";
       directory = "~/university/documents/bachelor/arbeit";
@@ -33,6 +33,4 @@ let
       command = "nix-shell --command fish";
     };
   };
-in {
-  home.packages = pkgs.callPackage ./pkgs/tasker.nix { inherit pkgs; inherit tasks; };
 }
