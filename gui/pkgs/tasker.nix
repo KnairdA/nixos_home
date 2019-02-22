@@ -5,10 +5,13 @@ pkgs.lib.mapAttrsToList (name: value: let
     name        = "tasker_cmd_" + name;
     executable  = true;
     destination = "/bin/tasker_cmd_" + name;
-    text = ''
+    text = if value.terminal then ''
       #!/bin/sh
-      pushd ${toString value.directory}
-        exec ${toString value.command}
+      exec ${pkgs.kitty}/bin/kitty -d ${value.directory} ${value.command}
+    '' else ''
+      #!/bin/sh
+      pushd ${value.directory}
+        exec ${value.command}
       popd
     '';
   };
@@ -19,8 +22,8 @@ pkgs.lib.mapAttrsToList (name: value: let
     text = ''
       [Desktop Entry]
       Type=Application
-      Name=${toString value.description}
-      Exec=${command}/bin/tasker_cmd_${toString name}
+      Name=${value.description}
+      Exec=${command}/bin/tasker_cmd_${name}
       Terminal=false
     '';
   };
