@@ -23,6 +23,7 @@ pkgs.lib.mapAttrsToList (name: value: let
       [Desktop Entry]
       Type=Application
       Name=${value.description}
+      GenericName=Tasker
       Exec=${command}/bin/tasker_cmd_${name}
       Terminal=false
     '';
