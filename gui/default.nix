@@ -9,6 +9,8 @@ in {
     ./kitty.nix
     ./vim.nix
     ./zathura.nix
+  # desktop shortcuts for project specific tasks
+    ./tasker.nix
   # applications grouped by purpose
     ./apps/file.nix
     ./apps/web.nix
