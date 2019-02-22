@@ -14,7 +14,5 @@ let
     };
   };
 in {
-  home.packages = let
-    task_derivations = pkgs.callPackage ./pkgs/tasker.nix { inherit pkgs; inherit tasks; };
-  in task_derivations;
+  home.packages = pkgs.callPackage ./pkgs/tasker.nix { inherit pkgs; inherit tasks; };
 }
