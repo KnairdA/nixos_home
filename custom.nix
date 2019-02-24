@@ -21,11 +21,14 @@ in {
             default = "~/";
           };
           type = mkOption {
-            type = types.enum [ "launcher" "terminal" ];
+            type = types.enum [ "launcher" "terminal" "environment" ];
             default = "launcher";
           };
           command = mkOption {
             type = types.str;
+          };
+          environment = mkOption {
+            type = types.package;
           };
         };
       });

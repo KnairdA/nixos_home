@@ -6,15 +6,20 @@ pkgs.lib.mapAttrsToList (name: conf: let
     executable  = true;
     destination = "/bin/tasker_cmd_" + name;
     text = pkgs.lib.attrByPath [ conf.type ] "" {
-      terminal = ''
-        #!/bin/sh
-        exec ${pkgs.kitty}/bin/kitty -d ${conf.directory} ${conf.command}
-      '';
       launcher = ''
         #!/bin/sh
         pushd ${conf.directory}
           exec ${conf.command}
         popd
+      '';
+      terminal = ''
+        #!/bin/sh
+        exec ${pkgs.kitty}/bin/kitty -d ${conf.directory} ${conf.command}
+      '';
+      environment = ''
+        #!/bin/sh
+        exec ${pkgs.kitty}/bin/kitty -d ${conf.directory} nix-shell \
+             ${builtins.unsafeDiscardStringContext conf.environment.drvPath} --command fish
       '';
     };
   };

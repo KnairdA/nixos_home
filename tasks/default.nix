@@ -1,6 +1,15 @@
-{ pkgs ? import <nixpkgs> { }, ... }:
+{ pkgs, ... }:
 
-{
+let
+  mkShellDerivation = n: ps: pkgs.stdenvNoCC.mkDerivation rec {
+    name = n;
+    buildInputs = ps;
+    shellHook = ''
+      export NIX_SHELL_NAME="${name}"
+    '';
+  };
+
+in {
   custom.tasks = {
     bsc_edit = {
       description = "Grid refinement BSc thesis editor";
@@ -28,6 +37,16 @@
       type = "terminal";
       directory = "~/projects/contrib/openlb";
       command = "nix-shell --command fish";
+    };
+    cpp_shell = {
+      description = "Generic C++ shell environment";
+      type = "environment";
+      directory = "~/";
+      environment = mkShellDerivation "cpp-env" (with pkgs; [
+        cmake
+        gcc8
+        gdb cgdb
+      ]);
     };
   };
 }

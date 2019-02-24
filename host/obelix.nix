@@ -10,8 +10,8 @@
   custom.tasks = {
     "compustream_shell" = {
       description = "compustream dev shell";
+      type = "terminal";
       directory = "~/projects/dev/compustream";
-      terminal = true;
       command = "nix-shell --command fish";
     };
   };
