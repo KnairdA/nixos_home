@@ -25,10 +25,4 @@ in {
     Xft.antialias: 1
     Xft.rgba: rgb
   '';
-
-# desktop shortcuts for project specific tasks
-  home.packages = pkgs.callPackage ./pkgs/tasker.nix {
-    inherit pkgs;
-    tasks = config.custom.tasks;
-  };
 }

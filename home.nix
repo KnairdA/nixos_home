@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   programs.home-manager = {
@@ -11,7 +11,8 @@
     ./custom.nix
   # load host specific stuff
     ./host/current.nix
-  # task shortcuts common to all setups
+  # task shortcuts
+    ./module/tasker.nix 
     ./tasks/default.nix
   ];
 
