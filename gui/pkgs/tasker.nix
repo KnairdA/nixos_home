@@ -1,6 +1,7 @@
 { pkgs, tasks, ... }:
 
 pkgs.lib.mapAttrsToList (name: conf: let
+
   command = pkgs.writeTextFile {
     name        = "tasker_cmd_" + name;
     executable  = true;
@@ -16,6 +17,16 @@ pkgs.lib.mapAttrsToList (name: conf: let
         #!/bin/sh
         exec ${pkgs.kitty}/bin/kitty -d ${conf.directory} ${conf.command}
       '';
+      local-shell = ''
+        #!/bin/sh
+        exec ${pkgs.kitty}/bin/kitty -d ${conf.directory} nix-shell --command fish
+      '';
+      local-editor = ''
+        #!/bin/sh
+        pushd ${conf.directory}
+          exec nix-shell --run 'nvim-qt --no-ext-tabline'
+        popd
+      '';
       environment = ''
         #!/bin/sh
         exec ${pkgs.kitty}/bin/kitty -d ${conf.directory} nix-shell \
@@ -23,6 +34,7 @@ pkgs.lib.mapAttrsToList (name: conf: let
       '';
     };
   };
+
   shortcut = pkgs.writeTextFile {
     name        = "tasker_shortcut_" + name;
     executable  = false;
@@ -36,6 +48,7 @@ pkgs.lib.mapAttrsToList (name: conf: let
       Terminal=false
     '';
   };
+
 in pkgs.symlinkJoin {
   name = "tasker_task_" + name;
   paths = [ shortcut ];

@@ -21,7 +21,7 @@ in {
             default = "~/";
           };
           type = mkOption {
-            type = types.enum [ "launcher" "terminal" "environment" ];
+            type = types.enum [ "launcher" "terminal" "local-shell" "local-editor" "environment" ];
             default = "launcher";
           };
           command = mkOption {
