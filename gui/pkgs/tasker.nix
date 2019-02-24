@@ -1,19 +1,22 @@
 { pkgs, tasks, ... }:
 
-pkgs.lib.mapAttrsToList (name: value: let
+pkgs.lib.mapAttrsToList (name: conf: let
   command = pkgs.writeTextFile {
     name        = "tasker_cmd_" + name;
     executable  = true;
     destination = "/bin/tasker_cmd_" + name;
-    text = if value.terminal then ''
-      #!/bin/sh
-      exec ${pkgs.kitty}/bin/kitty -d ${value.directory} ${value.command}
-    '' else ''
-      #!/bin/sh
-      pushd ${value.directory}
-        exec ${value.command}
-      popd
-    '';
+    text = pkgs.lib.attrByPath [ conf.type ] "" {
+      terminal = ''
+        #!/bin/sh
+        exec ${pkgs.kitty}/bin/kitty -d ${conf.directory} ${conf.command}
+      '';
+      launcher = ''
+        #!/bin/sh
+        pushd ${conf.directory}
+          exec ${conf.command}
+        popd
+      '';
+    };
   };
   shortcut = pkgs.writeTextFile {
     name        = "tasker_shortcut_" + name;
@@ -22,7 +25,7 @@ pkgs.lib.mapAttrsToList (name: value: let
     text = ''
       [Desktop Entry]
       Type=Application
-      Name=${value.description}
+      Name=${conf.description}
       GenericName=Tasker
       Exec=${command}/bin/tasker_cmd_${name}
       Terminal=false
