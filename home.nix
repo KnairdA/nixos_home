@@ -1,11 +1,6 @@
 { pkgs, config, ... }:
 
 {
-  programs.home-manager = {
-    enable = true;
-    path = ''https://github.com/rycee/home-manager/archive/master.tar.gz'';
-  };
-
   imports = [
   # define options custom to this config
     ./custom.nix
