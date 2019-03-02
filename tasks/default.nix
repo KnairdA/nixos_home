@@ -51,5 +51,18 @@ in {
         gdb cgdb
       ]);
     };
+
+    latex_shell = {
+      description = "Generic LaTeX shell environment";
+      directory = "~/";
+      type = "environment";
+      environment = with pkgs; let
+        texlive-custom = texlive.combine {
+          inherit (texlive) scheme-small collection-langgerman latexmk amsmath enumitem;
+        };
+      in mkShellDerivation "latex-env" [
+        texlive-custom
+      ];
+    };
   };
 }
