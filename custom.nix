@@ -33,5 +33,9 @@ in {
         };
       });
     };
+
+    pkgs = mkOption {
+      type = types.attrs;
+    };
   };
 }

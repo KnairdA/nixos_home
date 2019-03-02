@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   home = {
@@ -11,7 +11,7 @@
 
     # nvim-qt using vim configuration
     packages = let
-      nvim-gui = import ./pkgs/nvim-gui.nix pkgs;
+      nvim-gui = import ./pkgs/nvim-gui.nix { inherit pkgs config; };
     in [
       nvim-gui
       pkgs.xclip # required to access clipboard in nvim-gui

@@ -2,14 +2,13 @@
 
 let
   hidpi = config.custom.hidpi;
-  mypkgs = import (fetchTarball "https://pkgs.kummerlaender.eu/nixexprs.tar.gz") { };
 in {
   gtk = {
     enable = true;
 
     theme = {
       name = "oomox";
-      package = mypkgs.oomox-gtk-theme {
+      package = config.custom.pkgs.oomox-gtk-theme {
         accent_bg  = "aadb0f";
         bg         = "d8d8d8";
         fg         = "101010";
@@ -38,7 +37,7 @@ in {
 
     iconTheme = {
       name    = "oomox-archdroid";
-      package = mypkgs.oomox-archdroid-icon-theme "909636";
+      package = config.custom.pkgs.oomox-archdroid-icon-theme "909636";
     };
 
     font = {

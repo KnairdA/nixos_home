@@ -1,6 +1,8 @@
-{ pkgs, config, ... }:
+{ config, pkgs, ... }:
 
 {
+  custom.pkgs = import <mypkgs> { };
+
   imports = [
   # define options custom to this config
     ./custom.nix
