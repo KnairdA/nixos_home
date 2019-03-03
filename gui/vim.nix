@@ -9,11 +9,13 @@
     in [
       neovim-qt
       pkgs.xclip # required to access clipboard in nvim-gui
+      pkgs.fzf   # required for all kinds of narrow-down-completion
     ];
 
     file.".config/nvim/ginit.vim".text = ''
       set title
       Guifont! Iosevka:h10
+      set guifont=Iosevka:h10
 
       autocmd FocusGained * :checktime
     '';
