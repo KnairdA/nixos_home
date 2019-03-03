@@ -2,18 +2,12 @@
 
 {
   home = {
-    # vim is configured globally for all users but common is the only GUI user
-    file.".gvimrc".text = ''
-      set guifont=Iosevka\ 10
-      set linespace=2
-      set guioptions=agi
-    '';
-
-    # nvim-qt using vim configuration
     packages = let
-      nvim-gui = import ./pkgs/nvim-gui.nix { inherit pkgs config; };
+      neovim-qt = pkgs.neovim-qt.override {
+        neovim = config.custom.pkgs.custom-neovim;
+      };
     in [
-      nvim-gui
+      neovim-qt
       pkgs.xclip # required to access clipboard in nvim-gui
     ];
 
@@ -22,14 +16,6 @@
       Guifont! Iosevka:h10
 
       autocmd FocusGained * :checktime
-    '';
-  };
-
-  gtk = {
-    gtk3.extraCss = ''
-      window#vim-main-window {
-          background-color: #161616;
-      }
     '';
   };
 

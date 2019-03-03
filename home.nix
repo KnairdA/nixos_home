@@ -1,7 +1,9 @@
 { config, pkgs, ... }:
 
 {
-  custom.pkgs = import <mypkgs> { };
+  custom.pkgs = import <mypkgs> {
+    pkgs = import <nixpkgs-unstable> { };
+  };
 
   imports = [
   # define options custom to this config
