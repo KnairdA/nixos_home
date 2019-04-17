@@ -7,12 +7,9 @@ let
         WIN_WIDTH  = 800,
         WIN_HEIGHT = 600
       };
-      static const char * const WIN_BG_COLOR = "${win_bg}";
-      static const char * const BAR_FONT = "${bar_font_name}:size=${bar_font_size}";
-      static const char * const WIN_FS_COLOR = "${win_fs}";
-      static const char * const SEL_COLOR    = "${sel}";
-      static const char * const BAR_BG_COLOR = "${bar_bg}";
-      static const char * const BAR_FG_COLOR = "${bar_fg}";
+      static const char * const BAR_FONT = "${font_name}:size=${font_size}";
+      static const char * const BG_COLOR = "${bg}";
+      static const char * const FG_COLOR = "${fg}";
     #endif
     #ifdef _IMAGE_CONFIG
       static const float zoom_levels[] = {
@@ -20,10 +17,10 @@ let
         100.0, 150.0, 200.0, 400.0, 800.0
       };
       enum { SLIDESHOW_DELAY = 5 };
-      static const double GAMMA_MAX = 10.0;
-      static const int GAMMA_RANGE  = 32;
+      static const double GAMMA_MAX   = 10.0;
+      static const int    GAMMA_RANGE = 32;
       static const int PAN_FRACTION = 5;
-      static const bool ANTI_ALIAS  = false;
+      static const bool ANTI_ALIAS = true;
       static const bool ALPHA_LAYER = true;
     #endif
     #ifdef _THUMBS_CONFIG
@@ -32,20 +29,38 @@ let
     #endif
     #ifdef _MAPPINGS_CONFIG
       static const keymap_t keys[] = {
+        /* modifiers    key               function              argument */
         { 0,            XK_q,             g_quit,               None },
         { 0,            XK_Return,        g_switch_mode,        None },
         { 0,            XK_f,             g_toggle_fullscreen,  None },
         { 0,            XK_b,             g_toggle_bar,         None },
+        { ControlMask,  XK_x,             g_prefix_external,    None },
         { 0,            XK_g,             g_first,              None },
         { 0,            XK_G,             g_n_or_last,          None },
         { 0,            XK_r,             g_reload_image,       None },
+        { 0,            XK_D,             g_remove_image,       None },
+        { ControlMask,  XK_h,             g_scroll_screen,      DIR_LEFT },
+        { ControlMask,  XK_Left,          g_scroll_screen,      DIR_LEFT },
+        { ControlMask,  XK_j,             g_scroll_screen,      DIR_DOWN },
+        { ControlMask,  XK_Down,          g_scroll_screen,      DIR_DOWN },
+        { ControlMask,  XK_k,             g_scroll_screen,      DIR_UP },
+        { ControlMask,  XK_Up,            g_scroll_screen,      DIR_UP },
+        { ControlMask,  XK_l,             g_scroll_screen,      DIR_RIGHT },
+        { ControlMask,  XK_Right,         g_scroll_screen,      DIR_RIGHT },
         { 0,            XK_plus,          g_zoom,               +1 },
+        { 0,            XK_KP_Add,        g_zoom,               +1 },
         { 0,            XK_minus,         g_zoom,               -1 },
+        { 0,            XK_KP_Subtract,   g_zoom,               -1 },
         { 0,            XK_m,             g_toggle_image_mark,  None },
-        { 0,            XK_M,             g_reverse_marks,      None },
-        { ControlMask,  XK_m,             g_unmark_all,         None },
+        { 0,            XK_M,             g_mark_range,         None },
+        { ControlMask,  XK_m,             g_reverse_marks,      None },
+        { ControlMask,  XK_u,             g_unmark_all,         None },
         { 0,            XK_N,             g_navigate_marked,    +1 },
         { 0,            XK_P,             g_navigate_marked,    -1 },
+        { 0,            XK_braceleft,     g_change_gamma,       -1 },
+        { 0,            XK_braceright,    g_change_gamma,       +1 },
+        { ControlMask,  XK_g,             g_change_gamma,        0 },
+
         { 0,            XK_h,             t_move_sel,           DIR_LEFT },
         { 0,            XK_Left,          t_move_sel,           DIR_LEFT },
         { 0,            XK_j,             t_move_sel,           DIR_DOWN },
@@ -55,12 +70,19 @@ let
         { 0,            XK_l,             t_move_sel,           DIR_RIGHT },
         { 0,            XK_Right,         t_move_sel,           DIR_RIGHT },
         { 0,            XK_R,             t_reload_all,         None },
+
         { 0,            XK_n,             i_navigate,           +1 },
         { 0,            XK_n,             i_scroll_to_edge,     DIR_LEFT | DIR_UP },
         { 0,            XK_space,         i_navigate,           +1 },
         { 0,            XK_p,             i_navigate,           -1 },
         { 0,            XK_p,             i_scroll_to_edge,     DIR_LEFT | DIR_UP },
         { 0,            XK_BackSpace,     i_navigate,           -1 },
+        { 0,            XK_bracketright,  i_navigate,           +10 },
+        { 0,            XK_bracketleft,   i_navigate,           -10 },
+        { ControlMask,  XK_6,             i_alternate,          None },
+        { ControlMask,  XK_n,             i_navigate_frame,     +1 },
+        { ControlMask,  XK_p,             i_navigate_frame,     -1 },
+        { ControlMask,  XK_space,         i_toggle_animation,   None },
         { 0,            XK_h,             i_scroll,             DIR_LEFT },
         { 0,            XK_Left,          i_scroll,             DIR_LEFT },
         { 0,            XK_j,             i_scroll,             DIR_DOWN },
@@ -69,13 +91,28 @@ let
         { 0,            XK_Up,            i_scroll,             DIR_UP },
         { 0,            XK_l,             i_scroll,             DIR_RIGHT },
         { 0,            XK_Right,         i_scroll,             DIR_RIGHT },
+        { 0,            XK_H,             i_scroll_to_edge,     DIR_LEFT },
+        { 0,            XK_J,             i_scroll_to_edge,     DIR_DOWN },
+        { 0,            XK_K,             i_scroll_to_edge,     DIR_UP },
+        { 0,            XK_L,             i_scroll_to_edge,     DIR_RIGHT },
         { 0,            XK_equal,         i_set_zoom,           100 },
+        { 0,            XK_w,             i_fit_to_win,         SCALE_DOWN },
+        { 0,            XK_W,             i_fit_to_win,         SCALE_FIT },
+        { 0,            XK_e,             i_fit_to_win,         SCALE_WIDTH },
+        { 0,            XK_E,             i_fit_to_win,         SCALE_HEIGHT },
+        { 0,            XK_less,          i_rotate,             DEGREE_270 },
+        { 0,            XK_greater,       i_rotate,             DEGREE_90 },
+        { 0,            XK_question,      i_rotate,             DEGREE_180 },
+        { 0,            XK_bar,           i_flip,               FLIP_HORIZONTAL },
+        { 0,            XK_underscore,    i_flip,               FLIP_VERTICAL },
         { 0,            XK_a,             i_toggle_antialias,   None },
         { 0,            XK_A,             i_toggle_alpha,       None },
         { 0,            XK_s,             i_slideshow,          None },
       };
       static const button_t buttons[] = {
+        /* modifiers    button            function              argument */
         { 0,            1,                i_cursor_navigate,    None },
+        { 0,            2,                i_drag,               DRAG_ABSOLUTE },
         { 0,            3,                g_switch_mode,        None },
         { 0,            4,                g_zoom,               +1 },
         { 0,            5,                g_zoom,               -1 },

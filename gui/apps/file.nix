@@ -4,11 +4,10 @@
   home = {
     packages = let
       custom-sxiv = import ./sxiv.nix pkgs;
-      unstable = import <nixpkgs-unstable> {};
     in with pkgs; [
     # browser
       pcmanfm
-      unstable.nnn file
+      nnn file
     # automounting
       gvfs lxmenu-data shared_mime_info
     # tools

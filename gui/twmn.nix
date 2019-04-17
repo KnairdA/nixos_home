@@ -29,21 +29,25 @@ in {
 
   home.file.".config/twmn/twmn.conf".text = ''
     [gui]
-    always_on_top=true
     background_color=#909737
-    bounce=true
     font=Iosevka
     font_size=${if hidpi then "24" else "14"}
     height=${if hidpi then "32" else "20"}
     foreground_color=#111111
+    always_on_top=true
+    position=bottom_right
+    bounce=true
+    bounce_duration=500
     in_animation=6
     in_animation_duration=500
-    opacity=100
     out_animation=5
     out_animation_duration=500
-    position=bottom_right
-    screen=0
+    max_length=-1
+    opacity=100
     [main]
     duration=5000
+    host=127.0.0.1
+    port=9797
   '';
+
 }
