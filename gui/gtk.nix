@@ -64,7 +64,7 @@ in {
   ];
 
   qt = {
-    enable      = true;
-    useGtkTheme = true;
+    enable = true;
+    platformTheme = "gtk";
   };
 }
