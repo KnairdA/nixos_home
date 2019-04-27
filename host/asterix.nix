@@ -3,8 +3,9 @@
 {
   imports = [
     ../gui/default.nix
-    ../gui/autorandr.nix
     ../gui/networkmanager.nix
+    ../gui/stalonetray.nix
+    ../gui/autorandr.nix
   ];
 
   home.packages = with pkgs; [
