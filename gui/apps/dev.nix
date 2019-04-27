@@ -7,8 +7,10 @@
       zeal
       hotspot
       qcachegrind
-      gitg
       paraview
+    # version control
+      gitg
+      meld
     # language utilities
       artha
     ];
