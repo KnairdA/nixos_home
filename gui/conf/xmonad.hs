@@ -133,7 +133,8 @@ hostSpecificKeybindings host = case host of
                , ("<XF86AudioRaiseVolume>"  , spawn "amixer sset Master 10%+")
                , ("<XF86AudioLowerVolume>"  , spawn "amixer sset Master 10%-")
                , ("<XF86AudioMute>"         , spawn "amixer sset Master toggle")
-               , ("<Print>"                 , namedScratchpadAction (scratchpads host) "terminal") ]
+               , ("<Print>"                 , namedScratchpadAction (scratchpads host) "terminal")
+               , ("M-c p"                   , spawn "flameshot gui") ]
   "obelix"  -> [ ("M-i g" , showNotification "GPU"
                                              "`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`") ]
   _         -> [ ]
