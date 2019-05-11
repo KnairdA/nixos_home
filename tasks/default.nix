@@ -49,19 +49,16 @@ in {
         cmake
         gcc8
         gdb cgdb
+        universal-ctags
       ]);
     };
 
-    latex_shell = {
-      description = "Generic LaTeX shell environment";
+    sympy_shell = {
+      description = "Python shell with SymPy";
       directory = "~/";
       type = "environment";
-      environment = with pkgs; let
-        texlive-custom = texlive.combine {
-          inherit (texlive) scheme-small collection-langgerman latexmk amsmath enumitem;
-        };
-      in mkShellDerivation "latex-env" [
-        texlive-custom
+      environment = with pkgs; mkShellDerivation "python-env" [
+        (pkgs.python3.withPackages (python-packages: with python-packages; [ sympy ]))
       ];
     };
   };
