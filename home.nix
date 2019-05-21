@@ -49,4 +49,8 @@
     defaultCacheTtlSsh  = 600;
     enableScDaemon      = false;
   };
+
+  programs.fish.shellAliases = {
+    ns = "nix-shell --command fish";
+  };
 }
