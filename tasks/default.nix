@@ -41,6 +41,18 @@ in {
       type = "local-shell";
     };
 
+    study_edit = {
+      description = "University notes editor";
+      directory = "~/university/note";
+      type = "local-editor";
+    };
+
+    study_shell = {
+      description = "University notes shell";
+      directory = "~/university/note";
+      type = "local-shell";
+    };
+
     cpp_shell = {
       description = "Generic C++ shell environment";
       directory = "~/";
