@@ -98,7 +98,7 @@ sideBarRight  = floatRectRight  $ 1/3
 scratchpads host =
   [ NS "terminal"      "kitty --class=scratchterm"                             (className =? "scratchterm")
        (customFloating $ hideScreenBorder host dropDown)
-  , NS "browser"       "firefox --no-remote -P scratchpad --class scratchfire" (className =? "scratchfire")
+  , NS "browser"       "env MOZ_USE_XINPUT2=1 firefox --no-remote -P scratchpad --class scratchfire" (className =? "scratchfire")
        (customFloating $ hideScreenBorder host dropDownLarge)
   , NS "documentation" "zeal"                                                  (className =? "Zeal")
        (customFloating $ hideScreenBorder host dropDown)
