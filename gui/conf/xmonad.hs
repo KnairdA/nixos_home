@@ -104,6 +104,8 @@ scratchpads host =
        (customFloating $ hideScreenBorder host dropDown)
   , NS "thesaurus"     "artha"                                                 (className =? "Artha")
        (customFloating $ hideScreenBorder host sideBarLeft)
+  , NS "calculator"    "speedcrunch"                                           (className =? "SpeedCrunch")
+       (customFloating $ hideScreenBorder host sideBarLeft)
   , NS "messaging"     "telegram-desktop"                                      ((className =? "TelegramDesktop") <&&> (title /=? "Media viewer"))
        (customFloating $ hideScreenBorder host sideBarRight) ]
 
@@ -167,6 +169,7 @@ commonKeybindings host =
   , ("M-b"           , namedScratchpadAction (scratchpads host) "browser")
   , ("M-d"           , namedScratchpadAction (scratchpads host) "documentation")
   , ("M-t"           , namedScratchpadAction (scratchpads host) "thesaurus")
+  , ("M-r"           , namedScratchpadAction (scratchpads host) "calculator")
   , ("M-m"           , namedScratchpadAction (scratchpads host) "messaging") ] ++
 -- workspace selection
   [ (p ++ [k]        , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']

@@ -13,6 +13,8 @@
       meld
     # language utilities
       artha
+    # calculator
+      speedcrunch
     ];
   };
 }
