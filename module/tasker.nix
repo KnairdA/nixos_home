@@ -27,6 +27,10 @@ let
         environment = launchTerminalInDirectory conf.directory ''
           nix-shell ${builtins.unsafeDiscardStringContext conf.environment.drvPath} --command fish
         '';
+
+        python-console = launchCommandInDirectory "~/" ''
+          nix-shell ${builtins.unsafeDiscardStringContext conf.environment.drvPath} --command jupyter-qtconsole
+        '';
       };
     };
 

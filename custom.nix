@@ -21,7 +21,7 @@ in {
             default = "~/";
           };
           type = mkOption {
-            type = types.enum [ "launcher" "terminal" "local-shell" "local-editor" "environment" ];
+            type = types.enum [ "launcher" "terminal" "local-shell" "local-editor" "environment" "python-console" ];
             default = "launcher";
           };
           command = mkOption {

@@ -9,6 +9,24 @@ let
     '';
   };
 
+  mkPythonShellDerivation = n: ps: init: pkgs.stdenvNoCC.mkDerivation rec {
+    name = n;
+    buildInputs = [(pkgs.python3.withPackages (python-packages: with python-packages; ps ++ [
+      jupyterlab
+      qtconsole
+    ]))];
+    shellHook = let
+      startup = pkgs.writeTextFile {
+        name = "startup.py";
+        text = init;
+      };
+
+    in ''
+      export NIX_SHELL_NAME="${name}"
+      export PYTHONSTARTUP=${startup}
+    '';
+  };
+
 in {
   custom.tasks = {
     bsc_edit = {
@@ -65,13 +83,23 @@ in {
       ]);
     };
 
-    sympy_shell = {
-      description = "Python shell with SymPy";
+    pymath_shell = {
+      description = "Python console for mathematics";
       directory = "~/";
-      type = "environment";
-      environment = with pkgs; mkShellDerivation "python-env" [
-        (pkgs.python3.withPackages (python-packages: with python-packages; [ sympy ]))
-      ];
+      type = "python-console";
+      environment = mkPythonShellDerivation "pymath-env" (with pkgs.python3Packages; [
+        sympy
+        numpy
+        matplotlib
+      ])
+      ''
+        import numpy as np
+        import sympy
+        import matplotlib
+        import matplotlib.pyplot as plt
+
+        sympy.init_session()
+      '';
     };
   };
 }
