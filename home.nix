@@ -15,6 +15,10 @@
 
   home = {
     keyboard.layout = "de";
+
+    packages = with pkgs; [
+      pass
+    ];
   };
 
   programs.git = {

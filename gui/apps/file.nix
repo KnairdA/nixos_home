@@ -8,6 +8,7 @@
     # browser
       pcmanfm
       nnn file
+      xfce.gigolo
     # automounting
       gvfs lxmenu-data shared_mime_info
     # tools
@@ -16,7 +17,9 @@
       evince
       custom-sxiv
       mpv
+    # office
       libreoffice
+      gimp
     ];
 
     sessionVariables = {
