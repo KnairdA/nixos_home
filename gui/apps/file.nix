@@ -36,7 +36,7 @@
     file.".config/user-dirs.dirs".text = ''
       XDG_TEMPLATES_DIR="$HOME/"
       XDG_DESKTOP_DIR="$HOME/"
-      XDG_DOWNLOADS_DIR="$HOME/downloads/"
+      XDG_DOWNLOAD_DIR="$HOME/downloads/"
     '';
   };
 }
