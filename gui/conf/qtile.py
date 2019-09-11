@@ -1,4 +1,4 @@
-from libqtile.config import Key, Screen, Group, Drag, Click
+from libqtile.config import Key, Screen, Group, Drag, Click, ScratchPad, DropDown
 from libqtile.command import lazy
 from libqtile import layout, bar, widget
 
@@ -27,6 +27,7 @@ keys = [
     Key([mod], "s", lazy.layout.toggle_split()),
 
     Key([mod], "Return", lazy.spawn("kitty")),
+    Key([mod, "shift"], "Return", lazy.spawn("nvim-qt --no-ext-tabline")),
 
     Key([mod], "v", lazy.next_layout()),
 
@@ -38,9 +39,11 @@ keys = [
     Key([mod], "space", lazy.spawn("rofi -show combi")),
 
     Key([mod, "shift"], "b", lazy.function(hide_show_bar)),
+
+    Key([], "Menu", lazy.group['scratchpad'].dropdown_toggle('term'))
 ]
 
-groups = [Group(i) for i in "0123456789"]
+groups = [ Group(i) for i in "1234567890" ]
 
 for i in groups:
     keys.extend([
@@ -48,26 +51,30 @@ for i in groups:
         Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
     ])
 
+groups += [ScratchPad("scratchpad", [
+    DropDown("term", "kitty")
+])]
+
 layouts = [
     layout.Max(),
     layout.Stack(
         num_stacks=2,
         border_focus="#909636",
         border_normal="#161616",
-        border_width=5
+        border_width=4
     ),
     layout.Stack(
         num_stacks=3,
         border_focus="#909636",
         border_normal="#161616",
-        border_width=5
-    ),
+        border_width=4
+    )
 ]
 
 widget_defaults = dict(
     font='Iosevka',
-    fontsize=22,
-    padding=3,
+    fontsize=12,
+    padding=2,
 )
 extension_defaults = widget_defaults.copy()
 
@@ -85,15 +92,12 @@ screens = [
                 widget.WindowName(
                     foreground = '#161616',
                 ),
-                widget.Systray(
-                    icon_size  = 25,
-                ),
                 widget.Clock(
                     foreground = '#161616',
                     format = '%Y-%m-%d %R'
                 ),
             ],
-            38,
+            24,
             background = "#909636",
         ),
     ),
@@ -122,12 +126,8 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'notification'},
     {'wmclass': 'splash'},
     {'wmclass': 'toolbar'},
-    {'wmclass': 'confirmreset'},  # gitk
-    {'wmclass': 'makebranch'},  # gitk
-    {'wmclass': 'maketag'},  # gitk
-    {'wname': 'branchdialog'},  # gitk
-    {'wname': 'pinentry'},  # GPG key password entry
-    {'wmclass': 'ssh-askpass'},  # ssh-askpass
+    {'wname': 'pinentry'},
+    {'wmclass': 'ssh-askpass'},
 ])
 auto_fullscreen = True
 focus_on_window_activation = "smart"
