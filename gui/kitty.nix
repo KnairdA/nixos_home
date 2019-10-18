@@ -8,9 +8,11 @@
       allow_remote_control yes
 
       font_family Iosevka
-      font_size   9
-      font_size_delta 1
+      font_size   10
+      font_size_delta 0.5
       adjust_line_height 110%
+
+      disable_ligatures always
 
       background #161616
       foreground #F2F2F2
