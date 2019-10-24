@@ -37,5 +37,8 @@ in {
     pkgs = mkOption {
       type = types.attrs;
     };
+    nixpkgs-unstable = mkOption {
+      type = types.attrs;
+    };
   };
 }
