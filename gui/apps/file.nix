@@ -14,6 +14,7 @@
     # tools
       veracrypt
     # viewers
+      bat
       evince
       custom-sxiv
       mpv
