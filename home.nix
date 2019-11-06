@@ -40,6 +40,10 @@
         hostname = "kummerlaender.eu";
         user = "common";
       };
+      "majestix" = {
+        hostname = "10.100.0.3";
+        user = "common";
+      };
       "horst" = {
         hostname = "172.23.20.188";
         user = "urdzx";
