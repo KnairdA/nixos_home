@@ -11,6 +11,10 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.MultiColumns
 import XMonad.Layout.TwoPane
 import XMonad.Layout.OneBig
+import XMonad.Layout.Grid
+
+import XMonad.Layout.Groups.Examples
+import XMonad.Layout.Groups.Helpers
 
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Reflect
@@ -59,29 +63,33 @@ customLayoutHook host = id
   . smartBorders
   . ModifiedLayout (hudMonitor host)
   . mkToggle (single NBFULL)
-  $ bsp ||| tabs ||| frame ||| tiles ||| two
+  $ tiles ||| two ||| tabs ||| frame ||| bsp ||| grid ||| groups
   where
-    bsp    = name "bsp"   $ borderResize (emptyBSP)
+    tiles  = name "tiles" $ id
+                          . mkToggle (single REFLECTX)
+                          . mkToggle (single REFLECTY)
+                          $ multiCol [1, 2, 0] 1 delta (1/3)
     tabs   = name "tabs"  $ tabbed shrinkText (customTabTheme host)
+    two    = name "two"   $ TwoPane delta (1/2)
     frame  = name "frame" $ id
                           . mkToggle (single REFLECTX)
                           . mkToggle (single REFLECTY)
                           . reflectVert
                           $ OneBig (2/3) (4/5)
-    tiles  = name "tiles" $ id
-                          . mkToggle (single REFLECTX)
-                          . mkToggle (single REFLECTY)
-                          $ multiCol [1, 2, 0] 1 delta (1/3)
-    two    = name "two"   $ TwoPane delta (1/2)
+    bsp    = name "bsp"   $ borderResize (emptyBSP)
+    grid   = name "grid"  $ Grid
+    groups = name "groups" $ rowOfColumns
     delta  = 1/24
     name n = renamed [Replace n]
 
 -- layout names for layout selection dialog
-layoutNames = fromList [ ("0: Binary space partition"  , "bsp")
+layoutNames = fromList [ ("0: Multi-column tiles"      , "tiles")
                        , ("1: Tabbed windows"          , "tabs")
-                       , ("2: One large framed window" , "frame")
-                       , ("3: Multi-column tiles"      , "tiles")
-                       , ("4: Two column stack"        , "two") ]
+                       , ("2: Two column stack"        , "two")
+                       , ("3: One large framed window" , "frame")
+                       , ("4: Binary space partition"  , "bsp")
+                       , ("5: Grid"                    , "grid")
+                       , ("6: Grouped columns"         , "groups") ]
 
 floatRectTop    h = S.RationalRect (1/20) 0      (18/20) h
 floatRectBottom h = S.RationalRect (1/20) (1-h)  (18/20) h
@@ -146,41 +154,61 @@ commonKeybindings host =
   [ ("C-M1-<Escape>"    , io (exitWith ExitSuccess))
   , ("C-M1-<Backspace>" , spawn "xmonad --restart")
   , ("C-M1-l"           , spawn "i3lock -c 000000")
+
 -- application launchers
   , ("M-<Space>"     , spawn "rofi -show combi")
   , ("M-<Return>"    , spawn "kitty")
   , ("M-S-<Return>"  , spawn "nvim-qt --no-ext-tabline")
   , ("<Print>"       , spawn "flameshot gui")
+
 -- window management
   , ("M-q"           , windows $ S.shift "NSP")
   , ("M-S-q"         , kill)
-  , ("M-h"           , sendMessage Shrink)
-  , ("M-l"           , sendMessage Expand)
   , ("M-<Backspace>" , nextMatch History (return True))
+
 -- window movement
-  , ("M-j"           , windows S.focusDown)
-  , ("M-k"           , windows S.focusUp)
-  , ("M-S-j"         , windows S.swapDown)
-  , ("M-S-k"         , windows S.swapUp)
+  , ("M-j"           , focusDown)
+  , ("M-k"           , focusUp)
+  , ("M-S-j"         , swapDown)
+  , ("M-S-k"         , swapUp)
+
+-- group control
+  , ("M-h"           , bindOnLayout [ ("groups", focusGroupUp)
+                                    , ("", sendMessage Shrink) ] )
+  , ("M-l"           , bindOnLayout [ ("groups", focusGroupDown)
+                                    , ("", sendMessage Expand) ] )
+  , ("M-S-h"         , bindOnLayout [ ("groups", moveToGroupUp False)
+                                    , ("", sendMessage Shrink) ] )
+  , ("M-S-l"         , bindOnLayout [ ("groups", moveToGroupDown False)
+                                    , ("", sendMessage Expand) ] )
+  , ("M-S-<Up>"      , zoomWindowOut)
+  , ("M-S-<Down>"    , zoomWindowIn)
+  , ("M-S-<Right>"   , zoomColumnIn)
+  , ("M-S-<Left>"    , zoomColumnOut)
+
 -- window bringer
   , ("M-a"           , gotoMenuConfig  windowBringerDmenuConfig)
   , ("M-S-a"         , bringMenuConfig windowBringerDmenuConfig)
+
 -- scratchpads
   , ("M-b"           , namedScratchpadAction (scratchpads host) "browser")
   , ("M-d"           , namedScratchpadAction (scratchpads host) "documentation")
   , ("M-t"           , namedScratchpadAction (scratchpads host) "thesaurus")
   , ("M-r"           , namedScratchpadAction (scratchpads host) "calculator")
   , ("M-m"           , namedScratchpadAction (scratchpads host) "messaging") ] ++
+
 -- workspace selection
   [ (p ++ [k]        , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']
                                       , (p, f) <- [ ("M-"   , S.view)
                                                   , ("M-S-" , S.shift) ] ] ++
   [ ("C-<Backspace>" , toggleWS' ["NSP"])
+
 -- workspace movement
   , ("M-s j"           , moveTo  Next nonEmptyWS)
   , ("M-s k"           , moveTo  Prev nonEmptyWS)
   , ("M-S-s j"         , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
   , ("N-S-s k"         , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
+
 -- workspace layout management
   , ("M-v"           , layoutMenu)
   , ("M-s l"         , sendMessage NextLayout)
@@ -189,6 +217,7 @@ commonKeybindings host =
   , ("M-s y"         , sendMessage $ Toggle REFLECTY)
   , ("M-s x"         , sendMessage $ Toggle REFLECTX)
   , ("M-s f"         , sendMessage $ Toggle NBFULL)
+
 -- floating placement
   , ("M-w t"         , withFocused $ windows . S.sink)
   , ("M-w j"         , withFocused $ placeFloating host dropUp)
@@ -197,9 +226,11 @@ commonKeybindings host =
   , ("M-w S-k"       , withFocused $ placeFloating host dropDownLarge)
   , ("M-w h"         , withFocused $ placeFloating host sideBarLeft)
   , ("M-w l"         , withFocused $ placeFloating host sideBarRight)
+
 -- system information
   , ("M-i t"         , showNotification "`date +%T`" "`date +\"%Y-%m-%d\"`")
   , ("M-i l"         , showNotification "Load" "`cut -c -14 /proc/loadavg`")
+
 -- system control
   , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
   , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
@@ -335,3 +366,17 @@ decoHeightOn host = case host of
   "majestix" -> 20
   "asterix"  -> 20
   "athena"   -> 30
+
+-------------------------------------------------------------------------------
+-- helper for layout name dependent actions
+
+chooseAction :: (String->X()) -> X()
+chooseAction f = withWindowSet (f . description . S.layout . S.workspace . S.current)
+
+bindOnLayout :: [(String, X())] -> X()
+bindOnLayout bindings = chooseAction chooser where
+    chooser ws = case lookup ws bindings of
+        Just action -> action
+        Nothing -> case lookup "" bindings of
+            Just action -> action
+            Nothing -> return ()
