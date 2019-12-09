@@ -18,6 +18,7 @@
       evince
       custom-sxiv
       mpv
+      gthumb
     # office
       libreoffice
       gimp
