@@ -60,6 +60,7 @@
   };
 
   programs.fish.shellAliases = {
-    ns = "nix-shell --command fish";
+    ns  = "nix-shell --command fish";
+    cat = "bat";
   };
 }
