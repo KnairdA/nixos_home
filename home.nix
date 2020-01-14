@@ -63,4 +63,11 @@
     ns  = "nix-shell --command fish";
     cat = "bat";
   };
+
+  services.lorri.enable = true;
+
+  programs.direnv = {
+    enable = true;
+    enableFishIntegration = true;
+  };
 }
