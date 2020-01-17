@@ -70,4 +70,8 @@
     enable = true;
     enableFishIntegration = true;
   };
+
+  programs.fish.interactiveShellInit = ''
+    set -x DIRENV_LOG_FORMAT ""
+  '';
 }
