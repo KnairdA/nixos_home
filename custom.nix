@@ -21,7 +21,7 @@ in {
             default = "~/";
           };
           type = mkOption {
-            type = types.enum [ "launcher" "terminal" "local-shell" "local-editor" "environment" "python-console" ];
+            type = types.enum [ "launcher" "terminal" "local-shell" "local-editor" "environment" "python-console" "jupyter-lab" ];
             default = "launcher";
           };
           command = mkOption {
@@ -34,9 +34,23 @@ in {
       });
     };
 
+    notebooks = mkOption {
+      type = types.attrsOf (types.submodule {
+        options = {
+          description = mkOption {
+            type = types.uniq types.string;
+          };
+          environment = mkOption {
+            type = types.package;
+          };
+        };
+      });
+    };
+
     pkgs = mkOption {
       type = types.attrs;
     };
+
     nixpkgs-unstable = mkOption {
       type = types.attrs;
     };

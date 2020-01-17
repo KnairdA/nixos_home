@@ -27,6 +27,15 @@ let
     '';
   };
 
+  jupyter = import (builtins.fetchGit {
+    url = https://github.com/tweag/jupyterWith;
+    rev = "";
+  }) {};
+
+  mkJupyterEnv = kernel: (jupyter.jupyterlabWith {
+    kernels = [ kernel ];
+  }).env;
+
 in {
   custom.tasks = {
     bsc_edit = {
@@ -100,6 +109,22 @@ in {
 
         sympy.init_session()
       '';
+    };
+
+    pymath_jupyter = {
+      description = "Python @ Jupyter Lab";
+      directory = "~/";
+      type = "jupyter-lab";
+      environment = mkJupyterEnv (
+        jupyter.kernels.iPythonWith {
+          name = "python";
+          packages = p: with p; [
+            numpy
+            sympy
+            matplotlib
+          ];
+        }
+      );
     };
   };
 }

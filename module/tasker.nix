@@ -11,6 +11,23 @@ let
     #!/bin/sh
     exec ${pkgs.kitty}/bin/kitty -d ${dir} ${cmd}
   '';
+  launchJupyterInDirectory = dir: env: ''
+    #!/usr/bin/env nix-shell
+    #!nix-shell ${builtins.unsafeDiscardStringContext env.drvPath} -i fish
+
+    for port in (seq 9000 9100)
+      if not ss --listening --oneline --tcp --no-header | awk '{ split($4, port, ":"); print port[2]+0 }' | grep -q $port
+        set free_port $port
+        break
+      end
+    end
+
+    set token (head /dev/urandom | tr -dc A-Za-z0-9 | head -c 40)
+    jupyter lab --no-browser --port=$free_port --NotebookApp.token=$token &
+    sleep 2
+    ${pkgs.chromium}/bin/chromium --app="http://localhost:$free_port/?token=$token"
+    kill (jobs -lp)
+  '';
 
   taskivations = pkgs.lib.mapAttrsToList (name: conf: let
     command = pkgs.writeTextFile {
@@ -31,6 +48,8 @@ let
         python-console = launchCommandInDirectory "~/" ''
           nix-shell ${builtins.unsafeDiscardStringContext conf.environment.drvPath} --command jupyter-qtconsole
         '';
+
+        jupyter-lab = launchJupyterInDirectory conf.directory conf.environment;
       };
     };
 
