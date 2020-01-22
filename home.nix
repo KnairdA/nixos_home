@@ -45,6 +45,7 @@
         user = "common";
       };
       "horst" = {
+        proxyCommand = "ssh majestix -W %h:%p";
         hostname = "172.23.20.188";
         user = "urdzx";
       };
