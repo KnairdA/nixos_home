@@ -29,7 +29,7 @@ let
 
   jupyter = import (builtins.fetchGit {
     url = https://github.com/tweag/jupyterWith;
-    rev = "";
+    rev = "7a6716f0c0a5538691a2f71a9f12b066bce7d55c";
   }) {};
 
   mkJupyterEnv = kernel: (jupyter.jupyterlabWith {
