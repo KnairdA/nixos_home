@@ -69,7 +69,7 @@ let
 
   in pkgs.symlinkJoin {
     name = "tasker_task_" + name;
-    paths = [ shortcut ];
+    paths = [ command shortcut ];
   }) config.custom.tasks;
 
 in {
