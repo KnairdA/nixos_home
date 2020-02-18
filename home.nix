@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  custom.pkgs = import ~/projects/dev/pkgs/default.nix { };
+  custom.pkgs = import <mypkgs> { };
   custom.nixpkgs-unstable = import <nixpkgs-unstable> { };
 
   imports = [
@@ -17,8 +17,9 @@
   home = {
     keyboard.layout = "de";
 
-    packages = with pkgs; [
-      pass
+    packages = [
+      pkgs.pass
+      config.custom.pkgs.persistent-nix-shell
     ];
   };
 
@@ -61,18 +62,7 @@
   };
 
   programs.fish.shellAliases = {
-    ns  = "nix-shell --command fish";
-    cat = "bat";
+    ns  = "persistent-nix-shell --command fish";
+    cat = "bat --plain";
   };
-
-  services.lorri.enable = true;
-
-  programs.direnv = {
-    enable = true;
-    enableFishIntegration = true;
-  };
-
-  programs.fish.interactiveShellInit = ''
-    set -x DIRENV_LOG_FORMAT ""
-  '';
 }
