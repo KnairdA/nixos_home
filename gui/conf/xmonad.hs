@@ -122,7 +122,7 @@ scratchpads host =
 hudMonitor host = monitor
   { prop = Title "hud"
   , XMonad.Layout.Monitor.name = "hud"
-  , rect = Rectangle ((screenWidthOn host) - 350) ((screenHeightOn host) - 250) 300 200
+  , rect = Rectangle ((screenWidthOn host) - 530) ((screenHeightOn host) - 350) 480 300
   , opacity    = 0.8
   , persistent = True }
 
