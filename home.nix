@@ -62,7 +62,7 @@
   };
 
   programs.fish.shellAliases = {
-    ns  = "persistent-nix-shell --command fish";
+    ns  = "persistent-nix-shell -s";
     cat = "bat --plain";
   };
 }
