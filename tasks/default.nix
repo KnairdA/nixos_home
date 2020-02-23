@@ -112,7 +112,7 @@ in {
     };
 
     pymath_jupyter = {
-      description = "Python @ Jupyter Lab";
+      description = "Python for mathematics @ Jupyter Lab";
       directory = "~/";
       type = "jupyter-lab";
       environment = mkJupyterEnv (
