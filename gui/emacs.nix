@@ -15,4 +15,6 @@
       org
     ]));
   };
+
+  home.file.".emacs.d/init.el".source = ./conf/init.el;
 }
