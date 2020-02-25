@@ -117,7 +117,10 @@ scratchpads host =
   , NS "calculator"    "speedcrunch"                                           (className =? "SpeedCrunch")
        (customFloating $ hideScreenBorder host sideBarLeft)
   , NS "messaging"     "telegram-desktop"                                      ((className =? "TelegramDesktop") <&&> (title /=? "Media viewer"))
-       (customFloating $ hideScreenBorder host sideBarRight) ]
+       (customFloating $ hideScreenBorder host sideBarRight)
+  , NS "notes"         "emacs --title=notemacs ~/org/org.org"                  (title =? "notemacs")
+       (customFloating $ hideScreenBorder host dropDownLarge)
+  ]
 
 hudMonitor host = monitor
   { prop = Title "hud"
@@ -198,7 +201,8 @@ commonKeybindings host =
   , ("M-t"           , namedScratchpadAction (scratchpads host) "thesaurus")
   , ("M-z"           , namedScratchpadAction (scratchpads host) "literature")
   , ("M-r"           , namedScratchpadAction (scratchpads host) "calculator")
-  , ("M-m"           , namedScratchpadAction (scratchpads host) "messaging") ] ++
+  , ("M-m"           , namedScratchpadAction (scratchpads host) "messaging")
+  , ("M-n"           , namedScratchpadAction (scratchpads host) "notes") ] ++
 
 -- workspace selection
   [ (p ++ [k]        , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']

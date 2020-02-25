@@ -1,3 +1,6 @@
+(setq inhibit-startup-message t)
+(setq initial-scratch-message nil)
+
 (setq backup-directory-alist `(("." . "~/.emacs.d/backup")))
 
 (require 'package)
