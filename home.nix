@@ -18,7 +18,6 @@
     keyboard.layout = "de";
 
     packages = [
-      pkgs.pass
       config.custom.pkgs.persistent-nix-shell
     ];
   };

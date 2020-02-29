@@ -166,6 +166,9 @@ commonKeybindings host =
   , ("M-S-<Return>"  , spawn "nvim-qt --no-ext-tabline")
   , ("<Print>"       , spawn "flameshot gui")
 
+-- password management
+  , ("M-p"     , spawn "passrofi")
+
 -- window management
   , ("M-q"           , windows $ S.shift "NSP")
   , ("M-S-q"         , kill)
