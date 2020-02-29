@@ -31,3 +31,7 @@
 
 (setq org-fontify-whole-heading-line t)
 (setq org-adapt-indentation nil)
+
+(evil-define-key 'normal org-mode-map
+  "J" 'org-next-visible-heading
+  "K" 'org-previous-visible-heading)
