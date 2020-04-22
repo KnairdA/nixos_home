@@ -265,11 +265,13 @@ customManageHook host = manageMonitor (hudMonitor host) <+> composeOne
   , isParaviewDialog               -?> doRectFloat $ hideScreenBorder host dropDown
   , isTelegramMediaViewer          -?> doFullFloat
   , isDialog                       -?> doCenterFloat
+  , isPrompter                     -?> doCenterFloat
   , transience
   , pure True -?> insertPosition Below Newer <+> namedScratchpadManageHook (scratchpads host) ]
   where
     hasRole x = stringProperty "WM_WINDOW_ROLE" =? x
     isParaviewDialog      = (className =? "ParaView") <&&> isDialog
+    isPrompter            = (className =? "Gcr-prompter")
     isTelegramMediaViewer = (className =? "TelegramDesktop") <&&> (title =? "Media viewer")
 
 customLogHook = do
