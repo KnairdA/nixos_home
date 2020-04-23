@@ -118,7 +118,7 @@ scratchpads host =
        (customFloating $ hideScreenBorder host sideBarLeft)
   , NS "messaging"     "telegram-desktop"                                      ((className =? "TelegramDesktop") <&&> (title /=? "Media viewer"))
        (customFloating $ hideScreenBorder host sideBarRight)
-  , NS "notes"         "nvim-qt --no-ext-tabline -- --cmd \"let &titlestring='orgnotes'\" ~/org/*.org" (title =? "orgnotes — Neovim")
+  , NS "notes"         "kitty --class=orgterm nvim ~/org/*.org"                (className =? "orgterm")
        (customFloating $ hideScreenBorder host dropDown)
   ]
 
