@@ -121,6 +121,7 @@ in {
           packages = p: with p; [
             numpy
             sympy
+            scipy
             matplotlib
           ];
         }
