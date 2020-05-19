@@ -118,7 +118,7 @@ scratchpads host =
        (customFloating $ hideScreenBorder host sideBarLeft)
   , NS "messaging"     "telegram-desktop"                                      ((className =? "TelegramDesktop") <&&> (title /=? "Media viewer"))
        (customFloating $ hideScreenBorder host sideBarRight)
-  , NS "notes"         "kitty --class=orgterm nvim ~/org/*.org"                (className =? "orgterm")
+  , NS "scratch"       "kitty --class=scratch"                                 (className =? "scratch")
        (customFloating $ hideScreenBorder host dropDown)
   ]
 
@@ -205,7 +205,7 @@ commonKeybindings host =
   , ("M-z"           , namedScratchpadAction (scratchpads host) "literature")
   , ("M-r"           , namedScratchpadAction (scratchpads host) "calculator")
   , ("M-m"           , namedScratchpadAction (scratchpads host) "messaging")
-  , ("M-n"           , namedScratchpadAction (scratchpads host) "notes") ] ++
+  , ("M-n"           , namedScratchpadAction (scratchpads host) "scratch") ] ++
 
 -- workspace selection
   [ (p ++ [k]        , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']
