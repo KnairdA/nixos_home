@@ -8,6 +8,7 @@ in {
     ./xmonad.nix
     ./kitty.nix
     ./vim.nix
+    ./emacs.nix
     ./zathura.nix
     ./pass.nix
   # applications grouped by purpose
