@@ -118,7 +118,7 @@ scratchpads host =
        (customFloating $ hideScreenBorder host sideBarLeft)
   , NS "messaging"     "telegram-desktop"                                      ((className =? "TelegramDesktop") <&&> (title /=? "Media viewer"))
        (customFloating $ hideScreenBorder host sideBarRight)
-  , NS "notes"         "emacs --title=notemacs ~/org/org.org"                  (title =? "notemacs")
+  , NS "notes"         "emacs --title=notemacs ~/org/inbox.org"                (title =? "notemacs")
        (customFloating $ hideScreenBorder host dropDownLarge)
   ]
 

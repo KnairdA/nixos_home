@@ -5,16 +5,20 @@
     enable = true;
 
     extraPackages = (epkgs: (with epkgs.melpaStablePackages; [ 
-      use-package
-      leuven-theme
     ]) ++ (with epkgs.melpaPackages; [ 
-      evil
-      evil-leader
-      evil-org
+      pdf-tools
     ]) ++ (with epkgs.elpaPackages; [ 
-      org
     ]));
   };
 
-  home.file.".emacs.d/init.el".source = ./conf/init.el;
+  home.packages = with pkgs; [
+    source-sans-pro
+    source-serif-pro
+  ];
+
+  # see https://github.com/rycee/home-manager/issues/589#issuecomment-466594137
+  home.activation.linkInitEl = config.lib.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p ~/.emacs.d
+    ln -s ${toString ./conf/init.el} ~/.emacs.d/init.el
+  '';
 }

@@ -17,6 +17,8 @@ in {
     ./apps/dev.nix
   ];
 
+  fonts.fontconfig.enable = true;
+
 # hidpi specific xorg flags
   xresources.extraConfig = pkgs.lib.mkIf hidpi ''
     Xft.dpi: 160
