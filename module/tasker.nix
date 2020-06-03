@@ -11,9 +11,8 @@ let
     #!/bin/sh
     exec ${pkgs.kitty}/bin/kitty -d ${dir} ${cmd}
   '';
-  launchJupyterInDirectory = dir: env: ''
-    #!/usr/bin/env nix-shell
-    #!nix-shell ${builtins.unsafeDiscardStringContext env.drvPath} -i fish
+  launchJupyterInDirectory = dir: jupyter: ''
+    #!/usr/bin/env fish
 
     for port in (seq 9000 9100)
       if not ss --listening --oneline --tcp --no-header | awk '{ split($4, port, ":"); print port[2]+0 }' | grep -q $port
@@ -23,7 +22,7 @@ let
     end
 
     set token (head /dev/urandom | tr -dc A-Za-z0-9 | head -c 40)
-    jupyter lab --no-browser --port=$free_port --NotebookApp.token=$token &
+    ${jupyter}/bin/jupyter-lab --no-browser --port=$free_port --NotebookApp.token=$token &
     sleep 2
     ${pkgs.chromium}/bin/chromium --app="http://localhost:$free_port/?token=$token"
     kill (jobs -lp)
@@ -69,7 +68,7 @@ let
 
   in pkgs.symlinkJoin {
     name = "tasker_task_" + name;
-    paths = [ command shortcut ];
+    paths = [ shortcut ];
   }) config.custom.tasks;
 
 in {
