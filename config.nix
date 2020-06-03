@@ -1,4 +1,3 @@
 {
-  allowUnsupportedSystem = true;
   allowUnfree = true;
 }
