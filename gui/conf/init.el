@@ -72,7 +72,8 @@
   (setq org-adapt-indentation nil)
   (setq org-hide-emphasis-markers t)
   (setq org-default-notes-file "~/org/inbox.org")
-  (setq org-agenda-files '("~/org")))
+  (setq org-agenda-files '("~/org"))
+  (setq org-link-frame-setup '((file . find-file)))) ; open links in same frame
 
 (setq org-todo-keywords
   '((sequence "TODO(t)" "|" "DONE(d)")
@@ -157,8 +158,15 @@
 
 (setq org-confirm-babel-evaluate nil)
 
+(defun org-deft-insert-link (file)
+  (interactive (list
+    (completing-read "Note: "
+      (deft-find-all-files))))
+  (org-insert-link nil (concat "file:" file) (file-name-base file)))
+
 (evil-leader/set-key
-  "e" 'org-babel-execute-src-block)
+  "e" 'org-babel-execute-src-block
+  "l" 'org-deft-insert-link)
 
 (use-package interleave
   :ensure t)
