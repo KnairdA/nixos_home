@@ -22,6 +22,8 @@
 
 (eval-when-compile (require 'use-package))
 
+(load-library "akr-theme")
+
 (use-package evil
   :ensure t
   :init
@@ -34,11 +36,6 @@
   :config
   (global-evil-leader-mode 1)
   (evil-leader/set-leader ","))
-
-(use-package poet-theme
-  :ensure t
-  :config
-  (load-theme 'poet-dark t))
 
 (use-package darkroom
   :ensure t
@@ -169,4 +166,7 @@
   "l" 'org-deft-insert-link)
 
 (use-package interleave
+  :ensure t)
+
+(use-package rainbow-mode
   :ensure t)

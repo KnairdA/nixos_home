@@ -1,14 +1,27 @@
 { config, pkgs, ... }:
 
 {
-  programs.emacs = {
+  programs.emacs = let
+    akr-color-theme = pkgs.stdenv.mkDerivation {
+      name = "emacs-color-theme-akr";
+      src = ./conf/metakr.org;
+      phases = [ "installPhase" ];
+      installPhase = ''
+        cp $src metakr.org
+        ${pkgs.emacs}/bin/emacs --batch --eval "(require 'org)" --eval "(setq org-confirm-babel-evaluate nil)" --eval '(org-babel-tangle-file "metakr.org")'
+        rm metakr.org
+        mkdir -p $out/share/emacs/site-lisp
+        mv akr-theme.el $out/share/emacs/site-lisp/
+      '';
+    };
+  in {
     enable = true;
 
-    extraPackages = (epkgs: (with epkgs.melpaStablePackages; [ 
-    ]) ++ (with epkgs.melpaPackages; [ 
+    extraPackages = epkgs: with epkgs.melpaPackages; [
       pdf-tools
-    ]) ++ (with epkgs.elpaPackages; [ 
-    ]));
+    ] ++ [
+      akr-color-theme
+    ];
   };
 
   home.packages = with pkgs; [

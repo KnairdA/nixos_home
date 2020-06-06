@@ -1,0 +1,352 @@
+#+TITLE: Metakr
+
+This file describes a basic Emacs version of my custom Vim color theme _akr_.
+For quick iteration all colors are stored in a table. 
+
+* Tangle scaffold
+#+BEGIN_SRC emacs-lisp :tangle ./akr-theme.el :noweb yes
+(deftheme akr "A theme of my own making.")
+  
+<<theme-generator(palette=akr-palette, theme-name="akr")>>
+
+(when (and (boundp 'custom-theme-load-path)
+           load-file-name)
+  (add-to-list 'custom-theme-load-path
+               (file-name-as-directory
+                (file-name-directory load-file-name))))
+
+(provide-theme 'akr)
+(provide 'akr-theme)
+#+END_SRC
+* Colors
+#+NAME: akr-palette
+| Label                     | Color   |
+| fg                        | #F2F2F2 |
+| bg                        | #161616 |
+| emph                      | #eeeeee |
+| sep                       | #444444 |
+| hlt                       | #000000 |
+| bg-hlt                    | #8C3346 |
+| muted                     | #F2F2F2 |
+| meta                      | #ede7dd |
+| link                      | #AADB0F |
+| link-underline            | #AADB0F |
+| header                    | #AADB0F |
+| button                    | #aaaaaa |
+| glyph                     | #f7ffd1 |
+| cursor                    | #AADB0F |
+| paren-match-fg            | #161616 |
+| paren-match-bg            | #AADB0F |
+| search-fg                 | #161616 |
+| search-bg                 | #909636 |
+| search-fail-bg            | #8C3346 |
+| tooltip-fg                | #161616 |
+| tooltip-bg                | #909636 |
+| shadow                    | #9E9E9E |
+| secondary-bg              | #080808 |
+| trailing-bg               | #8C3346 |
+| lazy-hlt-fg               | #000000 |
+| lazy-hlt-bg               | #ffffff |
+| evil-rep-fg               | #F2F2F2 |
+| evil-rep-bg               | #161616 |
+| mode-line-fg              | #909636 |
+| header-line-bg            | #080808 |
+| mode-line-hlt             | #000000 |
+| mode-line-inactive        | #9E9E9E |
+| error                     | #8C3346 |
+| builtin                   | #AADB0F |
+| string                    | #AADB0F |
+| function-name             | #F2F2F2 |
+| keyword                   | #F2F2F2 |
+| constant                  | #F2F2F2 |
+| type                      | #AADB0F |
+| variable                  | #F2F2F2 |
+| org-meta                  | #E4E093 |
+| org-document-info         | #E4E093 |
+| org-table                 | #080808 |
+| org-quote-fg              | #F2F2F2 |
+| org-quote-bg              | #080808 |
+| org-date                  | #c6b6ad |
+| org-title                 | #AADB0F |
+| org-title-underline       | #F2F2F2 |
+| org-checkbox              | #999999 |
+| org-scheduled             | #dddddd |
+| org-scheduled-today       | #ffffff |
+| org-done                  | #909636 |
+| org-todo                  | #8C3346 |
+| org-tag                   | #F2F2F2 |
+| org-block-line            | #080808 |
+| org-block-bg              | #080808 |
+| org-agenda-structure-fg   | #aaaaaa |
+| org-agenda-structure-bg   | #080808 |
+| org-agenda-today-fg       | #dddddd |
+| org-agenda-today-bg       | #000000 |
+| org-special-keyword       | #777777 |
+| org-sched-prev            | #8C3346 |
+| org-agenda-done           | #909636 |
+
+* Structure
+#+NAME: structure
+#+BEGIN_SRC emacs-lisp
+;; Basics
+'((default
+    :background @bg
+    :foreground @fg)
+  (italic
+   :foreground @emph
+   :slant italic)
+  (highlight
+   :background @hlt
+   :overline nil)
+  (region
+   :background @bg-hlt)
+  (fringe
+   :background @bg)
+  (button
+   :inherit default
+   :foreground @button)
+  (escape-glyph
+   :foreground @glyph)
+  (link
+   :underline (:color @link-underline :style line)
+   :foreground @link)
+  (link-visited
+   :inherit link)
+  (cursor
+   :background @cursor)
+  (show-paren-match
+   :background @paren-match-fg
+   :foreground @paren-match-bg)
+  (isearch
+   :foreground @search-fg
+   :background @search-bg)
+  (isearch-fail
+   :background @search-fail-bg)
+  (query-replace
+   :inherit isearch)
+  (tooltip
+   :inherit default
+   :foreground @tooltip-fg
+   :background @tooltip-bg)
+  (shadow
+   :foreground @shadow)
+  (secondary-selection
+   :background @secondary-bg)
+  (trailing-whitespace
+   :background @trailing-bg)
+  (lazy-highlight
+   :foreground @lazy-hlt-fg
+   :background @lazy-hlt-bg)
+  (next-error
+   :inherit region)
+  (window-divider
+   :background @sep
+   :foreground @sep)
+  (vertical-border
+   :background @sep
+   :foreground @sep)
+
+;; Evil
+  (evil-ex-substitute-replacement
+   :foreground @evil-rep-fg
+   :background @evil-rep-bg
+   :underline nil)
+
+;; Minibuffer
+  (minibuffer-prompt
+   :inherit fixed-pitch
+   :weight bold
+   :foreground @meta)
+
+ ;; Mode Line
+  (mode-line
+   :inherit fixed-pitch
+   :foreground @mode-line-fg
+   :background @bg
+   :overline @sep
+   :box (:line-width 3 :color @bg))
+  (header-line
+   :overline nil
+   :background @header-line-bg
+   :box (:line-width 3 :color @header-line-bg)
+   :underline @sep
+   :inherit mode-line)
+  (mode-line-buffer-id
+   :weight bold)
+  (mode-line-emphasis
+   :weight bold)
+  (mode-line-highlight
+   :background @mode-line-hlt)
+  (mode-line-inactive
+   :inherit mode-line
+   :background @bg
+   :foreground @mode-line-inactive
+   :box (:color @bg :line-width 3))
+
+;; Syntax
+  (error
+   :foreground @error
+   :inherit fixed-pitch)
+  (font-lock-comment-face
+   :foreground @muted
+   :slant italic
+   :inherit fixed-pitch)
+  (font-lock-builtin-face
+   :foreground @builtin
+   :inherit fixed-pitch)
+  (font-lock-string-face
+   :inherit fixed-pitch
+   :foreground @string)
+  (font-lock-function-name-face
+   :inherit fixed-pitch
+   :foreground @function-name)
+  (font-lock-keyword-face
+   :inherit fixed-pitch
+   :foreground @keyword)
+  (font-lock-comment-delimiter-face
+   :inherit fixed-pitch
+   :inherit font-lock-comment-face)
+  (font-lock-constant-face
+   :inherit fixed-pitch
+   :foreground @constant)
+  (font-lock-doc-face
+   :inherit fixed-pitch
+   :inherit font-lock-string-face)
+  (font-lock-preprocessor-face
+   :inherit fixed-pitch
+   :inherit font-lock-builtin-face)
+  (font-lock-regexp-grouping-backslash
+   :inherit fixed-pitch
+   :inherit bold)
+  (font-lock-regexp-grouping-construct
+   :inherit fixed-pitch
+   :inherit bold)
+  (font-lock-type-face
+   :foreground @type
+   :inherit fixed-pitch)
+  (font-lock-variable-name-face
+   :inherit fixed-pitch
+   :foreground @variable)
+  (font-lock-warning-face
+   :inherit error)
+
+;; Org
+  (org-level-1 :inherit default :foreground @header)
+  (org-level-2 :inherit default :foreground @header)
+  (org-level-3 :inherit default :foreground @header)
+  (org-meta-line
+   :inherit fixed-pitch
+   :foreground @org-meta)
+  (org-document-info-keyword
+   :inherit fixed-pitch
+   :foreground @org-document-info)
+  (org-document-info
+   :inherit default
+   :foreground @org-document-info)
+  (org-verbatim ; inline code
+   :inherit fixed-pitch)
+  (org-code
+   :inherit fixed-pitch)
+  (org-table
+   :inherit fixed-pitch
+   :background @org-table)
+  (org-formula
+   :inherit org-table
+   :height 1)
+  (org-verse
+   :inherit default
+   :foreground @org-quote-fg
+   :background @org-quote-bg)
+  (org-quote
+   :inherit default
+   :foreground @org-quote-fg
+   :background @org-quote-bg)
+  (org-hide
+   :inherit fixed-pitch
+   :foreground @bg)
+  (org-indent
+   :inherit org-hide)
+  (org-date
+   :inherit fixed-pitch
+   :foreground @org-date
+   :underline nil)
+  (org-document-title
+   :inherit default
+   :foreground @org-title
+   :height 1.8
+   :underline (:color @org-title-underline))
+  (org-checkbox
+   :inherit fixed-pitch
+   :weight bold
+   :foreground @org-checkbox)
+  (org-done
+   :inherit fixed-pitch
+   :foreground @org-done)
+  (org-todo
+   :inherit fixed-pitch
+   :foreground @org-todo)
+  (org-tag
+   :inherit fixed-pitch
+   :height 1
+   :foreground @org-tag)
+  (org-block-begin-line
+   :inherit fixed-pitch
+   :background @org-block-line)
+  (org-block-end-line
+   :inherit fixed-pitch
+   :background @org-block-line)
+  (org-block
+   :background @org-block-bg
+   :inherit fixed-pitch)
+  (org-priority
+   :inherit fixed-pitch
+   :weight normal)
+  (org-agenda-structure
+   :foreground @org-agenda-structure-fg
+   :background @bg
+   :box (:line-width 3 :color @bg)
+   :underline @org-agenda-structure-bg)
+  (org-scheduled
+   :foreground @org-scheduled)
+  (org-scheduled-today
+   :foreground @org-scheduled-today)
+  (org-agenda-date-weekend
+   :inherit org-agenda-structure)
+  (org-agenda-date-today
+   :box (:line-width 3 :color @org-agenda-today-bg)
+   :foreground @org-agenda-today-fg
+   :background @org-agenda-today-bg)
+  (org-special-keyword
+   :inherit fixed-pitch
+   :foreground @org-special-keyword)
+  (org-scheduled-previously
+   :foreground @org-sched-prev)
+  (org-agenda-done
+   :foreground @org-agenda-done)
+  (org-footnote
+   :foreground @link)
+)
+#+END_SRC
+
+* Instantiate structure using color palette
+
+This block resolves the =@=-prefixed variables of the theme structure using a given table of colors.
+
+#+NAME: theme-generator
+#+BEGIN_SRC emacs-lisp :var palette='() structure=structure theme-name=""
+(defun process (x)
+  (cond
+   ((not x)                                     '())
+   ((listp x)                                   (cons (process (car x)) (process (cdr x))))
+   ((and (symbolp x)
+         (string-prefix-p "@" (symbol-name x))) (cadr (assoc (substring (symbol-name x) 1) (cdr palette))))
+   (t                                           x)))
+   
+(print `(apply
+          'custom-theme-set-faces
+          ',(make-symbol theme-name)
+          ',(mapcar (lambda (x) `(,(car x) ((t ,(cdr x)))))
+                    (process structure)))))
+
+#+END_SRC
+
