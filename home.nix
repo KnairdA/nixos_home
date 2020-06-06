@@ -25,6 +25,7 @@
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
+    lfs.enable = true;
 
     userName  = "Adrian Kummerlaender";
     userEmail = "adrian@kummerlaender.eu";
