@@ -20,70 +20,71 @@ For quick iteration all colors are stored in a table.
 #+END_SRC
 * Colors
 #+NAME: akr-palette
-| Label                     | Color   |
-| fg                        | #F2F2F2 |
-| bg                        | #161616 |
-| emph                      | #eeeeee |
-| sep                       | #444444 |
-| hlt                       | #000000 |
-| bg-hlt                    | #8C3346 |
-| muted                     | #F2F2F2 |
-| meta                      | #ede7dd |
-| link                      | #AADB0F |
-| link-underline            | #AADB0F |
-| header                    | #AADB0F |
-| button                    | #aaaaaa |
-| glyph                     | #f7ffd1 |
-| cursor                    | #AADB0F |
-| paren-match-fg            | #161616 |
-| paren-match-bg            | #AADB0F |
-| search-fg                 | #161616 |
-| search-bg                 | #909636 |
-| search-fail-bg            | #8C3346 |
-| tooltip-fg                | #161616 |
-| tooltip-bg                | #909636 |
-| shadow                    | #9E9E9E |
-| secondary-bg              | #080808 |
-| trailing-bg               | #8C3346 |
-| lazy-hlt-fg               | #000000 |
-| lazy-hlt-bg               | #ffffff |
-| evil-rep-fg               | #F2F2F2 |
-| evil-rep-bg               | #161616 |
-| mode-line-fg              | #909636 |
-| header-line-bg            | #080808 |
-| mode-line-hlt             | #000000 |
-| mode-line-inactive        | #9E9E9E |
-| error                     | #8C3346 |
-| builtin                   | #AADB0F |
-| string                    | #AADB0F |
-| function-name             | #F2F2F2 |
-| keyword                   | #F2F2F2 |
-| constant                  | #F2F2F2 |
-| type                      | #AADB0F |
-| variable                  | #F2F2F2 |
-| org-meta                  | #E4E093 |
-| org-document-info         | #E4E093 |
-| org-table                 | #080808 |
-| org-quote-fg              | #F2F2F2 |
-| org-quote-bg              | #080808 |
-| org-date                  | #c6b6ad |
-| org-title                 | #AADB0F |
-| org-title-underline       | #F2F2F2 |
-| org-checkbox              | #999999 |
-| org-scheduled             | #dddddd |
-| org-scheduled-today       | #ffffff |
-| org-done                  | #909636 |
-| org-todo                  | #8C3346 |
-| org-tag                   | #F2F2F2 |
-| org-block-line            | #080808 |
-| org-block-bg              | #080808 |
-| org-agenda-structure-fg   | #aaaaaa |
-| org-agenda-structure-bg   | #080808 |
-| org-agenda-today-fg       | #dddddd |
-| org-agenda-today-bg       | #000000 |
-| org-special-keyword       | #777777 |
-| org-sched-prev            | #8C3346 |
-| org-agenda-done           | #909636 |
+| Label                   | Color   |
+| fg                      | #F2F2F2 |
+| bg                      | #161616 |
+| emph                    | #eeeeee |
+| sep                     | #444444 |
+| hlt                     | #000000 |
+| bg-hlt                  | #8C3346 |
+| muted                   | #F2F2F2 |
+| meta                    | #ede7dd |
+| link                    | #AADB0F |
+| link-underline          | #AADB0F |
+| header                  | #AADB0F |
+| button                  | #aaaaaa |
+| glyph                   | #f7ffd1 |
+| cursor                  | #AADB0F |
+| paren-match-fg          | #161616 |
+| paren-match-bg          | #AADB0F |
+| search-fg               | #161616 |
+| search-bg               | #909636 |
+| search-fail-bg          | #8C3346 |
+| tooltip-fg              | #161616 |
+| tooltip-bg              | #909636 |
+| shadow                  | #9E9E9E |
+| secondary-bg            | #080808 |
+| trailing-bg             | #8C3346 |
+| lazy-hlt-fg             | #000000 |
+| lazy-hlt-bg             | #ffffff |
+| evil-rep-fg             | #F2F2F2 |
+| evil-rep-bg             | #161616 |
+| header-line-bg          | #080808 |
+| mode-line-fg            | #909636 |
+| mode-line-hlt           | #000000 |
+| mode-line-inactive      | #9E9E9E |
+| error                   | #8C3346 |
+| builtin                 | #AADB0F |
+| string                  | #AADB0F |
+| function-name           | #F2F2F2 |
+| keyword                 | #AADB0F |
+| constant                | #F2F2F2 |
+| type                    | #AADB0F |
+| variable                | #F2F2F2 |
+| preprocessor            | #F2F2F2 |
+| org-meta                | #E4E093 |
+| org-document-info       | #E4E093 |
+| org-table               | #080808 |
+| org-quote-fg            | #F2F2F2 |
+| org-quote-bg            | #080808 |
+| org-date                | #c6b6ad |
+| org-title               | #AADB0F |
+| org-title-underline     | #F2F2F2 |
+| org-checkbox            | #999999 |
+| org-scheduled           | #dddddd |
+| org-scheduled-today     | #ffffff |
+| org-done                | #909636 |
+| org-todo                | #D80F32 |
+| org-tag                 | #F2F2F2 |
+| org-block-line          | #080808 |
+| org-block-bg            | #080808 |
+| org-agenda-structure-fg | #aaaaaa |
+| org-agenda-structure-bg | #080808 |
+| org-agenda-today-fg     | #dddddd |
+| org-agenda-today-bg     | #000000 |
+| org-special-keyword     | #777777 |
+| org-sched-prev          | #8C3346 |
+| org-agenda-done         | #909636 |
 
 * Structure
 #+NAME: structure
@@ -158,19 +159,20 @@ For quick iteration all colors are stored in a table.
    :weight bold
    :foreground @meta)
 
- ;; Mode Line
-  (mode-line
-   :inherit fixed-pitch
-   :foreground @mode-line-fg
-   :background @bg
-   :overline @sep
-   :box (:line-width 3 :color @bg))
+;; Header Line
   (header-line
    :overline nil
    :background @header-line-bg
    :box (:line-width 3 :color @header-line-bg)
    :underline @sep
    :inherit mode-line)
+
+ ;; Mode Line
+  (mode-line
+   :inherit fixed-pitch
+   :foreground @mode-line-fg
+   :background @bg
+   :overline @sep)
   (mode-line-buffer-id
    :weight bold)
   (mode-line-emphasis
@@ -181,7 +183,7 @@ For quick iteration all colors are stored in a table.
    :inherit mode-line
    :background @bg
    :foreground @mode-line-inactive
-   :box (:color @bg :line-width 3))
+   :overline @sep)
 
 ;; Syntax
   (error
@@ -202,6 +204,7 @@ For quick iteration all colors are stored in a table.
    :foreground @function-name)
   (font-lock-keyword-face
    :inherit fixed-pitch
+   :inherit bold
    :foreground @keyword)
   (font-lock-comment-delimiter-face
    :inherit fixed-pitch
@@ -214,7 +217,7 @@ For quick iteration all colors are stored in a table.
    :inherit font-lock-string-face)
   (font-lock-preprocessor-face
    :inherit fixed-pitch
-   :inherit font-lock-builtin-face)
+   :foreground @preprocessor)
   (font-lock-regexp-grouping-backslash
    :inherit fixed-pitch
    :inherit bold)

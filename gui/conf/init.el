@@ -24,6 +24,10 @@
 
 (load-library "akr-theme")
 
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+
 (use-package evil
   :ensure t
   :init
@@ -54,7 +58,7 @@
 
 (custom-theme-set-faces
  'user
- '(variable-pitch ((t (:family "Source Sans Pro"))))
+ '(variable-pitch ((t (:family "Source Sans Pro" :height 1.1))))
  '(fixed-pitch ((t ( :family "Iosevka")))))
 
 (setq browse-url-browser-function 'eww-browse-url) 
@@ -89,7 +93,8 @@
 (use-package org-bullets
   :ensure t
   :config
-  (setq org-bullets-bullet-list '("◉" "○"))
+  (setq org-bullets-bullet-list '("●"))
+  ;(setq org-bullets-bullet-list '("●" "◉" "◎"))
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
 (use-package deft
@@ -170,3 +175,16 @@
 
 (use-package rainbow-mode
   :ensure t)
+
+(use-package magit
+  :ensure t)
+
+(use-package fzf
+  :ensure t
+  :config
+  (define-key evil-normal-state-map (kbd "C-p") 'fzf-git-files))
+
+(use-package modern-cpp-font-lock
+  :ensure t
+  :config
+  (modern-c++-font-lock-global-mode t))
