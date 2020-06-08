@@ -207,15 +207,17 @@
 (use-package ag
   :ensure t)
 
-(defun hide-banner ()
+(defun copyright-message-p ()
+  "Returns t when the current buffer starts with a Copyright note"
   (save-excursion
-    (let* ((start (progn (beginning-of-buffer) (point)))
-           (end (progn (forward-comment (buffer-size)) (point)))
-           (header-comment-hider (make-overlay start end)))
-      (overlay-put header-comment-hider 'invisible t))))
+    (goto-char (point-min))
+    (looking-at "\\s */\\*\\(:?\\s \\|\\*\\)*\\(This file\\|Copyright\\)\\b")))
 
-(defun unhide-banner ()
+(defun hide-copyright-note ()
+  "Tries to narrow the current buffer so that the copyright comment is hidden"
   (interactive)
-  (delete-overlay 'header-comment-hider))
-
-(add-hook  'c-mode-common-hook 'hide-banner)
+  (when (copyright-message-p)
+    (save-excursion
+      (let* ((start (progn (goto-char (point-min)) (forward-comment (buffer-size)) (point)))
+	     (end   (progn (end-of-buffer) (point))))
+        (narrow-to-region start end)))))
