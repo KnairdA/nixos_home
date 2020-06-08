@@ -194,11 +194,6 @@
   :config
   (define-key evil-normal-state-map (kbd "C-p") 'fzf-git-files))
 
-(use-package modern-cpp-font-lock
-  :ensure t
-  :config
-  (modern-c++-font-lock-global-mode t))
-
 (use-package counsel-etags
   :ensure t
   :config
