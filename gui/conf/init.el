@@ -3,6 +3,10 @@
 
 (setq backup-directory-alist `((".*" . "~/.emacs.d/backup")))
 
+(setq custom-file "~/.emacs.d/custom.el")
+(if (file-exists-p custom-file)
+    (load custom-file))
+
 (setq user-full-name "Adrian Kummerlaender"
       user-mail-address "adrian@kummerlaender.eu")
 
@@ -11,6 +15,11 @@
 (toggle-scroll-bar -1) 
 (tool-bar-mode -1) 
 (global-visual-line-mode t)
+
+(add-hook 'prog-mode-hook 'linum-mode)
+
+(setq mouse-wheel-scroll-amount '(5))
+(setq mouse-wheel-progressive-speed nil)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -22,11 +31,18 @@
 
 (eval-when-compile (require 'use-package))
 
+(set-face-attribute 'default        nil :family "Iosevka")
+(set-face-attribute 'fixed-pitch    nil :family "Iosevka")
+(set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.1)
+
 (load-library "akr-theme")
 
 (use-package doom-modeline
   :ensure t
-  :init (doom-modeline-mode 1))
+  :init
+  (doom-modeline-mode 1)
+  :config
+  (setq doom-modeline-vcs-max-length 24))
 
 (use-package evil
   :ensure t
@@ -51,16 +67,6 @@
   :mode "\\.pdf$"
   :config (pdf-tools-install))
 
-(use-package mixed-pitch
-  :ensure t
-  :hook
-  (text-mode . mixed-pitch-mode))
-
-(custom-theme-set-faces
- 'user
- '(variable-pitch ((t (:family "Source Sans Pro" :height 1.1))))
- '(fixed-pitch ((t ( :family "Iosevka")))))
-
 (setq browse-url-browser-function 'eww-browse-url) 
 
 (use-package nix-buffer
@@ -69,12 +75,13 @@
 (use-package org
   :ensure t
   :config
-  (setq org-fontify-whole-heading-line t)
   (setq org-adapt-indentation nil)
+  (setq org-startup-indented t)
   (setq org-hide-emphasis-markers t)
   (setq org-default-notes-file "~/org/inbox.org")
   (setq org-agenda-files '("~/org"))
-  (setq org-link-frame-setup '((file . find-file)))) ; open links in same frame
+  (setq org-link-frame-setup '((file . find-file))) ; open links in same frame
+  (add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1))))
 
 (setq org-todo-keywords
   '((sequence "TODO(t)" "|" "DONE(d)")
@@ -126,6 +133,8 @@
   :ensure t
   :config
   (setq ivy-use-virtual-buffers t)
+  (setq ivy-re-builders-alist
+        '((t . ivy--regex-plus)))
   (ivy-mode 1))
 
 (use-package swiper :ensure t)
@@ -170,7 +179,7 @@
   "e" 'org-babel-execute-src-block
   "l" 'org-deft-insert-link)
 
-(use-package interleave
+(use-package org-noter
   :ensure t)
 
 (use-package rainbow-mode
@@ -188,3 +197,25 @@
   :ensure t
   :config
   (modern-c++-font-lock-global-mode t))
+
+(use-package counsel-etags
+  :ensure t
+  :config
+  (evil-leader/set-key
+    "d" 'counsel-etags-find-tag-at-point))
+
+(use-package ag
+  :ensure t)
+
+(defun hide-banner ()
+  (save-excursion
+    (let* ((start (progn (beginning-of-buffer) (point)))
+           (end (progn (forward-comment (buffer-size)) (point)))
+           (header-comment-hider (make-overlay start end)))
+      (overlay-put header-comment-hider 'invisible t))))
+
+(defun unhide-banner ()
+  (interactive)
+  (delete-overlay 'header-comment-hider))
+
+(add-hook  'c-mode-common-hook 'hide-banner)
