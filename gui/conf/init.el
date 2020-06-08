@@ -209,17 +209,5 @@
 (use-package ag
   :ensure t)
 
-(defun copyright-message-p ()
-  "Returns t when the current buffer starts with a Copyright note"
-  (save-excursion
-    (goto-char (point-min))
-    (looking-at "\\s */\\*\\(:?\\s \\|\\*\\)*\\(This file\\|Copyright\\)\\b")))
-
-(defun hide-copyright-note ()
-  "Tries to narrow the current buffer so that the copyright comment is hidden"
-  (interactive)
-  (when (copyright-message-p)
-    (save-excursion
-      (let* ((start (progn (goto-char (point-min)) (forward-comment (buffer-size)) (point)))
-	     (end   (progn (end-of-buffer) (point))))
-        (narrow-to-region start end)))))
+(add-hook 'c-mode-common-hook 'hs-minor-mode t)
+(add-hook 'c-mode-common-hook 'hs-hide-initial-comment-block t)
