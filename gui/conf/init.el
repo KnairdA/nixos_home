@@ -58,6 +58,9 @@
   (global-evil-leader-mode 1)
   (evil-leader/set-leader ","))
 
+(evil-leader/set-key
+  "s" 'evil-ex-nohighlight)
+
 (use-package darkroom
   :ensure t
   :config
@@ -146,10 +149,13 @@
   (deft)
   (evil-insert-state))
 
-(define-key evil-normal-state-map (kbd "C-b") 'ivy-switch-buffer)
-(define-key evil-normal-state-map (kbd "C-f") 'counsel-find-file)
-(define-key evil-normal-state-map (kbd "C-n") 'go-to-deft)
-(define-key evil-normal-state-map (kbd "M-<tab>") 'next-buffer)
+(evil-define-key 'normal 'global
+  "J" 'evil-forward-paragraph
+  "K" 'evil-backward-paragraph
+  (kbd "C-b")     'ivy-switch-buffer
+  (kbd "C-f")     'counsel-find-file
+  (kbd "C-n")     'go-to-deft
+  (kbd "M-<tab>") 'next-buffer)
 
 (defun switch-to-last-buffer ()
   (interactive)
