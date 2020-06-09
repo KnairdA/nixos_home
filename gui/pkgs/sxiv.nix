@@ -1,15 +1,12 @@
-{ pkgs, theme, ... }:
+{ pkgs, ... }:
 
 let
-  config = with theme; ''
+  config = ''
     #ifdef _WINDOW_CONFIG
       enum {
         WIN_WIDTH  = 800,
         WIN_HEIGHT = 600
       };
-      static const char * const BAR_FONT = "${font_name}:size=${font_size}";
-      static const char * const BG_COLOR = "${bg}";
-      static const char * const FG_COLOR = "${fg}";
     #endif
     #ifdef _IMAGE_CONFIG
       static const float zoom_levels[] = {

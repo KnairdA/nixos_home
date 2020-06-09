@@ -3,7 +3,7 @@
 {
   home = {
     packages = let
-      custom-sxiv = import ./sxiv.nix pkgs;
+      custom-sxiv = pkgs.callPackage ../pkgs/sxiv.nix { };
     in with pkgs; [
     # browser
       pcmanfm
@@ -41,4 +41,11 @@
       XDG_DOWNLOAD_DIR="$HOME/downloads/"
     '';
   };
+
+# sxiv config
+  xresources.extraConfig = ''
+    Sxiv.font: Iosevka:size=12
+    Sxiv.foreground: #909636
+    Sxiv.background: #161616
+  '';
 }
