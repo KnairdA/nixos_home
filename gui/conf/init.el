@@ -94,6 +94,7 @@
 
 (add-hook 'org-mode-hook 'visual-line-mode)
 
+(setq org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 (evil-leader/set-key
   "p" 'org-latex-preview)
