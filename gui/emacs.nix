@@ -14,6 +14,28 @@
         mv akr-theme.el $out/share/emacs/site-lisp/
       '';
     };
+
+    custom-runtime-env-el = let
+      tex = pkgs.texlive.combine {
+        inherit (pkgs.texlive) scheme-small dvipng;
+      };
+    in pkgs.writeTextFile {
+      name = "custom-runtime-env.el";
+      text = ''
+        (setenv "PATH" (concat (getenv "PATH") ":${tex}/bin"))
+        (add-to-list 'exec-path "${tex}/bin")
+      '';
+    };
+
+    custom-runtime-env = pkgs.stdenv.mkDerivation {
+      name = "emacs-custom-runtime-env";
+      phases = [ "installPhase" ];
+
+      installPhase = ''
+        mkdir -p $out/share/emacs/site-lisp
+        cp ${custom-runtime-env-el} $out/share/emacs/site-lisp/custom-runtime-env.el
+      '';
+    };
   in {
     enable = true;
 
@@ -21,6 +43,7 @@
       pdf-tools
     ] ++ [
       akr-color-theme
+      custom-runtime-env
     ];
   };
 

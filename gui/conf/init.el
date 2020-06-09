@@ -36,6 +36,7 @@
 (set-face-attribute 'fixed-pitch    nil :family "Iosevka")
 (set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.1)
 
+(load-library "custom-runtime-env")
 (load-library "akr-theme")
 
 (use-package doom-modeline
@@ -92,6 +93,15 @@
     (sequence "EXAM(e)" "|" "DONE(d)")))
 
 (add-hook 'org-mode-hook 'visual-line-mode)
+
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+(evil-leader/set-key
+  "p" 'org-latex-preview)
+
+(use-package org-fragtog
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook 'org-fragtog-mode))
 
 (custom-theme-set-faces
    'user
@@ -172,6 +182,7 @@
  'org-babel-load-languages
  '((python  . t)
    (shell   . t)
+   (latex   . t)
    (C       . t)))
 
 (setq org-confirm-babel-evaluate nil)
