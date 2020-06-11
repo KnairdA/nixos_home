@@ -59,9 +59,6 @@
   (global-evil-leader-mode 1)
   (evil-leader/set-leader ","))
 
-(evil-leader/set-key
-  "s" 'evil-ex-nohighlight)
-
 (use-package darkroom
   :ensure t
   :config
@@ -185,7 +182,11 @@
   "J" 'evil-forward-paragraph
   "K" 'evil-backward-paragraph
   (kbd "C-b")     'ivy-switch-buffer
+
   (kbd "C-f")     'counsel-find-file
+  (kbd "C-r")     'counsel-recentf
+  (kbd "C-p")     'counsel-git
+
   (kbd "C-n")     'go-to-deft
   (kbd "M-<tab>") 'next-buffer)
 
@@ -217,7 +218,8 @@
 
 (evil-leader/set-key
   "e" 'org-babel-execute-src-block
-  "l" 'org-deft-insert-link)
+  "l" 'org-deft-insert-link
+  "s" 'evil-ex-nohighlight)
 
 (use-package org-noter
   :ensure t)
@@ -227,11 +229,6 @@
 
 (use-package magit
   :ensure t)
-
-(use-package fzf
-  :ensure t
-  :config
-  (define-key evil-normal-state-map (kbd "C-p") 'fzf-git-files))
 
 (use-package counsel-etags
   :ensure t
