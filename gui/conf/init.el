@@ -94,6 +94,25 @@
   '((sequence "TODO(t)" "|" "DONE(d)")
     (sequence "EXAM(e)" "|" "DONE(d)")))
 
+(setq org-capture-templates
+  '(("t"
+     "Todo item"
+     entry
+     (file org-default-notes-file)
+     "* TODO %?\n%a")
+    ("j"
+     "Journal entry"
+     entry
+     (file org-default-notes-file)
+     "* %U %^{Title}\n%?")
+    ("s"
+     "Quote selection"
+     entry
+     (file org-default-notes-file)
+     "* %^{Description}\n%U\n#+BEGIN_QUOTE\n%i#+END_QUOTE")))
+
+(global-set-key (kbd "C-c c") 'org-capture)
+
 (add-hook 'org-mode-hook 'visual-line-mode)
 
 (setq org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
