@@ -247,3 +247,27 @@
 
 (add-hook 'c-mode-common-hook 'hs-minor-mode t)
 (add-hook 'c-mode-common-hook 'hs-hide-initial-comment-block t)
+
+(use-package projectile
+  :ensure t
+  :config
+  (setq projectile-completion-system 'ivy))
+
+(defun get-related-files ()
+  (let ((common-basename-files (seq-filter (lambda (file) (string= (file-name-sans-extension file) (file-name-base)))
+	 				   (directory-files "."))))
+    (sort (seq-remove (lambda (file) (string= file (buffer-name)))
+		      common-basename-files)
+	  #'string-greaterp)))
+
+(defun jump-to-related ()
+  (interactive)
+  (find-file (ivy-read "related:" (get-related-files))))
+
+(defun jump-to-first-related ()
+  (interactive)
+  (find-file (car (get-related-files))))
+
+(evil-define-key 'normal prog-mode-map
+  (kbd "<tab>") 'jump-to-first-related
+  (kbd "M-r")   'jump-to-related)
