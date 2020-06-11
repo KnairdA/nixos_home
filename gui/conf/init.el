@@ -74,6 +74,8 @@
 
 (setq browse-url-browser-function 'eww-browse-url) 
 
+(use-package nix-mode
+  :ensure t)
 (use-package nix-buffer
   :ensure t)
 
