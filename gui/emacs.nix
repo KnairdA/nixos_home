@@ -22,8 +22,11 @@
     in pkgs.writeTextFile {
       name = "custom-runtime-env.el";
       text = ''
-        (setenv "PATH" (concat (getenv "PATH") ":${tex}/bin"))
+        (setenv "PATH" (concat (getenv "PATH")
+	                             ":${tex}/bin"))
         (add-to-list 'exec-path "${tex}/bin")
+
+        (setq counsel-etags-update-tags-backend (lambda (src-dir) (shell-command "${pkgs.universal-ctags}/bin/ctags -e -R")))
       '';
     };
 

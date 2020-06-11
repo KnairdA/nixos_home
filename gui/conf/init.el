@@ -236,6 +236,12 @@
 (use-package counsel-etags
   :ensure t
   :config
+  (setq tags-revert-without-query t)
+  (setq large-file-warning-threshold nil)
+  (add-hook 'prog-mode-hook
+    (lambda ()
+      (add-hook 'after-save-hook
+                'counsel-etags-virtual-update-tags 'append 'local)))
   (evil-leader/set-key
     "d" 'counsel-etags-find-tag-at-point))
 
