@@ -220,6 +220,7 @@ commonKeybindings host =
   , ("N-S-s k"         , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
 
 -- workspace layout management
+  , ("M-y"           , refresh)
   , ("M-v"           , layoutMenu)
   , ("M-s l"         , sendMessage NextLayout)
   , ("M-s +"         , sendMessage $ IncMasterN   1)
