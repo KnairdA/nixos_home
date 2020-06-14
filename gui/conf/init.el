@@ -11,9 +11,9 @@
       user-mail-address "adrian@kummerlaender.eu")
 
 (set-frame-font "Iosevka 11" nil t)
-(menu-bar-mode -1) 
-(toggle-scroll-bar -1) 
-(tool-bar-mode -1) 
+(menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
 (global-visual-line-mode t)
 
 (add-hook 'prog-mode-hook 'linum-mode)
@@ -21,6 +21,16 @@
 (setq mouse-wheel-scroll-amount '(5))
 (setq mouse-wheel-progressive-speed nil)
 (setq fast-but-imprecise-scrolling t)
+
+(setq font-lock-support-mode 'jit-lock-mode)
+(setq jit-lock-stealth-time 16
+      jit-lock-defer-contextually t
+      jit-lock-stealth-nice 0.5)
+(setq-default font-lock-multiline t)
+
+(setq-default tab-width 2)
+(setq-default c-basic-offset 2)
+(setq-default python-indent-offset 4)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -69,7 +79,7 @@
   :mode "\\.pdf$"
   :config (pdf-tools-install))
 
-(setq browse-url-browser-function 'eww-browse-url) 
+(setq browse-url-browser-function 'eww-browse-url)
 
 (use-package nix-mode
   :ensure t)
@@ -82,6 +92,7 @@
   (setq org-adapt-indentation nil)
   (setq org-startup-indented t)
   (setq org-hide-emphasis-markers t)
+  (setq org-src-preserve-indentation t)
   (setq org-default-notes-file "~/org/inbox.org")
   (setq org-agenda-files '("~/org"))
   (setq org-link-frame-setup '((file . find-file))) ; open links in same frame
@@ -251,14 +262,17 @@
 (use-package projectile
   :ensure t
   :config
-  (setq projectile-completion-system 'ivy))
+  (setq projectile-completion-system 'ivy)
+  (setq projectile-project-search-path '("~/projects/dev"
+																				 "~/projects/contrib"
+																				 "~/projects/playground")))
 
 (defun get-related-files ()
   (let ((common-basename-files (seq-filter (lambda (file) (string= (file-name-sans-extension file) (file-name-base)))
-	 				   (directory-files "."))))
+																					 (directory-files "."))))
     (sort (seq-remove (lambda (file) (string= file (buffer-name)))
-		      common-basename-files)
-	  #'string-greaterp)))
+											common-basename-files)
+					#'string-greaterp)))
 
 (defun jump-to-related ()
   (interactive)
