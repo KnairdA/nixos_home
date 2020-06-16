@@ -67,6 +67,9 @@
   (setq doom-modeline-vcs-max-length 24)
   (setq doom-modeline-minor-modes t))
 
+(use-package hydra
+  :ensure t)
+
 (use-package evil
   :ensure t
   :init
@@ -179,9 +182,20 @@
   (add-hook 'org-mode-hook 'evil-org-mode)
   (evil-org-set-key-theme '(navigation insert textobjects additional todo)))
 
+(defhydra hydra-org-mode ()
+  "Org mode"
+  ("e" org-babel-execute-buffer "Execute buffer" :column "Babel")
+  ("t" org-babel-tangle         "Tangle"         :column "Babel")
+
+  ("i" org-toggle-inline-images "Toggle images"  :column "Preview")
+  ("l" org-latex-preview        "Toggle LaTeX"   :column "Preview")
+
+  ("q" nil "Exit menu" :column "Other"))
+
 (evil-define-key 'normal org-mode-map
   "J" 'org-next-visible-heading
   "K" 'org-previous-visible-heading
+  "m" 'hydra-org-mode/body
   (kbd "<return>") 'org-open-at-point)
 
 (use-package ivy
