@@ -12,6 +12,7 @@
         rm metakr.org
         mkdir -p $out/share/emacs/site-lisp
         mv akr-theme.el $out/share/emacs/site-lisp/
+        ${pkgs.emacs}/bin/emacs -batch -f batch-byte-compile $out/share/emacs/site-lisp/*.el
       '';
     };
 
@@ -23,7 +24,7 @@
       name = "custom-runtime-env.el";
       text = ''
         (setenv "PATH" (concat (getenv "PATH")
-	                             ":${tex}/bin"))
+                               ":${tex}/bin"))
         (add-to-list 'exec-path "${tex}/bin")
 
         (setq counsel-etags-update-tags-backend (lambda (src-dir) (shell-command "${pkgs.universal-ctags}/bin/ctags -e -R")))
@@ -53,6 +54,7 @@
   home.packages = with pkgs; [
     source-sans-pro
     source-serif-pro
+    emacs-all-the-icons-fonts
   ];
 
   # see https://github.com/rycee/home-manager/issues/589#issuecomment-466594137
