@@ -16,8 +16,6 @@
 (tool-bar-mode -1)
 (global-visual-line-mode t)
 
-(add-hook 'prog-mode-hook 'linum-mode)
-
 (setq mouse-wheel-scroll-amount '(5))
 (setq mouse-wheel-progressive-speed nil)
 (setq fast-but-imprecise-scrolling t)
@@ -28,9 +26,12 @@
       jit-lock-stealth-nice 0.5)
 (setq-default font-lock-multiline t)
 
+(setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq-default c-basic-offset 2)
 (setq-default python-indent-offset 4)
+
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
