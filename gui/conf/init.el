@@ -33,6 +33,10 @@
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
+(global-set-key (kbd "<M-tab>") 'next-buffer)
+(global-set-key (kbd "<M-iso-lefttab>") 'previous-buffer)
+(global-set-key (kbd "<C-tab>") 'other-window)
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
@@ -205,8 +209,7 @@
   (kbd "C-r")     'counsel-recentf
   (kbd "C-p")     'counsel-git
 
-  (kbd "C-n")     'go-to-deft
-  (kbd "M-<tab>") 'next-buffer)
+  (kbd "C-n")     'go-to-deft)
 
 (defun switch-to-last-buffer ()
   (interactive)
