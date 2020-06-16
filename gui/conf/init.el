@@ -50,12 +50,18 @@
 (load-library "custom-runtime-env")
 (load-library "akr-theme")
 
+(use-package minions
+  :ensure t
+  :config
+  (minions-mode 1))
+
 (use-package doom-modeline
   :ensure t
   :init
   (doom-modeline-mode 1)
   :config
-  (setq doom-modeline-vcs-max-length 24))
+  (setq doom-modeline-vcs-max-length 24)
+  (setq doom-modeline-minor-modes t))
 
 (use-package evil
   :ensure t
