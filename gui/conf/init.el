@@ -110,6 +110,10 @@
   (setq org-default-notes-file "~/org/inbox.org")
   (setq org-agenda-files '("~/org"))
   (setq org-link-frame-setup '((file . find-file))) ; open links in same frame
+  (setq org-goto-interface 'outline-path-completion)
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-src-window-setup 'current-window)
+  (define-key org-mode-map (kbd "<C-tab>") nil)
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1))))
 
 (setq org-todo-keywords
@@ -139,8 +143,6 @@
 
 (setq org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
-(evil-leader/set-key
-  "p" 'org-latex-preview)
 
 (use-package org-fragtog
   :ensure t
@@ -190,6 +192,10 @@
   ("i" org-toggle-inline-images "Toggle images"  :column "Preview")
   ("l" org-latex-preview        "Toggle LaTeX"   :column "Preview")
 
+  ("s" org-time-stamp-inactive  "Timestamp (inactive)" :column "Fragments")
+
+  ("h" org-html-export-to-html  "HTML export" :column "Export")
+
   ("q" nil "Exit menu" :column "Other"))
 
 (evil-define-key 'normal org-mode-map
@@ -197,6 +203,10 @@
   "K" 'org-previous-visible-heading
   "m" 'hydra-org-mode/body
   (kbd "<return>") 'org-open-at-point)
+
+(evil-leader/set-key-for-mode 'org-mode
+  "c" 'org-edit-src-code
+  "g" 'org-goto)
 
 (use-package ivy
   :ensure t
