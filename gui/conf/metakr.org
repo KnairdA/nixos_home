@@ -85,6 +85,7 @@ For quick iteration all colors are stored in a table.
 | org-special-keyword     | #777777 |
 | org-sched-prev          | #8C3346 |
 | org-agenda-done         | #909636 |
+| eshell-prompt           | #AADB0F |
 
 * Structure
 #+NAME: structure
@@ -330,6 +331,10 @@ For quick iteration all colors are stored in a table.
    :foreground @org-agenda-done)
   (org-footnote
    :foreground @link)
+   
+;; Eshell
+  (eshell-prompt
+   :foreground @eshell-prompt)
 )
 #+END_SRC
 

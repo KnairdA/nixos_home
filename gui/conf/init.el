@@ -319,3 +319,8 @@
 (evil-define-key 'normal prog-mode-map
   (kbd "<tab>") 'jump-to-first-related
   (kbd "M-r")   'jump-to-related)
+
+(add-hook 'eshell-mode-hook
+  (lambda () 
+    (define-key eshell-mode-map (kbd "<tab>")
+      (lambda () (interactive) (completion-at-point)))))
