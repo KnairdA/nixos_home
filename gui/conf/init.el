@@ -54,6 +54,19 @@
 (load-library "custom-runtime-env")
 (load-library "akr-theme")
 
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-search-module 'evil-search)
+  :config
+  (evil-mode 1))
+
+(use-package evil-leader
+  :ensure t
+  :config
+  (global-evil-leader-mode 1)
+  (evil-leader/set-leader ","))
+
 (use-package minions
   :ensure t
   :config
@@ -67,21 +80,21 @@
   (setq doom-modeline-vcs-max-length 24)
   (setq doom-modeline-minor-modes t))
 
+(setq dired-listing-switches "-Bahl --group-directories-first")
+
+(use-package all-the-icons-dired
+  :ensure t
+  :config
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+
+(use-package dired-subtree
+  :ensure t
+  :config
+  (evil-define-key 'normal dired-mode-map
+    (kbd "TAB") 'dired-subtree-toggle))
+
 (use-package hydra
   :ensure t)
-
-(use-package evil
-  :ensure t
-  :init
-  (setq evil-search-module 'evil-search)
-  :config
-  (evil-mode 1))
-
-(use-package evil-leader
-  :ensure t
-  :config
-  (global-evil-leader-mode 1)
-  (evil-leader/set-leader ","))
 
 (use-package darkroom
   :ensure t
