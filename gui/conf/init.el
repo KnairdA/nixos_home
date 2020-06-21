@@ -10,11 +10,17 @@
 (setq user-full-name "Adrian Kummerlaender"
       user-mail-address "adrian@kummerlaender.eu")
 
-(set-frame-font "Iosevka 11" nil t)
-(menu-bar-mode -1)
-(toggle-scroll-bar -1)
-(tool-bar-mode -1)
-(global-visual-line-mode t)
+(defun startup (frame)
+  (select-frame frame)
+  (set-frame-font "Iosevka 11" nil t)
+  (menu-bar-mode -1)
+  (toggle-scroll-bar -1)
+  (tool-bar-mode -1)
+  (global-visual-line-mode t))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions #'startup)
+  (startup (selected-frame)))
 
 (setq mouse-wheel-scroll-amount '(5))
 (setq mouse-wheel-progressive-speed nil)
@@ -77,6 +83,7 @@
   :init
   (doom-modeline-mode 1)
   :config
+  (setq doom-modeline-icon t)
   (setq doom-modeline-vcs-max-length 24)
   (setq doom-modeline-minor-modes t))
 

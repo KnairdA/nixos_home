@@ -118,7 +118,7 @@ scratchpads host =
        (customFloating $ hideScreenBorder host sideBarLeft)
   , NS "messaging"     "telegram-desktop"                                      ((className =? "TelegramDesktop") <&&> (title /=? "Media viewer"))
        (customFloating $ hideScreenBorder host sideBarRight)
-  , NS "notes"         "emacs --title=notemacs ~/org/inbox.org"                (title =? "notemacs")
+  , NS "notes"         "emacsclient --create-frame --frame-parameters='(quote (name . \"notemacs\"))' ~/org/inbox.org" (title =? "notemacs")
        (customFloating $ hideScreenBorder host dropDownLarge)
   ]
 
@@ -163,7 +163,7 @@ commonKeybindings host =
 -- application launchers
   , ("M-<Space>"     , spawn "rofi -show combi")
   , ("M-<Return>"    , spawn "kitty")
-  , ("M-S-<Return>"  , spawn "nvim-qt --no-ext-tabline")
+  , ("M-S-<Return>"  , spawn "emacsclient --create-frame")
   , ("<Print>"       , spawn "flameshot gui")
 
 -- password management

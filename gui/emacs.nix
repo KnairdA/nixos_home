@@ -62,4 +62,9 @@
     mkdir -p ~/.emacs.d
     ln -s ${toString ./conf/init.el} ~/.emacs.d/init.el
   '';
+
+  services.emacs = {
+    enable = true;
+    client.enable = true;
+  };
 }
