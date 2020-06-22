@@ -63,6 +63,8 @@
     ln -s ${toString ./conf/init.el} ~/.emacs.d/init.el
   '';
 
+  systemd.user.services.emacs.Service.ExecStart = pkgs.lib.mkForce "${pkgs.runtimeShell} -l -c 'exec emacs --fg-daemon'";
+
   services.emacs = {
     enable = true;
     client.enable = true;
