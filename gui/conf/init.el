@@ -252,6 +252,7 @@
   (kbd "C-f")     'counsel-find-file
   (kbd "C-r")     'counsel-recentf
   (kbd "C-p")     'counsel-git
+  (kbd "C-t")     'counsel-etags-list-tag
 
   (kbd "C-n")     'go-to-deft)
 
