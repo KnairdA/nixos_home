@@ -65,4 +65,7 @@
     ns  = "persistent-nix-shell -s";
     cat = "bat --plain";
   };
+
+  programs.direnv.enable = true;
+  programs.direnv.enableNixDirenvIntegration = true;
 }

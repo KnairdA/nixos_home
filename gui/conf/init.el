@@ -117,8 +117,12 @@
 
 (use-package nix-mode
   :ensure t)
-(use-package nix-buffer
-  :ensure t)
+
+(use-package direnv
+  :ensure t
+  :config
+  (setq direnv-always-show-summary nil)
+  (direnv-mode))
 
 (use-package org
   :ensure t
