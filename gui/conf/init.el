@@ -234,7 +234,10 @@
 
 (evil-leader/set-key-for-mode 'org-mode
   "c" 'org-edit-src-code
+  "p" 'org-insert-link
   "g" 'org-goto)
+
+(global-set-key (kbd "<f12>") 'org-store-link)
 
 (use-package ivy
   :ensure t
@@ -360,6 +363,7 @@
         send-mail-function 'smtpmail-send-it
         message-sendmail-f-is-evil t
         message-send-mail-function 'message-send-mail-with-sendmail)
+  (require 'org-mu4e)
   (evil-collection-init 'mu4e))
 
 (setq mu4e-contexts
