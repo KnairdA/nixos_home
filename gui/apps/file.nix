@@ -42,6 +42,15 @@
     '';
   };
 
+  xdg.mimeApps.defaultApplications = {
+    "application/pdf" = [ "org.gnome.Evince.desktop" ];
+
+    "image/png" = [ "sxiv.desktop" ];
+    "image/jpg" = [ "sxiv.desktop" ];
+
+    "video/mp4" = [ "mpv.desktop" ];
+  };
+
 # sxiv config
   xresources.extraConfig = ''
     Sxiv.font: Iosevka:size=12
