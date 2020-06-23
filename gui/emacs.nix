@@ -48,6 +48,7 @@
     ] ++ [
       akr-color-theme
       custom-runtime-env
+      pkgs.mu
     ];
   };
 

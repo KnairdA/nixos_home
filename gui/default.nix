@@ -9,8 +9,10 @@ in {
     ./kitty.nix
     ./vim.nix
     ./emacs.nix
+    ./email.nix
     ./zathura.nix
     ./pass.nix
+
   # applications grouped by purpose
     ./apps/file.nix
     ./apps/web.nix
