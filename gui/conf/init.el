@@ -134,6 +134,7 @@
   (setq org-startup-indented t)
   (setq org-hide-emphasis-markers t)
   (setq org-src-preserve-indentation t)
+  (setq org-src-tab-acts-natively t)
   (setq org-default-notes-file "~/org/inbox.org")
   (setq org-agenda-files '("~/org"))
   (setq org-link-frame-setup '((file . find-file))) ; open links in same frame
@@ -290,7 +291,7 @@
   (org-insert-link nil (concat "file:" file) (file-name-base file)))
 
 (evil-leader/set-key
-  "e" 'org-babel-execute-src-block
+  "e" 'org-ctrl-c-ctrl-c
   "l" 'org-deft-insert-link
   "s" 'evil-ex-nohighlight)
 
