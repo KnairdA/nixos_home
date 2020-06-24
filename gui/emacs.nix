@@ -56,6 +56,7 @@
     source-sans-pro
     source-serif-pro
     emacs-all-the-icons-fonts
+    mu
   ];
 
   # see https://github.com/rycee/home-manager/issues/589#issuecomment-466594137

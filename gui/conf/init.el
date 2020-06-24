@@ -356,15 +356,26 @@
 (use-package mu4e
   :config
   (setq mu4e-maildir "~/mail")
-  (setq mu4e-get-mail-command "mbsync -a")
+  (setq mu4e-get-mail-command "true")
+  (setq mu4e-index-cleanup nil)
+  (setq mu4e-index-lazy-check t)
+  (setq mu4e-update-interval 120)
   (setq mu4e-use-fancy-chars t)
+  (setq mu4e-headers-attach-mark '("a" . "@")) ; alignment fix
   (setq mu4e-change-filenames-when-moving t)
   (setq sendmail-program "msmtp"
         send-mail-function 'smtpmail-send-it
         message-sendmail-f-is-evil t
         message-send-mail-function 'message-send-mail-with-sendmail)
   (require 'org-mu4e)
-  (evil-collection-init 'mu4e))
+  (evil-collection-init 'mu4e)
+  (setq doom-modeline-mu4e t))
+
+(use-package mu4e-alert
+  :ensure t
+  :config
+  (mu4e-alert-set-default-style 'libnotify)
+  (add-hook 'after-init-hook #'mu4e-alert-enable-notifications))
 
 (setq mu4e-contexts
       `(,(make-mu4e-context

@@ -53,11 +53,13 @@
     };
   };
 
+  systemd.user.startServices = true;
+
   services.gpg-agent = {
     enable = true;
-    defaultCacheTtl     = 120;
+    defaultCacheTtl     = 43200;
     enableSshSupport    = true;
-    defaultCacheTtlSsh  = 600;
+    defaultCacheTtlSsh  = 43200;
     enableScDaemon      = false;
   };
 

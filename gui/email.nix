@@ -14,7 +14,7 @@
       address  = "adrian@kummerlaender.eu";
 
       userName = "adrian@kummerlaender.eu";
-      passwordCommand = "pass it/automatix_mail";
+      passwordCommand = "${pkgs.pass}/bin/pass it/automatix_mail";
 
       gpg = {
         key = "61F4C67D12636E70AFB10C3D83E758150AB49859";
@@ -44,7 +44,7 @@
       address = "adrian.kummerlaender@student.kit.edu";
 
       userName = "urdzx@student.kit.edu";
-      passwordCommand = "pass kit";
+      passwordCommand = "${pkgs.pass}/bin/pass kit";
 
       imap = {
         host = "imap.kit.edu";
@@ -67,5 +67,9 @@
 
       msmtp.enable = true;
     };
+  };
+
+  services.mbsync = {
+    enable = true;
   };
 }
