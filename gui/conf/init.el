@@ -196,7 +196,7 @@
 (use-package org-bullets
   :ensure t
   :config
-  (setq org-bullets-bullet-list '("●"))
+  (setq org-bullets-bullet-list '("●" "●" "⤷"))
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
 (use-package deft
