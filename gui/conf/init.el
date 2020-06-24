@@ -7,6 +7,12 @@
 (if (file-exists-p custom-file)
     (load custom-file))
 
+(prefer-coding-system       'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-language-environment   'utf-8)
+
 (setq user-full-name "Adrian Kummerlaender"
       user-mail-address "adrian@kummerlaender.eu")
 
