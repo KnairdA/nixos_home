@@ -76,8 +76,10 @@
 (use-package evil-leader
   :ensure t
   :config
-  (global-evil-leader-mode 1)
-  (evil-leader/set-leader ","))
+  (global-evil-leader-mode)
+  (evil-leader/set-leader ",")
+  (evil-leader/set-key
+    "s" 'evil-ex-nohighlight))
 
 (use-package evil-collection
   :ensure t)
@@ -195,7 +197,6 @@
   :ensure t
   :config
   (setq org-bullets-bullet-list '("●"))
-  ;(setq org-bullets-bullet-list '("●" "◉" "◎"))
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
 (use-package deft
@@ -220,8 +221,9 @@
 
 (defhydra hydra-org-mode ()
   "Org mode"
-  ("e" org-babel-execute-buffer "Execute buffer" :column "Babel")
-  ("t" org-babel-tangle         "Tangle"         :column "Babel")
+  ("e" org-babel-execute-buffer   "Execute buffer"   :column "Babel")
+  ("t" org-babel-tangle           "Tangle"           :column "Babel")
+  ("p" org-babel-expand-src-block "Tangle (preview)" :column "Babel")
 
   ("i" org-toggle-inline-images "Toggle images"  :column "Preview")
   ("l" org-latex-preview        "Toggle LaTeX"   :column "Preview")
@@ -299,10 +301,9 @@
       (deft-find-all-files))))
   (org-insert-link nil (concat "file:" file) (file-name-base file)))
 
-(evil-leader/set-key
+(evil-leader/set-key-for-mode 'org-mode
   "e" 'org-ctrl-c-ctrl-c
-  "l" 'org-deft-insert-link
-  "s" 'evil-ex-nohighlight)
+  "l" 'org-deft-insert-link)
 
 (use-package org-noter
   :ensure t)
