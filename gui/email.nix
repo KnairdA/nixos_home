@@ -74,4 +74,6 @@
   services.mbsync = {
     enable = true;
   };
+
+  home.file.".emacs.d/email.el".source = ./conf/email.el;
 }
