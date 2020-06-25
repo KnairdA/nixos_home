@@ -17,6 +17,7 @@
       speedcrunch
     # ctag to override the emacs provided ones (placeholder)
       universal-ctags
+      fzf
     ];
   };
 }

@@ -7,7 +7,6 @@ in {
   imports = [
     ./xmonad.nix
     ./kitty.nix
-    ./vim.nix
     ./emacs.nix
     ./email.nix
     ./zathura.nix
