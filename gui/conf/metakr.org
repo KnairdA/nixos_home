@@ -75,7 +75,7 @@ For quick iteration all colors are stored in a table.
 | org-scheduled-today     | #ffffff |
 | org-done                | #909636 |
 | org-todo                | #D80F32 |
-| org-tag                 | #F2F2F2 |
+| org-tag                 | #E4E093 |
 | org-block-line          | #080808 |
 | org-block-bg            | #080808 |
 | org-agenda-structure-fg | #aaaaaa |
@@ -293,7 +293,7 @@ For quick iteration all colors are stored in a table.
    :foreground @org-todo)
   (org-tag
    :inherit fixed-pitch
-   :height 1
+   :height 1.0
    :foreground @org-tag)
   (org-block-begin-line
    :inherit fixed-pitch
