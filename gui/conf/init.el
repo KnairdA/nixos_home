@@ -187,11 +187,11 @@
 
 (custom-theme-set-faces
    'user
-   '(org-level-1 ((t (:family "Source Serif Pro" :weight regular :height 1.4 ))))
-   '(org-level-2 ((t (:family "Source Serif Pro" :weight regular :height 1.3))))
-   '(org-level-3 ((t (:family "Source Serif Pro" :weight regular :height 1.1))))
-   '(org-level-4 ((t (:family "Source Serif Pro" :weight regular :height 1.0))))
-   '(org-document-title ((t (:family "Source Serif Pro" :height 2.0)))))
+   '(org-level-1 ((t (:family "Source Serif Pro"))))
+   '(org-level-2 ((t (:family "Source Serif Pro"))))
+   '(org-level-3 ((t (:family "Source Serif Pro"))))
+   '(org-level-4 ((t (:family "Source Serif Pro"))))
+   '(org-document-title ((t (:family "Source Serif Pro")))))
 
 (use-package org-bullets
   :ensure t
