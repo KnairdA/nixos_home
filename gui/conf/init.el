@@ -365,8 +365,6 @@
   :config
   (setq mu4e-maildir "~/mail")
   (setq mu4e-get-mail-command "true")
-  (setq mu4e-index-cleanup nil)
-  (setq mu4e-index-lazy-check t)
   (setq mu4e-update-interval 120)
   (setq mu4e-use-fancy-chars t)
   (setq mu4e-headers-attach-mark '("a" . "@")) ; alignment fix

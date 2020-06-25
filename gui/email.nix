@@ -27,6 +27,7 @@
 
       mbsync = {
         enable = true;
+        expunge = "both";
         create = "maildir";
       };
 
@@ -54,6 +55,7 @@
       mbsync = {
         enable = true;
         create = "maildir";
+        expunge = "both";
         extraConfig.account = {
           AuthMechs = "PLAIN";
         };
