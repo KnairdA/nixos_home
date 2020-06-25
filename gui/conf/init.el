@@ -207,6 +207,7 @@
   (setq deft-directory "~/org")
   (setq deft-text-mode 'org-mode)
   (setq deft-use-filter-string-for-filename t)
+  (setq deft-filter-only-filenames t)
   (setq deft-org-mode-title-prefix t)
   (setq deft-file-naming-rules
     '((noslash . "_")
