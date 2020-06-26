@@ -327,6 +327,9 @@
 (use-package magit
   :ensure t)
 
+(use-package evil-magit
+  :ensure t)
+
 (use-package counsel-etags
   :ensure t
   :config
