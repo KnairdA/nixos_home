@@ -63,9 +63,12 @@
     enableScDaemon      = false;
   };
 
-  programs.fish.shellAliases = {
-    ns  = "persistent-nix-shell -s";
-    cat = "bat --plain";
+  programs.fish = {
+    enable = true;
+    shellAliases = {
+      ns  = "persistent-nix-shell -s";
+      cat = "bat --plain";
+    };
   };
 
   programs.direnv.enable = true;
