@@ -11,6 +11,7 @@
         message-sendmail-f-is-evil t
         message-send-mail-function 'message-send-mail-with-sendmail)
   (setq mu4e-hide-index-messages t)
+  (setq mu4e-completing-read-function 'ivy-completing-read)
   (require 'org-mu4e)
   (evil-collection-init 'mu4e)
   (setq doom-modeline-mu4e t))
