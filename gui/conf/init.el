@@ -227,8 +227,9 @@
   ("t" org-babel-tangle           "Tangle"           :column "Babel")
   ("p" org-babel-expand-src-block "Tangle (preview)" :column "Babel")
 
-  ("i" org-toggle-inline-images "Toggle images"  :column "Preview")
-  ("l" org-latex-preview        "Toggle LaTeX"   :column "Preview")
+  ("i" org-toggle-inline-images     "Toggle images"  :column "View")
+  ("l" org-latex-preview            "Toggle LaTeX"   :column "View")
+  ("n" org-toggle-narrow-to-subtree "Toggle narrow"  :column "View")
 
   ("s" org-time-stamp-inactive  "Timestamp (inactive)" :column "Fragments")
 
