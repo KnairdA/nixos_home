@@ -66,14 +66,6 @@
 (load-library "custom-runtime-env")
 (load-library "akr-theme")
 
-(use-package evil
-  :ensure t
-  :init
-  (setq evil-want-keybinding nil)
-  (setq evil-search-module 'evil-search)
-  :config
-  (evil-mode 1))
-
 (use-package evil-leader
   :ensure t
   :config
@@ -81,6 +73,14 @@
   (evil-leader/set-key
     "s" 'evil-ex-nohighlight)
   (global-evil-leader-mode))
+
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-keybinding nil)
+  (setq evil-search-module 'evil-search)
+  :config
+  (evil-mode 1))
 
 (use-package evil-collection
   :ensure t)
