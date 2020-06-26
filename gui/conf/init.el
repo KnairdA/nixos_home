@@ -77,10 +77,10 @@
 (use-package evil-leader
   :ensure t
   :config
-  (global-evil-leader-mode)
   (evil-leader/set-leader ",")
   (evil-leader/set-key
-    "s" 'evil-ex-nohighlight))
+    "s" 'evil-ex-nohighlight)
+  (global-evil-leader-mode))
 
 (use-package evil-collection
   :ensure t)
@@ -268,6 +268,9 @@
 (evil-define-key 'normal 'global
   "J" 'evil-forward-paragraph
   "K" 'evil-backward-paragraph
+
+  "P" 'counsel-yank-pop
+
   (kbd "C-b")     'ivy-switch-buffer
 
   (kbd "C-f")     'counsel-find-file
