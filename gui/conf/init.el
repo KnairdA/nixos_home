@@ -313,6 +313,14 @@
 (use-package org-noter
   :ensure t)
 
+(use-package helm-org-rifle
+  :ensure t
+  :config
+  (evil-collection-init 'helm)
+  (evil-define-key 'normal 'global
+    (kbd "C-o")  'helm-org-rifle-org-directory
+    (kbd "M-o")  'helm-org-rifle-current-buffer))
+
 (use-package rainbow-mode
   :ensure t)
 
