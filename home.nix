@@ -57,10 +57,13 @@
 
   services.gpg-agent = {
     enable = true;
-    defaultCacheTtl     = 43200;
     enableSshSupport    = true;
-    defaultCacheTtlSsh  = 43200;
     enableScDaemon      = false;
+
+    defaultCacheTtl    = 43200;
+    maxCacheTtl        = 43200;
+    defaultCacheTtlSsh = 43200;
+    maxCacheTtlSsh     = 43200;
   };
 
   programs.fish = {
