@@ -14,7 +14,8 @@
   (setq mu4e-completing-read-function 'ivy-completing-read)
   (require 'org-mu4e)
   (evil-collection-init 'mu4e)
-  (setq doom-modeline-mu4e t))
+  (setq doom-modeline-mu4e t)
+  (setq doom-modeline-gnus nil))
 
 (use-package mu4e-alert
   :ensure t

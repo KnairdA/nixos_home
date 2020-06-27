@@ -88,7 +88,7 @@
 (use-package minions
   :ensure t
   :config
-  (minions-mode 1))
+  (minions-mode))
 
 (use-package doom-modeline
   :ensure t
@@ -126,9 +126,6 @@
   :config (pdf-tools-install))
 
 (setq browse-url-browser-function 'eww-browse-url)
-
-(use-package nix-mode
-  :ensure t)
 
 (use-package direnv
   :ensure t
@@ -258,8 +255,13 @@
         '((t . ivy--regex-plus)))
   (ivy-mode 1))
 
-(use-package swiper :ensure t)
-(use-package counsel :ensure t)
+(use-package counsel
+  :ensure t)
+
+(use-package helm
+  :ensure t
+  :config
+  (global-set-key (kbd "M-x") 'helm-M-x))
 
 (defun go-to-deft ()
   (interactive)
@@ -270,13 +272,12 @@
   "J" 'evil-forward-paragraph
   "K" 'evil-backward-paragraph
 
-  "P" 'counsel-yank-pop
+  "P" 'helm-show-kill-ring
 
-  (kbd "C-b")     'ivy-switch-buffer
+  (kbd "C-b")     'helm-mini
 
-  (kbd "C-f")     'counsel-find-file
-  (kbd "C-r")     'counsel-recentf
-  (kbd "C-p")     'counsel-git
+  (kbd "C-p")     'projectile-find-file
+  (kbd "M-p")     'projectile-switch-project
   (kbd "C-t")     'counsel-etags-list-tag
 
   (kbd "C-n")     'go-to-deft)
@@ -317,7 +318,6 @@
 (use-package helm-org-rifle
   :ensure t
   :config
-  (evil-collection-init 'helm)
   (evil-define-key 'normal 'global
     (kbd "C-o")  'helm-org-rifle-org-directory
     (kbd "M-o")  'helm-org-rifle-current-buffer))
@@ -339,7 +339,7 @@
   (evil-leader/set-key
     "d" 'counsel-etags-find-tag-at-point))
 
-(use-package ag
+(use-package helm-ag
   :ensure t)
 
 (add-hook 'c-mode-common-hook 'hs-minor-mode t)
@@ -349,9 +349,8 @@
   :ensure t
   :config
   (setq projectile-completion-system 'ivy)
-  (setq projectile-project-search-path '("~/projects/dev"
-																				 "~/projects/contrib"
-																				 "~/projects/playground")))
+  (setq projectile-project-search-path '("~/projects"))
+  (projectile-mode))
 
 (defun get-related-files ()
   (let ((common-basename-files (seq-filter (lambda (file) (string= (file-name-sans-extension file) (file-name-base)))
@@ -371,6 +370,12 @@
 (evil-define-key 'normal prog-mode-map
   (kbd "<tab>") 'jump-to-first-related
   (kbd "M-r")   'jump-to-related)
+
+(use-package nix-mode
+  :ensure t)
+
+(use-package glsl-mode
+  :ensure t)
 
 (add-hook 'eshell-mode-hook
   (lambda () 

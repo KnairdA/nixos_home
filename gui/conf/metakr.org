@@ -86,6 +86,10 @@ For quick iteration all colors are stored in a table.
 | org-sched-prev          | #8C3346 |
 | org-agenda-done         | #909636 |
 | eshell-prompt           | #AADB0F |
+| helm-header-fg          | #909636 |
+| helm-header-bg          | #161616 |
+| helm-source-header-fg   | #161616 |
+| helm-source-header-bg   | #909636 |
 
 * Structure
 #+NAME: structure
@@ -336,6 +340,18 @@ For quick iteration all colors are stored in a table.
 ;; Eshell
   (eshell-prompt
    :foreground @eshell-prompt)
+
+;; Helm
+  (helm-header
+   :inherit fixed-pitch
+   :foreground @helm-header-fg
+   :background @helm-header-bg)
+  (helm-source-header
+   :inherit fixed-pitch
+   :foreground @helm-source-header-fg
+   :background @helm-source-header-bg)
+  (helm-selection
+   :background @bg-hlt)
 )
 #+END_SRC
 
