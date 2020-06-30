@@ -43,6 +43,9 @@
 (setq-default c-basic-offset 2)
 (setq-default python-indent-offset 4)
 
+(setq password-cache t)
+(setq password-cache-expiry 3600)
+
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 (global-set-key (kbd "<M-tab>") 'next-buffer)
