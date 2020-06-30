@@ -186,6 +186,9 @@
   :config
   (add-hook 'org-mode-hook 'org-fragtog-mode))
 
+(use-package ob-async
+  :ensure t)
+
 (custom-theme-set-faces
    'user
    '(org-level-1 ((t (:family "Source Serif Pro"))))
