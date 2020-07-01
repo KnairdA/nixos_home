@@ -11,7 +11,7 @@
 
   home.packages = with pkgs; [
     acpi
-    xorg.xbacklight
+    brightnessctl
   ];
 
   custom.hidpi = true;

@@ -143,8 +143,8 @@ hostSpecificKeybindings host = case host of
                , ("M-i c" , showNotification "`acpi --thermal | awk '{print $4}'`°C"
                                              "`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM")
                , ("M-c n" , spawn "networkmanager_dmenu")
-               , ("<XF86MonBrightnessUp>"   , spawn "xbacklight -inc 5")
-               , ("<XF86MonBrightnessDown>" , spawn "xbacklight -dec 5")
+               , ("<XF86MonBrightnessUp>"   , spawn "brightnessctl s +5%")
+               , ("<XF86MonBrightnessDown>" , spawn "brightnessctl s 5%-")
                , ("<XF86AudioRaiseVolume>"  , spawn "amixer sset Master 10%+")
                , ("<XF86AudioLowerVolume>"  , spawn "amixer sset Master 10%-")
                , ("<XF86AudioMute>"         , spawn "amixer sset Master toggle")
