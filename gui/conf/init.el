@@ -28,6 +28,11 @@
     (add-hook 'after-make-frame-functions #'startup)
   (startup (selected-frame)))
 
+(savehist-mode 1)
+(setq savehist-additional-variables
+      '(kill-ring search-ring))
+(setq savehist-file "~/.emacs.d/savehist")
+
 (setq mouse-wheel-scroll-amount '(5))
 (setq mouse-wheel-progressive-speed nil)
 (setq fast-but-imprecise-scrolling t)
