@@ -391,6 +391,21 @@
 (use-package glsl-mode
   :ensure t)
 
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq-default initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+  (setq-default
+   dashboard-startup-banner    1
+   dashboard-set-heading-icons t
+   dashboard-set-file-icons    t
+   dashboard-set-init-info     nil)
+  (setq-default dashboard-items '((recents  . 5)
+                                  (projects . 10)
+                                  (agenda   . 5)))
+  (evil-set-initial-state 'dashboard-mode 'emacs))
+
 (add-hook 'eshell-mode-hook
   (lambda () 
     (define-key eshell-mode-map (kbd "<tab>")
