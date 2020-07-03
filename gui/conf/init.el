@@ -53,10 +53,6 @@
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
-(global-set-key (kbd "<M-tab>") 'next-buffer)
-(global-set-key (kbd "<M-iso-lefttab>") 'previous-buffer)
-(global-set-key (kbd "<C-tab>") 'other-window)
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
@@ -205,7 +201,7 @@
 (use-package org-bullets
   :ensure t
   :config
-  (setq org-bullets-bullet-list '("●" "●" "⤷"))
+  (setq org-bullets-bullet-list '("●" "●" "⤷" "⤷"))
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
 (use-package deft
@@ -221,7 +217,12 @@
   (setq deft-file-naming-rules
     '((noslash . "_")
       (nospace . "_")
-      (case-fn . downcase))))
+      (case-fn . downcase)))
+  (defun go-to-deft ()
+    (interactive)
+    (deft)
+    (evil-insert-state))
+  (global-set-key (kbd "<f9>") 'go-to-deft))
 
 (use-package evil-org
   :ensure t
@@ -269,7 +270,8 @@
 (use-package helm
   :ensure t
   :config
-  (global-set-key (kbd "M-x") 'helm-M-x))
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-b") 'helm-mini))
 
 (use-package helm-swoop
   :ensure t
@@ -277,24 +279,14 @@
   (global-set-key (kbd "C-s")   'helm-swoop)
   (global-set-key (kbd "C-S-s") 'helm-multi-swoop-current-mode))
 
-(defun go-to-deft ()
-  (interactive)
-  (deft)
-  (evil-insert-state))
+(global-set-key (kbd "<M-tab>")         'next-buffer)
+(global-set-key (kbd "<M-iso-lefttab>") 'previous-buffer)
+(global-set-key (kbd "<C-tab>")         'other-window)
 
 (evil-define-key 'normal 'global
   "J" 'evil-forward-paragraph
   "K" 'evil-backward-paragraph
-
-  "P" 'helm-show-kill-ring
-
-  (kbd "C-b")     'helm-mini
-
-  (kbd "C-p")     'projectile-find-file
-  (kbd "M-p")     'projectile-switch-project
-  (kbd "C-t")     'counsel-etags-list-tag
-
-  (kbd "C-n")     'go-to-deft)
+  "P" 'helm-show-kill-ring)
 
 (defun switch-to-last-buffer ()
   (interactive)
@@ -351,7 +343,9 @@
   (setq tags-revert-without-query t)
   (setq large-file-warning-threshold nil)
   (evil-leader/set-key
-    "d" 'counsel-etags-find-tag-at-point))
+    "d" 'counsel-etags-find-tag-at-point)
+  (evil-define-key 'normal 'global
+    (kbd "C-t") 'counsel-etags-list-tag))
 
 (use-package helm-ag
   :ensure t)
@@ -364,7 +358,9 @@
   :config
   (setq projectile-completion-system 'ivy)
   (setq projectile-project-search-path '("~/projects"))
-  (projectile-mode))
+  (projectile-mode)
+  (global-set-key (kbd "C-p") 'projectile-find-file)
+  (global-set-key (kbd "M-p") 'projectile-switch-project))
 
 (defun get-related-files ()
   (let ((common-basename-files (seq-filter (lambda (file) (string= (file-name-sans-extension file) (file-name-base)))
@@ -401,9 +397,8 @@
    dashboard-set-heading-icons t
    dashboard-set-file-icons    t
    dashboard-set-init-info     nil)
-  (setq-default dashboard-items '((recents  . 5)
-                                  (projects . 10)
-                                  (agenda   . 5)))
+  (setq-default dashboard-items '((recents  . 10)
+                                  (projects . 10)))
   (evil-set-initial-state 'dashboard-mode 'emacs))
 
 (add-hook 'eshell-mode-hook
