@@ -261,13 +261,16 @@
         '((t . ivy--regex-plus)))
   (ivy-mode 1))
 
-(use-package counsel
-  :ensure t)
-
 (use-package helm
   :ensure t
   :config
   (global-set-key (kbd "M-x") 'helm-M-x))
+
+(use-package helm-swoop
+  :ensure t
+  :config
+  (global-set-key (kbd "C-s")   'helm-swoop)
+  (global-set-key (kbd "C-S-s") 'helm-multi-swoop-current-mode))
 
 (defun go-to-deft ()
   (interactive)
