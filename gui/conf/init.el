@@ -271,12 +271,13 @@
   :ensure t
   :config
   (global-set-key (kbd "M-x") 'helm-M-x)
+  (define-key evil-motion-state-map (kbd "C-b") nil)
   (global-set-key (kbd "C-b") 'helm-mini))
 
 (use-package helm-swoop
   :ensure t
   :config
-  (global-set-key (kbd "C-s")   'helm-swoop)
+  (global-set-key (kbd "C-s")   'helm-swoop-without-pre-input)
   (global-set-key (kbd "C-S-s") 'helm-multi-swoop-current-mode))
 
 (global-set-key (kbd "<M-tab>")         'next-buffer)
