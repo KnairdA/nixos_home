@@ -72,6 +72,8 @@
 
 (use-package evil-leader
   :ensure t
+  :init
+  (setq evil-want-keybinding nil)
   :config
   (evil-leader/set-leader ",")
   (evil-leader/set-key
@@ -81,7 +83,6 @@
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-keybinding nil)
   (setq evil-search-module 'evil-search)
   :config
   (evil-mode 1))
@@ -158,12 +159,22 @@
   '((sequence "TODO(t)" "|" "DONE(d)")
     (sequence "EXAM(e)" "|" "DONE(d)")))
 
+(defun capture-new-note ()
+  (interactive)
+  (let ((name (read-string "Name: ")))
+    (expand-file-name (format "%s.org" name) "~/org/")))
+
 (setq org-capture-templates
   '(("t"
      "Todo item"
      entry
      (file org-default-notes-file)
      "* TODO %?\n%a")
+    ("n"
+     "New zettel"
+     plain
+     (file capture-new-note)
+     "#+TITLE: %^{Title}\n\n%?")
     ("j"
      "Journal entry"
      entry
@@ -175,7 +186,8 @@
      (file org-default-notes-file)
      "* %^{Description}\n%U\n#+BEGIN_QUOTE\n%i#+END_QUOTE")))
 
-(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c c") 'counsel-org-capture)
+(global-set-key (kbd "C-c o") 'counsel-org-agenda-headlines)
 
 (add-hook 'org-mode-hook 'visual-line-mode)
 
@@ -203,26 +215,6 @@
   :config
   (setq org-bullets-bullet-list '("●" "●" "⤷" "⤷"))
   (add-hook 'org-mode-hook #'org-bullets-mode))
-
-(use-package deft
-  :ensure t
-  :config
-  (setq deft-extensions '("org"))
-  (setq deft-default-extension "org")
-  (setq deft-directory "~/org")
-  (setq deft-text-mode 'org-mode)
-  (setq deft-use-filter-string-for-filename t)
-  (setq deft-filter-only-filenames t)
-  (setq deft-org-mode-title-prefix t)
-  (setq deft-file-naming-rules
-    '((noslash . "_")
-      (nospace . "_")
-      (case-fn . downcase)))
-  (defun go-to-deft ()
-    (interactive)
-    (deft)
-    (evil-insert-state))
-  (global-set-key (kbd "<f9>") 'go-to-deft))
 
 (use-package evil-org
   :ensure t
@@ -264,15 +256,17 @@
   :config
   (setq ivy-use-virtual-buffers t)
   (setq ivy-re-builders-alist
-        '((t . ivy--regex-plus)))
-  (ivy-mode 1))
+        '((t . ivy--regex-plus))))
 
 (use-package helm
   :ensure t
   :config
   (global-set-key (kbd "M-x") 'helm-M-x)
   (define-key evil-motion-state-map (kbd "C-b") nil)
-  (global-set-key (kbd "C-b") 'helm-mini))
+  (global-set-key (kbd "C-b") 'helm-mini)
+  (setq helm-split-window-in-side-p       t
+        helm-move-to-line-cycle-in-source t)
+  (helm-mode 1))
 
 (use-package helm-swoop
   :ensure t
@@ -329,7 +323,7 @@
     (kbd "C-o")  'helm-org-rifle-org-directory
     (kbd "M-o")  'helm-org-rifle-current-buffer))
 
-(use-package rainbow-mode
+(use-package helm-ag
   :ensure t)
 
 (use-package magit
@@ -338,30 +332,18 @@
 (use-package evil-magit
   :ensure t)
 
-(use-package counsel-etags
-  :ensure t
-  :config
-  (setq tags-revert-without-query t)
-  (setq large-file-warning-threshold nil)
-  (evil-leader/set-key
-    "d" 'counsel-etags-find-tag-at-point)
-  (evil-define-key 'normal 'global
-    (kbd "C-t") 'counsel-etags-list-tag))
-
-(use-package helm-ag
-  :ensure t)
-
-(add-hook 'c-mode-common-hook 'hs-minor-mode t)
-(add-hook 'c-mode-common-hook 'hs-hide-initial-comment-block t)
-
 (use-package projectile
   :ensure t
   :config
-  (setq projectile-completion-system 'ivy)
+  (setq projectile-completion-system 'helm)
   (setq projectile-project-search-path '("~/projects"))
   (projectile-mode)
-  (global-set-key (kbd "C-p") 'projectile-find-file)
-  (global-set-key (kbd "M-p") 'projectile-switch-project))
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+(use-package helm-projectile
+  :ensure t
+  :config
+  (helm-projectile-on))
 
 (defun get-related-files ()
   (let ((common-basename-files (seq-filter (lambda (file) (string= (file-name-sans-extension file) (file-name-base)))
@@ -382,25 +364,30 @@
   (kbd "<tab>") 'jump-to-first-related
   (kbd "M-r")   'jump-to-related)
 
+(use-package counsel-etags
+  :ensure t
+  :config
+  (setq tags-revert-without-query t)
+  (setq large-file-warning-threshold nil)
+  (evil-leader/set-key
+    "d" 'counsel-etags-find-tag-at-point)
+  (evil-define-key 'normal 'global
+    (kbd "C-t") 'counsel-etags-list-tag))
+
+(add-hook 'c-mode-common-hook 'hs-minor-mode t)
+(add-hook 'c-mode-common-hook 'hs-hide-initial-comment-block t)
+
 (use-package nix-mode
   :ensure t)
 
 (use-package glsl-mode
   :ensure t)
 
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  (setq-default initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
-  (setq-default
-   dashboard-startup-banner    1
-   dashboard-set-heading-icons t
-   dashboard-set-file-icons    t
-   dashboard-set-init-info     nil)
-  (setq-default dashboard-items '((recents  . 10)
-                                  (projects . 10)))
-  (evil-set-initial-state 'dashboard-mode 'emacs))
+(use-package cmake-mode
+  :ensure t)
+
+(use-package rainbow-mode
+  :ensure t)
 
 (add-hook 'eshell-mode-hook
   (lambda () 
