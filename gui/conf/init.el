@@ -274,6 +274,11 @@
   (global-set-key (kbd "C-s")   'helm-swoop-without-pre-input)
   (global-set-key (kbd "C-S-s") 'helm-multi-swoop-current-mode))
 
+(use-package helm-ls-git
+  :ensure t
+  :config
+  (global-set-key (kbd "C-c g") 'helm-browse-project))
+
 (global-set-key (kbd "<M-tab>")         'next-buffer)
 (global-set-key (kbd "<M-iso-lefttab>") 'previous-buffer)
 (global-set-key (kbd "<C-tab>")         'other-window)
@@ -376,6 +381,13 @@
 
 (add-hook 'c-mode-common-hook 'hs-minor-mode t)
 (add-hook 'c-mode-common-hook 'hs-hide-initial-comment-block t)
+
+(use-package ace-jump-mode
+  :ensure t
+  :config
+  (global-set-key (kbd "C-x SPC") 'ace-jump-mode)
+  (evil-define-key 'normal 'global
+    (kbd "SPC") 'ace-jump-mode))
 
 (use-package nix-mode
   :ensure t)
