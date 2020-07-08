@@ -409,6 +409,16 @@
     (define-key eshell-mode-map (kbd "<tab>")
       (lambda () (interactive) (completion-at-point)))))
 
+(defadvice org-babel-tangle-single-block (around inhibit-redisplay activate protect compile)
+  (let ((inhibit-redisplay t)
+        (inhibit-message t))
+    ad-do-it))
+
+(defadvice org-babel-tangle (around time-it activate compile)
+  (let ((time (current-time)))
+    ad-do-it
+    (message "org-tangle took %f sec" (float-time (time-subtract (current-time) time)))))
+
 (let ((mu4e-config "~/.emacs.d/email.el"))
  (when (file-exists-p mu4e-config)
    (load-file mu4e-config)))
