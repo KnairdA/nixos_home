@@ -401,6 +401,9 @@
 (use-package rainbow-mode
   :ensure t)
 
+(use-package literate-calc-mode
+  :ensure t)
+
 (add-hook 'eshell-mode-hook
   (lambda () 
     (define-key eshell-mode-map (kbd "<tab>")
