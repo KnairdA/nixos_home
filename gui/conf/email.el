@@ -10,6 +10,7 @@
         send-mail-function 'smtpmail-send-it
         message-sendmail-f-is-evil t
         message-send-mail-function 'message-send-mail-with-sendmail)
+  (setq mu4e-split-view 'single-window)
   (setq mu4e-hide-index-messages t)
   (setq mu4e-completing-read-function 'ivy-completing-read)
   (require 'org-mu4e)
