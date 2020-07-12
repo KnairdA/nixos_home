@@ -260,6 +260,10 @@ For quick iteration all colors are stored in a table.
    :foreground @link
    :underline t
    :inherit fixed-pitch)
+  (org-roam-link-invalid
+   :foreground @link
+   :underline t
+   :inherit fixed-pitch)
   (org-table
    :inherit fixed-pitch
    :background @org-table)
@@ -379,4 +383,3 @@ This block resolves the =@=-prefixed variables of the theme structure using a gi
                     (process structure)))))
 
 #+END_SRC
-
