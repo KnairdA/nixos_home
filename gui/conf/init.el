@@ -147,18 +147,21 @@
 
 (use-package org
   :ensure t
+  :custom
+  (org-adapt-indentation nil)
+  (org-startup-indented t)
+  (org-hide-emphasis-markers t)
+  (org-src-preserve-indentation t)
+  (org-src-tab-acts-natively t)
+  (org-default-notes-file "~/org/inbox.org")
+  (org-agenda-files '("~/org"))
+  (org-link-frame-setup '((file . find-file))) ; open links in same frame
+  (org-goto-interface 'outline-path-completion)
+  (org-outline-path-complete-in-steps nil)
+  (org-src-window-setup 'current-window)
+  (org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
+  (org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   :config
-  (setq org-adapt-indentation nil)
-  (setq org-startup-indented t)
-  (setq org-hide-emphasis-markers t)
-  (setq org-src-preserve-indentation t)
-  (setq org-src-tab-acts-natively t)
-  (setq org-default-notes-file "~/org/inbox.org")
-  (setq org-agenda-files '("~/org"))
-  (setq org-link-frame-setup '((file . find-file))) ; open links in same frame
-  (setq org-goto-interface 'outline-path-completion)
-  (setq org-outline-path-complete-in-steps nil)
-  (setq org-src-window-setup 'current-window)
   (define-key org-mode-map (kbd "<C-tab>") nil)
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1))))
 
@@ -166,22 +169,12 @@
   '((sequence "TODO(t)" "|" "DONE(d)")
     (sequence "EXAM(e)" "|" "DONE(d)")))
 
-(defun capture-new-note ()
-  (interactive)
-  (let ((name (read-string "Name: ")))
-    (expand-file-name (format "%s.org" name) "~/org/")))
-
 (setq org-capture-templates
   '(("t"
      "Todo item"
      entry
      (file org-default-notes-file)
      "* TODO %?\n%a")
-    ("n"
-     "New zettel"
-     plain
-     (file capture-new-note)
-     "#+TITLE: %^{Title}\n\n%?")
     ("j"
      "Journal entry"
      entry
@@ -197,9 +190,6 @@
 (global-set-key (kbd "C-c o") 'counsel-org-agenda-headlines)
 
 (add-hook 'org-mode-hook 'visual-line-mode)
-
-(setq org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 
 (use-package org-fragtog
   :ensure t
@@ -313,6 +303,34 @@
 (evil-leader/set-key-for-mode 'org-mode
   "e" 'org-ctrl-c-ctrl-c)
 
+(use-package org-roam
+  :ensure t
+  :hook
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory "~/org")
+  (org-roam-completion-system 'helm))
+
+(defhydra hydra-roam ()
+  "Roam"
+  ("s" org-roam                "Toggle sidebar" :column "View")
+  ("r" org-roam-db-build-cache "Update cache" :column "View")
+
+  ("f" org-roam-find-file "Find file" :column "Navigation")
+
+  ("c" org-roam-insert     "Create link" :column "Links")
+  ("y" org-roam-store-link "Store link"  :column "Links")
+  ("p" org-insert-link     "Insert link" :column "Links")
+
+  ("dy" org-roam-dailies-yesterday "Yesterday" :column "Dailies")
+  ("dc" org-roam-dailies-today     "Today"     :column "Dailies")
+  ("da" org-roam-dailies-date      "Arbitrary" :column "Dailies")
+  ("dt" org-roam-dailies-tomorrow  "Tomorrow"  :column "Dailies")
+
+  ("q" nil "Exit menu" :column "Other"))
+
+(global-set-key (kbd "C-c r") 'hydra-roam/body)
+(global-set-key (kbd "C-S-o") 'org-roam-find-file)
 
 (use-package org-noter
   :ensure t)
@@ -384,6 +402,13 @@
   (global-set-key (kbd "C-x SPC") 'ace-jump-mode)
   (evil-define-key 'normal 'global
     (kbd "SPC") 'ace-jump-mode))
+
+(setq org-roam-capture-templates
+  '(("d" "default" plain (function org-roam-capture--get-point)
+     "%?"
+     :file-name "${slug}"
+     :head "#+title: ${title}\n"
+     :unnarrowed t)))
 
 (use-package nix-mode
   :ensure t)

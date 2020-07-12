@@ -26,6 +26,8 @@
         (setenv "PATH" (concat (getenv "PATH")
                                ":${tex}/bin"))
         (add-to-list 'exec-path "${tex}/bin")
+        (add-to-list 'exec-path "${pkgs.graphviz}/bin")
+        (add-to-list 'exec-path "${pkgs.sqlite}/bin")
 
         (setq counsel-etags-update-tags-backend (lambda (src-dir) (shell-command "${pkgs.universal-ctags}/bin/ctags -e -R")))
       '';
