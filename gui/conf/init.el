@@ -301,11 +301,6 @@
 
 (define-key evil-normal-state-map (kbd "<backspace>") 'switch-to-last-buffer)
 
-(evil-define-key 'normal eww-mode-map
-  "o" 'eww
-  "H" 'eww-back-url
-  "L" 'eww-forward-url)
-
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python  . t)
@@ -315,15 +310,9 @@
 
 (setq org-confirm-babel-evaluate nil)
 
-(defun org-deft-insert-link (file)
-  (interactive (list
-    (completing-read "Note: "
-      (deft-find-all-files))))
-  (org-insert-link nil (concat "file:" file) (file-name-base file)))
-
 (evil-leader/set-key-for-mode 'org-mode
-  "e" 'org-ctrl-c-ctrl-c
-  "l" 'org-deft-insert-link)
+  "e" 'org-ctrl-c-ctrl-c)
+
 
 (use-package org-noter
   :ensure t)
