@@ -85,10 +85,15 @@
   :init
   (setq evil-search-module 'evil-search)
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+  (evil-set-initial-state 'calendar-mode 'emacs))
 
 (use-package evil-collection
-  :ensure t)
+  :after evil
+  :ensure t
+  :config
+  (setq evil-collection-mode-list '(dired eshell eww pdf))
+  (evil-collection-init))
 
 (use-package minions
   :ensure t
