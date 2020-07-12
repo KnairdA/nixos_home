@@ -104,10 +104,10 @@
   :ensure t
   :init
   (doom-modeline-mode 1)
-  :config
-  (setq doom-modeline-icon t)
-  (setq doom-modeline-vcs-max-length 24)
-  (setq doom-modeline-minor-modes t))
+  :custom
+  (doom-modeline-icon t)
+  (doom-modeline-vcs-max-length 24)
+  (doom-modeline-minor-modes t))
 
 (setq dired-listing-switches "-Bahl --group-directories-first")
 
@@ -127,8 +127,10 @@
 
 (use-package darkroom
   :ensure t
-  :config
-  (setq darkroom-text-scale-increase 0))
+  :custom
+  (darkroom-text-scale-increase 0)
+  :bind
+  ("<f12>" . darkroom-mode))
 
 (use-package pdf-tools
   :defer t
@@ -254,7 +256,7 @@
   "p" 'org-insert-link
   "g" 'org-goto)
 
-(global-set-key (kbd "<f12>") 'org-store-link)
+(global-set-key (kbd "<print>") 'org-store-link)
 
 (use-package ivy
   :ensure t
