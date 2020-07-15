@@ -21,8 +21,7 @@
   (set-frame-font "Iosevka 11" nil t)
   (menu-bar-mode -1)
   (toggle-scroll-bar -1)
-  (tool-bar-mode -1)
-  (global-visual-line-mode t))
+  (tool-bar-mode -1))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions #'startup)
@@ -75,9 +74,7 @@
   :init
   (setq evil-want-keybinding nil)
   :config
-  (evil-leader/set-leader ",")
-  (evil-leader/set-key
-    "s" 'evil-ex-nohighlight)
+  (evil-leader/set-leader "SPC")
   (global-evil-leader-mode))
 
 (use-package evil
@@ -94,6 +91,24 @@
   :config
   (setq evil-collection-mode-list '(dired eshell eww pdf))
   (evil-collection-init))
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-setup-minibuffer)
+  (which-key-mode))
+
+(use-package hydra
+  :ensure t)
+
+(use-package undo-tree
+  :ensure t
+  :custom
+  (undo-tree-visualizer-diff t)
+  :config
+  (evil-leader/set-key "hu" 'undo-tree-undo)
+  (evil-leader/set-key "hr" 'undo-tree-redo)
+  (evil-leader/set-key "hv" 'undo-tree-visualize))
 
 (use-package minions
   :ensure t
@@ -122,23 +137,6 @@
   (evil-define-key 'normal dired-mode-map
     (kbd "TAB") 'dired-subtree-toggle))
 
-(use-package hydra
-  :ensure t)
-
-(use-package darkroom
-  :ensure t
-  :custom
-  (darkroom-text-scale-increase 0)
-  :bind
-  ("<f12>" . darkroom-mode))
-
-(use-package pdf-tools
-  :defer t
-  :mode "\\.pdf$"
-  :config (pdf-tools-install))
-
-(setq browse-url-browser-function 'eww-browse-url)
-
 (use-package direnv
   :ensure t
   :config
@@ -160,9 +158,9 @@
   (org-outline-path-complete-in-steps nil)
   (org-src-window-setup 'current-window)
   (org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
-  (org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   :config
   (define-key org-mode-map (kbd "<C-tab>") nil)
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1))))
 
 (setq org-todo-keywords
@@ -186,10 +184,8 @@
      (file org-default-notes-file)
      "* %^{Description}\n%U\n#+BEGIN_QUOTE\n%i#+END_QUOTE")))
 
-(global-set-key (kbd "C-c c") 'counsel-org-capture)
-(global-set-key (kbd "C-c o") 'counsel-org-agenda-headlines)
-
-(add-hook 'org-mode-hook 'visual-line-mode)
+(evil-leader/set-key "oc" 'counsel-org-capture)
+(evil-leader/set-key "on" 'counsel-org-agenda-headlines)
 
 (use-package org-fragtog
   :ensure t
@@ -244,7 +240,7 @@
 
 (evil-leader/set-key-for-mode 'org-mode
   "c" 'org-edit-src-code
-  "p" 'org-insert-link
+  "lp" 'org-insert-link
   "g" 'org-goto)
 
 (global-set-key (kbd "<print>") 'org-store-link)
@@ -260,6 +256,7 @@
   :ensure t
   :config
   (global-set-key (kbd "M-x") 'helm-M-x)
+  (evil-leader/set-key "x" 'helm-M-x)
   (define-key evil-motion-state-map (kbd "C-b") nil)
   (global-set-key (kbd "C-b") 'helm-mini)
   (setq helm-split-window-in-side-p       t
@@ -269,13 +266,12 @@
 (use-package helm-swoop
   :ensure t
   :config
-  (global-set-key (kbd "C-s")   'helm-swoop-without-pre-input)
-  (global-set-key (kbd "C-S-s") 'helm-multi-swoop-current-mode))
+  (evil-leader/set-key "s" 'helm-swoop-without-pre-input))
 
 (use-package helm-ls-git
   :ensure t
   :config
-  (global-set-key (kbd "C-c g") 'helm-browse-project))
+  (evil-leader/set-key "pf" 'helm-browse-project))
 
 (global-set-key (kbd "<M-tab>")         'next-buffer)
 (global-set-key (kbd "<M-iso-lefttab>") 'previous-buffer)
@@ -331,7 +327,8 @@
   ("q" nil "Exit menu" :column "Other"))
 
 (global-set-key (kbd "C-c r") 'hydra-roam/body)
-(global-set-key (kbd "C-S-o") 'org-roam-find-file)
+(evil-leader/set-key "rh" 'hydra-roam/body)
+(evil-leader/set-key "rf" 'org-roam-find-file)
 
 (use-package org-noter
   :ensure t)
@@ -344,10 +341,14 @@
     (kbd "M-o")  'helm-org-rifle-current-buffer))
 
 (use-package helm-ag
-  :ensure t)
+  :ensure t
+  :config
+  (evil-leader/set-key "pa" 'helm-projectile-ag))
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config
+  (evil-leader/set-key "pg" 'magit))
 
 (use-package evil-magit
   :ensure t)
@@ -358,7 +359,8 @@
   (setq projectile-completion-system 'helm)
   (setq projectile-project-search-path '("~/projects"))
   (projectile-mode)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (evil-leader/set-key "pp" 'helm-projectile-switch-project))
 
 (use-package helm-projectile
   :ensure t
@@ -382,17 +384,15 @@
 
 (evil-define-key 'normal prog-mode-map
   (kbd "<tab>") 'jump-to-first-related
-  (kbd "M-r")   'jump-to-related)
+  (evil-leader/set-key "fr" 'jump-to-related))
 
 (use-package counsel-etags
   :ensure t
   :config
   (setq tags-revert-without-query t)
   (setq large-file-warning-threshold nil)
-  (evil-leader/set-key
-    "d" 'counsel-etags-find-tag-at-point)
-  (evil-define-key 'normal 'global
-    (kbd "C-t") 'counsel-etags-list-tag))
+  (evil-leader/set-key "d" 'counsel-etags-find-tag-at-point)
+  (evil-leader/set-key "t" 'counsel-etags-list-tag-in-current-file))
 
 (add-hook 'c-mode-common-hook 'hs-minor-mode t)
 (add-hook 'c-mode-common-hook 'hs-hide-initial-comment-block t)
@@ -400,9 +400,7 @@
 (use-package ace-jump-mode
   :ensure t
   :config
-  (global-set-key (kbd "C-x SPC") 'ace-jump-mode)
-  (evil-define-key 'normal 'global
-    (kbd "SPC") 'ace-jump-mode))
+  (evil-leader/set-key "SPC" 'ace-jump-mode))
 
 (setq org-roam-capture-templates
   '(("d" "default" plain (function org-roam-capture--get-point)
@@ -425,6 +423,20 @@
 
 (use-package literate-calc-mode
   :ensure t)
+
+(use-package darkroom
+  :ensure t
+  :custom
+  (darkroom-text-scale-increase 0)
+  :bind
+  ("<f12>" . darkroom-mode))
+
+(use-package pdf-tools
+  :defer t
+  :mode "\\.pdf$"
+  :config (pdf-tools-install))
+
+(setq browse-url-browser-function 'eww-browse-url)
 
 (add-hook 'eshell-mode-hook
   (lambda () 

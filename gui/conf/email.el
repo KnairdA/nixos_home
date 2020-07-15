@@ -47,3 +47,5 @@
                   (mu4e-drafts-folder . "/kit/Drafts")
                   (mu4e-trash-folder  . "/kit/Trash")
                   (message-sendmail-extra-arguments  . ("--read-envelope-from" "--account=kit"))))))
+
+(evil-leader/set-key "m" 'mu4e)
