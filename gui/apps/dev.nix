@@ -20,4 +20,10 @@
       fzf
     ];
   };
+
+  home.file.".ctags.d/exclude.ctags".text = ''
+    --exclude=*.html
+    --exclude=.git
+    --exclude=.gcroots
+  '';
 }
