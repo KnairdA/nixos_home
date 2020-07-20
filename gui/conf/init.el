@@ -350,9 +350,8 @@
 (use-package helm-org-rifle
   :ensure t
   :config
-  (evil-define-key 'normal 'global
-    (kbd "C-o")  'helm-org-rifle-org-directory
-    (kbd "M-o")  'helm-org-rifle-current-buffer))
+  (evil-leader/set-key "or" 'helm-org-rifle-org-directory)
+  (evil-leader/set-key "ol" 'helm-org-rifle-current-buffer))
 
 (use-package helm-ag
   :ensure t
