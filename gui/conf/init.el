@@ -71,6 +71,11 @@
 (load-library "custom-runtime-env")
 (load-library "akr-theme")
 
+(use-package gcmh ; noticeably reduces unwanted GC pauses when editing e.g. large fancy org files
+  :ensure t
+  :config
+  (gcmh-mode 1))
+
 (use-package evil-leader
   :ensure t
   :init
