@@ -422,6 +422,11 @@
      :head "#+title: ${title}\n"
      :unnarrowed t)))
 
+(use-package expand-region
+  :ensure t
+  :config
+  (evil-leader/set-key "v" 'er/expand-region))
+
 (use-package nix-mode
   :ensure t)
 
@@ -429,6 +434,9 @@
   :ensure t)
 
 (use-package cmake-mode
+  :ensure t)
+
+(use-package rainbow-delimiters
   :ensure t)
 
 (use-package rainbow-mode
