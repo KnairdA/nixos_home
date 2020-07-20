@@ -47,6 +47,8 @@
 (setq-default c-basic-offset 2)
 (setq-default python-indent-offset 4)
 
+(setq dabbrev-case-fold-search nil)
+
 (setq password-cache t)
 (setq password-cache-expiry 3600)
 
