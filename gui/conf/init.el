@@ -150,6 +150,9 @@
   (setq direnv-always-show-summary nil)
   (direnv-mode))
 
+(use-package htmlize
+  :ensure t)
+
 (use-package org
   :ensure t
   :custom
@@ -164,6 +167,7 @@
   (org-goto-interface 'outline-path-completion)
   (org-outline-path-complete-in-steps nil)
   (org-src-window-setup 'current-window)
+  (org-html-htmlize-output-type 'css)
   (org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
   :config
   (define-key org-mode-map (kbd "<C-tab>") nil)
@@ -215,6 +219,9 @@
   :config
   (setq org-bullets-bullet-list '("●" "●" "⤷" "⤷"))
   (add-hook 'org-mode-hook #'org-bullets-mode))
+
+(use-package ox-reveal
+  :ensure t)
 
 (use-package evil-org
   :ensure t
