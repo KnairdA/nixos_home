@@ -13,6 +13,7 @@
   (setq mu4e-split-view 'single-window)
   (setq mu4e-hide-index-messages t)
   (setq mu4e-completing-read-function 'ivy-completing-read)
+  (setq shr-color-visible-luminance-min 80)
   (require 'org-mu4e)
   (evil-collection-init 'mu4e)
   (setq doom-modeline-mu4e t)
