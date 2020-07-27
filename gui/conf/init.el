@@ -195,9 +195,6 @@
      (file org-default-notes-file)
      "* %^{Description}\n%U\n#+BEGIN_QUOTE\n%i#+END_QUOTE")))
 
-(evil-leader/set-key "oc" 'counsel-org-capture)
-(evil-leader/set-key "on" 'counsel-org-agenda-headlines)
-
 (use-package org-fragtog
   :ensure t
   :config
@@ -259,13 +256,6 @@
 
 (global-set-key (kbd "<print>") 'org-store-link)
 
-(use-package ivy
-  :ensure t
-  :config
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-re-builders-alist
-        '((t . ivy--regex-plus))))
-
 (use-package helm
   :ensure t
   :config
@@ -274,7 +264,9 @@
   (define-key evil-motion-state-map (kbd "C-b") nil)
   (global-set-key (kbd "C-b") 'helm-mini)
   (setq helm-split-window-in-side-p       t
-        helm-move-to-line-cycle-in-source t)
+        helm-move-to-line-cycle-in-source t
+        helm-buffer-max-length            60)
+  (evil-leader/set-key "d" 'helm-etags-select)
   (helm-mode 1))
 
 (use-package helm-swoop
@@ -372,13 +364,14 @@
   (setq projectile-completion-system 'helm)
   (setq projectile-project-search-path '("~/projects"))
   (projectile-mode)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-  (evil-leader/set-key "pp" 'helm-projectile-switch-project))
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 (use-package helm-projectile
   :ensure t
   :config
-  (helm-projectile-on))
+  (helm-projectile-on)
+  (evil-leader/set-key "pp" 'helm-projectile-switch-project)
+  (evil-leader/set-key "ph" 'helm-projectile))
 
 (defun get-related-files ()
   (let ((common-basename-files (seq-filter (lambda (file) (string= (file-name-sans-extension file) (file-name-base)))
@@ -398,14 +391,6 @@
 (evil-define-key 'normal prog-mode-map
   (kbd "<tab>") 'jump-to-first-related
   (evil-leader/set-key "fr" 'jump-to-related))
-
-(use-package counsel-etags
-  :ensure t
-  :config
-  (setq tags-revert-without-query t)
-  (setq large-file-warning-threshold nil)
-  (evil-leader/set-key "d" 'counsel-etags-find-tag-at-point)
-  (evil-leader/set-key "t" 'counsel-etags-list-tag-in-current-file))
 
 (add-hook 'c-mode-common-hook 'hs-minor-mode t)
 (add-hook 'c-mode-common-hook 'hs-hide-initial-comment-block t)
