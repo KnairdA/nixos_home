@@ -32,6 +32,8 @@
       '(kill-ring search-ring))
 (setq savehist-file "~/.emacs.d/savehist")
 
+(global-eldoc-mode -1)
+
 (setq mouse-wheel-scroll-amount '(5))
 (setq mouse-wheel-progressive-speed nil)
 (setq fast-but-imprecise-scrolling t)
@@ -54,14 +56,6 @@
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(package-initialize)
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
 (eval-when-compile (require 'use-package))
 
 (set-face-attribute 'default        nil :family "Iosevka")
@@ -69,7 +63,10 @@
 (set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.1)
 
 (load-library "custom-runtime-env")
-(load-library "akr-theme")
+
+(use-package akr-theme
+  :config
+  (enable-theme 'akr))
 
 (use-package gcmh ; noticeably reduces unwanted GC pauses when editing e.g. large fancy org files
   :ensure t

@@ -308,14 +308,17 @@ For quick iteration all colors are stored in a table.
    :foreground @org-tag)
   (org-block-begin-line
    :inherit fixed-pitch
-   :background @org-block-line)
+   :background @org-block-line
+   :extend t)
   (org-block-end-line
    :inherit fixed-pitch
-   :background @org-block-line)
+   :background @org-block-line
+   :extend t)
   (org-block
    :background @org-block-bg
    :inherit fixed-pitch
-   :height 0.9)
+   :height 0.9
+   :extend t)
   (org-priority
    :inherit fixed-pitch
    :weight normal)

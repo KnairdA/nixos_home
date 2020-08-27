@@ -12,7 +12,6 @@
         rm metakr.org
         mkdir -p $out/share/emacs/site-lisp
         mv akr-theme.el $out/share/emacs/site-lisp/
-        ${pkgs.emacs}/bin/emacs -batch -f batch-byte-compile $out/share/emacs/site-lisp/*.el
       '';
     };
 
@@ -45,13 +44,27 @@
   in {
     enable = true;
 
-    extraPackages = epkgs: with epkgs.melpaPackages; [
-      pdf-tools
-    ] ++ [
-      akr-color-theme
-      custom-runtime-env
-      pkgs.mu
-    ];
+    package = let
+      pkgs-unstable = import <nixpkgs-unstable> {
+        overlays = [
+          (import (builtins.fetchTarball {
+            url = https://github.com/nix-community/emacs-overlay/archive/c10d59874dfa8341237702bce514a763198770c4.tar.gz;
+          }))
+        ];
+      };
+    in
+      pkgs-unstable.emacsWithPackagesFromUsePackage {
+        config = ./conf/init.el;
+        package = pkgs-unstable.emacsGcc;
+        extraEmacsPackages = epkgs: with epkgs.melpaPackages; [
+          pdf-tools
+          mu4e-alert
+        ] ++ [
+          akr-color-theme
+          custom-runtime-env
+          pkgs.mu
+        ];
+      };
   };
 
   home.packages = with pkgs; [
@@ -71,6 +84,5 @@
 
   services.emacs = {
     enable = true;
-    client.enable = true;
   };
 }
