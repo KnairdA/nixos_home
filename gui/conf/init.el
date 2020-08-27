@@ -1,6 +1,9 @@
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 
+(require 'package)
+(package-initialize)
+
 (setq backup-directory-alist `((".*" . "~/.emacs.d/backup")))
 
 (setq custom-file "~/.emacs.d/custom.el")
@@ -38,12 +41,6 @@
 (setq mouse-wheel-progressive-speed nil)
 (setq fast-but-imprecise-scrolling t)
 
-(setq font-lock-support-mode 'jit-lock-mode)
-(setq jit-lock-stealth-time 16
-      jit-lock-defer-contextually t
-      jit-lock-stealth-nice 0.5)
-(setq-default font-lock-multiline t)
-
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq-default c-basic-offset 2)
@@ -55,8 +52,6 @@
 (setq password-cache-expiry 3600)
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
-
-(eval-when-compile (require 'use-package))
 
 (set-face-attribute 'default        nil :family "Iosevka")
 (set-face-attribute 'fixed-pitch    nil :family "Iosevka")
@@ -151,7 +146,6 @@
   :ensure t)
 
 (use-package org
-  :ensure t
   :custom
   (org-adapt-indentation nil)
   (org-startup-indented t)
