@@ -1,14 +1,15 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-personal, ... }:
 
 let
   hidpi = config.custom.hidpi;
+
 in {
   gtk = {
     enable = true;
 
     theme = {
       name = "oomox";
-      package = config.custom.pkgs.oomox-gtk-theme {
+      package = pkgs-personal.oomox-gtk-theme {
         accent_bg  = "aadb0f";
         bg         = "d8d8d8";
         fg         = "101010";
@@ -37,7 +38,7 @@ in {
 
     iconTheme = {
       name    = "oomox-archdroid";
-      package = config.custom.pkgs.oomox-archdroid-icon-theme "909636";
+      package = pkgs-personal.oomox-archdroid-icon-theme "909636";
     };
 
     font = {

@@ -1,6 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, sources, ... }:
 
-{
+let
+  pkgs-unstable = import sources.nixpkgs-unstable {
+    overlays = [ (import sources.emacs-overlay) ];
+  };
+
+in {
   programs.emacs = let
     akr-color-theme = pkgs.stdenv.mkDerivation {
       name = "emacs-color-theme-akr";
@@ -44,27 +49,18 @@
   in {
     enable = true;
 
-    package = let
-      pkgs-unstable = import <nixpkgs-unstable> {
-        overlays = [
-          (import (builtins.fetchTarball {
-            url = https://github.com/nix-community/emacs-overlay/archive/c10d59874dfa8341237702bce514a763198770c4.tar.gz;
-          }))
-        ];
-      };
-    in
-      pkgs-unstable.emacsWithPackagesFromUsePackage {
-        config = ./conf/init.el;
-        package = pkgs-unstable.emacsGcc;
-        extraEmacsPackages = epkgs: with epkgs.melpaPackages; [
-          pdf-tools
-          mu4e-alert
-        ] ++ [
-          akr-color-theme
-          custom-runtime-env
-          pkgs.mu
-        ];
-      };
+    package = pkgs-unstable.emacsWithPackagesFromUsePackage {
+      config = ./conf/init.el;
+      package = pkgs-unstable.emacsGcc;
+      extraEmacsPackages = epkgs: with epkgs.melpaPackages; [
+        pdf-tools
+        mu4e-alert
+      ] ++ [
+        akr-color-theme
+        custom-runtime-env
+        pkgs.mu
+      ];
+    };
   };
 
   home.packages = with pkgs; [

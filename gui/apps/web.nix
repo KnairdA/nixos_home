@@ -1,11 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   home = {
     packages = (with pkgs; [
       thunderbird
       tdesktop
-    ]) ++ (with config.custom.nixpkgs-unstable; [
+    ]) ++ (with pkgs-unstable; [
       zotero
     ]);
   };

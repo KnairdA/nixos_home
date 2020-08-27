@@ -1,9 +1,16 @@
 { config, pkgs, ... }:
 
-{
-  custom.pkgs = import <mypkgs> { };
-  custom.nixpkgs-unstable = import <nixpkgs-unstable> { };
+let
+  sources = import ./nix/sources.nix;
+  pkgs = import sources.nixpkgs { };
+  pkgs-unstable = import sources.nixpkgs-unstable { };
+  pkgs-personal = import sources.mypkgs { };
 
+in {
+  _module.args.sources = sources;
+  _module.args.pkgs-unstable = pkgs-unstable;
+  _module.args.pkgs-personal = pkgs-personal;
+  
   imports = [
   # define options custom to this config
     ./custom.nix
@@ -18,7 +25,7 @@
     keyboard.layout = "de";
 
     packages = [
-      config.custom.pkgs.persistent-nix-shell
+      pkgs-personal.persistent-nix-shell
     ];
   };
 
