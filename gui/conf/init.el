@@ -4,6 +4,9 @@
 (require 'package)
 (package-initialize)
 
+(eval-when-compile
+  (require 'use-package))
+
 (setq backup-directory-alist `((".*" . "~/.emacs.d/backup")))
 
 (setq custom-file "~/.emacs.d/custom.el")
@@ -146,6 +149,7 @@
   :ensure t)
 
 (use-package org
+  :ensure t
   :custom
   (org-adapt-indentation nil)
   (org-startup-indented t)

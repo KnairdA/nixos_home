@@ -32,8 +32,8 @@ in {
         (add-to-list 'exec-path "${tex}/bin")
         (add-to-list 'exec-path "${pkgs.graphviz}/bin")
         (add-to-list 'exec-path "${pkgs.sqlite}/bin")
-
-        (setq counsel-etags-update-tags-backend (lambda (src-dir) (shell-command "${pkgs.universal-ctags}/bin/ctags -e -R")))
+        (add-to-list 'exec-path "${pkgs.universal-ctags}/bin")
+        (add-to-list 'exec-path "${pkgs.global}/bin")
       '';
     };
 
@@ -51,11 +51,21 @@ in {
 
     package = pkgs-unstable.emacsWithPackagesFromUsePackage {
       config = ./conf/init.el;
-      package = pkgs-unstable.emacsGcc;
-      extraEmacsPackages = epkgs: with epkgs.melpaPackages; [
+      # remove builtin org as in https://github.com/chrisbarrett/.emacs.d/blob/6efd82c8e328e677dbef84331ed54763b89667a3/default.nix
+      # this is a workaround until I find a better way to force usage of a non-builtin up-to-date org version
+      package = pkgs-unstable.emacsGcc.overrideAttrs (old: {
+        patches = old.patches ++ [
+          ./patch/optional-org-gnus.patch
+        ];
+        postPatch = ''
+          ${old.postPatch}
+          rm -r test/lisp/org lisp/org etc/org etc/ORG-NEWS doc/misc/org.texi
+        '';
+      });
+      extraEmacsPackages = epkgs: (with epkgs.melpaPackages; [
         pdf-tools
         mu4e-alert
-      ] ++ [
+      ]) ++ [
         akr-color-theme
         custom-runtime-env
         pkgs.mu
