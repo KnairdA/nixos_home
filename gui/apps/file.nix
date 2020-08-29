@@ -45,8 +45,9 @@
   xdg.mimeApps.defaultApplications = {
     "application/pdf" = [ "org.gnome.Evince.desktop" ];
 
-    "image/png" = [ "sxiv.desktop" ];
-    "image/jpg" = [ "sxiv.desktop" ];
+    "image/png"  = [ "sxiv.desktop" ];
+    "image/jpg"  = [ "sxiv.desktop" ];
+    "image/jpeg" = [ "sxiv.desktop" ];
 
     "video/mp4" = [ "mpv.desktop" ];
   };
