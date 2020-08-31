@@ -8,13 +8,13 @@ Furthermore it is possible to reproduce this environment on a new computer withi
 
 The desktop environment consisting of XMonad, custom theming and a selection of utilities and applications is configured by the derivations in the `gui` folder. e.g. check out `gui/xmonad.nix` and `gui/gtk.nix` to get started.
 
-Parts of this setup are maintained in my own Nix channel [pkgs.kummerlaender.eu](https://pkgs.kummerlaender.eu).
-e.g. I can build my custom Vim setup on any system that is able to run the Nix package manager (such as a Surface running WSL) using a single command: 
+`home-manager` doesn't have to be installed in the user environment and is only required for applying the configuration.
 
+```sh
+nix-shell --command "home-manager switch"
 ```
-nix-build "https://pkgs.kummerlaender.eu/nixexprs.tar.bz2" -A custom-vim
-./result/bin/vim
-```
+
+This shell also provides the `niv` utility used for updating the fixed channels.
 
 ## Host specific config
 
