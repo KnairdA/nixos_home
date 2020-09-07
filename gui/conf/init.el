@@ -359,7 +359,8 @@
   (setq projectile-completion-system 'helm)
   (setq projectile-project-search-path '("~/projects"))
   (projectile-mode)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (evil-leader/set-key "pt" 'projectile-regenerate-tags))
 
 (use-package helm-projectile
   :ensure t
