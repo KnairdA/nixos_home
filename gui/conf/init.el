@@ -162,7 +162,7 @@
   (org-goto-interface 'outline-path-completion)
   (org-outline-path-complete-in-steps nil)
   (org-src-window-setup 'current-window)
-  (org-html-htmlize-output-type 'css)
+  (org-html-htmlize-output-type 'inline-css)
   (org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
   :config
   (define-key org-mode-map (kbd "<C-tab>") nil)
