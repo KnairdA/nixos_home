@@ -307,7 +307,8 @@
   (after-init . org-roam-mode)
   :custom
   (org-roam-directory "~/org")
-  (org-roam-completion-system 'helm))
+  (org-roam-completion-system 'helm)
+  (org-roam-rename-file-on-title-change nil))
 
 (defhydra hydra-roam ()
   "Roam"
