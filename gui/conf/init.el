@@ -318,7 +318,7 @@
   ("f" org-roam-find-file "Find file" :column "Navigation")
 
   ("c" org-roam-insert     "Create link" :column "Links")
-  ("y" org-roam-store-link "Store link"  :column "Links")
+  ("y" org-store-link      "Store link"  :column "Links")
   ("p" org-insert-link     "Insert link" :column "Links")
 
   ("dy" org-roam-dailies-yesterday "Yesterday" :column "Dailies")
