@@ -204,7 +204,8 @@
      "Website"
      entry
      (file org-default-notes-file)
-     "* %:description\n%:link %T")))
+     "* %:description\n%:link %T"
+     :immediate-finish t)))
 
 (use-package org-fragtog
   :ensure t
