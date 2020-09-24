@@ -164,6 +164,8 @@
   (org-src-window-setup 'current-window)
   (org-html-htmlize-output-type 'inline-css)
   (org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
+  :init
+  (require 'org-protocol)
   :config
   (define-key org-mode-map (kbd "<C-tab>") nil)
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
@@ -188,7 +190,17 @@
      "Quote selection"
      entry
      (file org-default-notes-file)
-     "* %^{Description}\n%U\n#+BEGIN_QUOTE\n%i#+END_QUOTE")))
+     "* %^{Description}\n%U\n#+BEGIN_QUOTE\n%i#+END_QUOTE")
+    ("wq"
+     "Website (Quote)"
+     entry
+     (file org-default-notes-file)
+     "* %:description\n%:link %T\n#+BEGIN_QUOTE\n%:initial\n#+END_QUOTE")
+    ("w"
+     "Website"
+     entry
+     (file org-default-notes-file)
+     "* %:description\n%:link %T")))
 
 (use-package org-fragtog
   :ensure t

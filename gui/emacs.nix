@@ -73,11 +73,27 @@ in {
     };
   };
 
-  home.packages = with pkgs; [
+  home.packages = let
+    org-protocol-shortcut = pkgs.writeTextFile {
+      name        = "org-protocol";
+      executable  = false;
+      destination = "/share/applications/org-protocol.desktop";
+      text = ''
+        [Desktop Entry]
+        Type=Application
+        Name=Emacs (Client, Protocol)
+        Exec=emacsclient %u
+        Terminal=false
+        MimeType=x-scheme-handler/org-protocol
+      '';
+    };
+
+  in with pkgs; [
     source-sans-pro
     source-serif-pro
     emacs-all-the-icons-fonts
     mu
+    org-protocol-shortcut
   ];
 
   # see https://github.com/rycee/home-manager/issues/589#issuecomment-466594137
