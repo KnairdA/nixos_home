@@ -379,8 +379,9 @@
   :ensure t
   :config
   (helm-projectile-on)
+  (evil-leader/set-key "ph" 'helm-projectile)
   (evil-leader/set-key "pp" 'helm-projectile-switch-project)
-  (evil-leader/set-key "ph" 'helm-projectile))
+  (evil-leader/set-key "pb" 'helm-projectile-switch-to-buffer))
 
 (defun get-related-files ()
   (let ((common-basename-files (seq-filter (lambda (file) (string= (file-name-sans-extension file) (file-name-base)))
