@@ -218,8 +218,8 @@ For quick iteration all colors are stored in a table.
    :inherit fixed-pitch
    :foreground @constant)
   (font-lock-doc-face
-   :inherit fixed-pitch
-   :inherit font-lock-string-face)
+   :foreground @muted
+   :inherit fixed-pitch)
   (font-lock-preprocessor-face
    :inherit fixed-pitch
    :foreground @preprocessor)
