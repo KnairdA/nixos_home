@@ -164,6 +164,7 @@
   (org-src-window-setup 'current-window)
   (org-html-htmlize-output-type 'inline-css)
   (org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
+  (org-image-actual-width nil)
   :init
   (require 'org-protocol)
   :config
