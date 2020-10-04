@@ -287,6 +287,12 @@
   :config
   (evil-leader/set-key "pf" 'helm-browse-project))
 
+(use-package helm-bibtex
+  :ensure t
+  :config
+  (setq bibtex-completion-bibliography '("~/university/bib/lit.bib"))
+  (setq bibtex-completion-pdf-field "file"))
+
 (global-set-key (kbd "<M-tab>")         'next-buffer)
 (global-set-key (kbd "<M-iso-lefttab>") 'previous-buffer)
 (global-set-key (kbd "<C-tab>")         'other-window)
