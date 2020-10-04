@@ -50,6 +50,15 @@ in {
       ]);
     };
 
+    latex_shell = {
+      description = "Complete TeX Live shell environment";
+      directory = "~/";
+      type = "environment";
+      environment = mkShellDerivation "latex-env" (with pkgs; [
+        texlive.combined.scheme-full
+      ]);
+    };
+
     pymath_jupyter = {
       description = "Python for mathematics @ Jupyter Lab";
       directory = "~/";
