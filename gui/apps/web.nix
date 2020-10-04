@@ -3,7 +3,6 @@
 {
   home = {
     packages = (with pkgs; [
-      thunderbird
       tdesktop
     ]) ++ (with pkgs-unstable; [
       zotero
