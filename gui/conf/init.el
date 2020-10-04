@@ -158,6 +158,9 @@
   (org-src-tab-acts-natively t)
   (org-default-notes-file "~/org/inbox.org")
   (org-agenda-files '("~/org"))
+  (org-refile-targets '((nil :maxlevel . 3)
+                        (org-agenda-files :maxlevel . 1)))
+  (org-refile-use-outline-path 'file)
   (org-link-frame-setup '((file . find-file))) ; open links in same frame
   (org-goto-interface 'outline-path-completion)
   (org-outline-path-complete-in-steps nil)
