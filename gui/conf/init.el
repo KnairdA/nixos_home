@@ -153,6 +153,7 @@
   :custom
   (org-adapt-indentation nil)
   (org-startup-indented t)
+  (org-startup-folded t)
   (org-hide-emphasis-markers t)
   (org-src-preserve-indentation t)
   (org-src-tab-acts-natively t)
@@ -168,6 +169,7 @@
   (org-html-htmlize-output-type 'inline-css)
   (org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
   (org-image-actual-width nil)
+  (org-fontify-done-headline nil)
   :init
   (require 'org-protocol)
   :config
