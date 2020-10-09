@@ -231,6 +231,11 @@
   (setq org-bullets-bullet-list '("●" "●" "⤷" "⤷"))
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
+(use-package zotxt
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook 'org-zotxt-mode))
+
 (use-package ox-reveal
   :ensure t)
 
