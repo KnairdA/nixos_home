@@ -209,6 +209,19 @@
      "* %:description\n%:link %T"
      :immediate-finish t)))
 
+(use-package calfw
+  :ensure t
+  :custom
+  (calendar-holidays nil)
+  (cfw:org-face-agenda-item-foreground-color "#F2F2F2")
+  (cfw:face-item-separator-color "#080808")
+  (cfw:render-line-breaker 'cfw:render-line-breaker-wordwrap))
+
+(use-package calfw-org
+  :ensure t
+  :config
+  (evil-leader/set-key "oc" 'cfw:open-org-calendar))
+
 (use-package org-fragtog
   :ensure t
   :config
@@ -223,7 +236,27 @@
    '(org-level-2 ((t (:family "Source Serif Pro"))))
    '(org-level-3 ((t (:family "Source Serif Pro"))))
    '(org-level-4 ((t (:family "Source Serif Pro"))))
-   '(org-document-title ((t (:family "Source Serif Pro")))))
+   '(org-document-title ((t (:family "Source Serif Pro"))))
+
+   ;; calfw
+   '(cfw:face-title ((t (:inherit variable-pitch :family "Source Serif Pro" :foreground "#AADB0F" :height 2.0))))
+   '(cfw:face-header ((t (:inherit fixed-pitch))))
+   '(cfw:face-sunday ((t (:inherit fixed-pitch))))
+   '(cfw:face-saturday ((t (:inherit fixed-pitch))))
+   '(cfw:face-holiday ((t (:inherit fixed-pitch))))
+   '(cfw:face-grid ((t (:inherit fixed-pitch))))
+   '(cfw:face-default-content ((t (:inherit fixed-pitch))))
+   '(cfw:face-periods ((t (:foreground "#909636"))))
+   '(cfw:face-day-title ((t :background "#161616")))
+   '(cfw:face-default-day ((t :weight bold :inherit cfw:face-day-title)))
+   '(cfw:face-annotation ((t :foreground "#909636" :inherit cfw:face-day-title)))
+   '(cfw:face-disable ((t :inherit cfw:face-day-title)))
+   '(cfw:face-today-title ((t :foreground "#161616" :background "#AADB0F" :weight bold)))
+   '(cfw:face-today ((t (:inherit fixed-pitch))))
+   '(cfw:face-select ((t (:background "#F2F2F2" :foreground "#161616"))))
+   '(cfw:face-toolbar ((t (:inherit fixed-pitch))))
+   '(cfw:face-toolbar-button-off ((t (:inherit fixed-pitch))))
+   '(cfw:face-toolbar-button-on  ((t (:inherit fixed-pitch)))))
 
 (use-package org-bullets
   :ensure t
