@@ -187,6 +187,11 @@
      entry
      (file org-default-notes-file)
      "* TODO %?\n%a")
+    ("c"
+     "Calendar entry"
+     entry
+     (file org-default-notes-file)
+     "* TODO %?\nSCHEDULED: %t")
     ("j"
      "Journal entry"
      entry
