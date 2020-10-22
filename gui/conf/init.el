@@ -179,7 +179,8 @@
 
 (setq org-todo-keywords
   '((sequence "TODO(t)" "|" "DONE(d)")
-    (sequence "EXAM(e)" "|" "DONE(d)")))
+    (sequence "EXAM(e)" "|" "DONE(d)")
+    (sequence "IDEA(i)" "TODO(t)" "|" "DONE(d)")))
 
 (setq org-capture-templates
   '(("t"
