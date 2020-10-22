@@ -51,11 +51,11 @@ in {
     };
 
     latex_shell = {
-      description = "Complete TeX Live shell environment";
+      description = "Generic LaTeX shell environment";
       directory = "~/";
       type = "environment";
       environment = mkShellDerivation "latex-env" (with pkgs; [
-        texlive.combined.scheme-full
+        tectonic
       ]);
     };
 

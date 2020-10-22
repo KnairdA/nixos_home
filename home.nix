@@ -81,8 +81,10 @@ in {
     };
   };
 
-  programs.direnv.enable = true;
-  programs.direnv.enableNixDirenvIntegration = true;
+  programs.direnv = {
+    enable = true;
+    enableNixDirenvIntegration = true;
+  };
 
   xdg.mimeApps.enable = true;
 }
