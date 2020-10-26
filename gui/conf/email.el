@@ -1,23 +1,28 @@
 (use-package mu4e
+  :custom
+  (mu4e-maildir "~/mail")
+  (mu4e-get-mail-command "true")
+  (mu4e-update-interval 120)
+  (mu4e-use-fancy-chars t)
+  (mu4e-headers-attach-mark '("a" . "@")) ; alignment fix
+  (mu4e-headers-fields '((:human-date . 12)
+                         (:flags . 6)
+                         (:from . 22)
+                         (:subject)))
+  (mu4e-change-filenames-when-moving t)
+  (sendmail-program "msmtp")
+  (send-mail-function 'smtpmail-send-it)
+  (message-sendmail-f-is-evil t)
+  (message-send-mail-function 'message-send-mail-with-sendmail)
+  (mu4e-split-view 'single-window)
+  (mu4e-hide-index-messages t)
+  (mu4e-completing-read-function 'helm-comp-read)
+  (shr-color-visible-luminance-min 80)
+  (doom-modeline-mu4e t)
+  (doom-modeline-gnus nil)
   :config
-  (setq mu4e-maildir "~/mail")
-  (setq mu4e-get-mail-command "true")
-  (setq mu4e-update-interval 120)
-  (setq mu4e-use-fancy-chars t)
-  (setq mu4e-headers-attach-mark '("a" . "@")) ; alignment fix
-  (setq mu4e-change-filenames-when-moving t)
-  (setq sendmail-program "msmtp"
-        send-mail-function 'smtpmail-send-it
-        message-sendmail-f-is-evil t
-        message-send-mail-function 'message-send-mail-with-sendmail)
-  (setq mu4e-split-view 'single-window)
-  (setq mu4e-hide-index-messages t)
-  (setq mu4e-completing-read-function 'helm-comp-read)
-  (setq shr-color-visible-luminance-min 80)
   (require 'org-mu4e)
-  (evil-collection-init 'mu4e)
-  (setq doom-modeline-mu4e t)
-  (setq doom-modeline-gnus nil))
+  (evil-collection-init 'mu4e))
 
 (use-package mu4e-alert
   :ensure t
