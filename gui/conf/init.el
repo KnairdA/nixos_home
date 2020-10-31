@@ -449,7 +449,10 @@
 
 (defun jump-to-related ()
   (interactive)
-  (find-file (ivy-read "related:" (get-related-files))))
+  (find-file (helm :sources
+                   (helm-build-sync-source "Related files"
+                     :candidates (get-related-files)
+                     :fuzzy-match t))))
 
 (defun jump-to-first-related ()
   (interactive)
