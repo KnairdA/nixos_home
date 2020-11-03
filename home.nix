@@ -37,8 +37,11 @@ in {
     userName  = "Adrian Kummerlaender";
     userEmail = "adrian@kummerlaender.eu";
 
-    extraConfig.core.editor = "vim";
-    extraConfig.merge.tool = "${pkgs.meld}/bin/meld";
+    extraConfig = {
+      core.editor = "vim";
+      merge.tool = "${pkgs.meld}/bin/meld";
+      pull.ff = "only";
+    };
   };
 
   programs.ssh = {
