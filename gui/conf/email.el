@@ -22,7 +22,8 @@
   (doom-modeline-gnus nil)
   :config
   (require 'org-mu4e)
-  (evil-collection-init 'mu4e))
+  (evil-collection-init 'mu4e)
+  (add-hook 'mu4e-compose-mode-hook #'(lambda () (auto-save-mode -1))))
 
 (use-package mu4e-alert
   :ensure t
