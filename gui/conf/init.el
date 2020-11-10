@@ -371,6 +371,7 @@
  '((python  . t)
    (shell   . t)
    (latex   . t)
+   (org     . t)
    (C       . t)))
 
 (setq org-confirm-babel-evaluate nil)
