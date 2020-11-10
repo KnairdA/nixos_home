@@ -64,6 +64,9 @@
 
 (load-library "custom-runtime-env")
 
+(setq auto-mode-alist
+      (append '(("\\.tikz\\'" . latex-mode))
+              auto-mode-alist))
 (use-package akr-theme
   :config
   (enable-theme 'akr))
