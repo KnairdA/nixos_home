@@ -90,6 +90,7 @@ For quick iteration all colors are stored in a table.
 | helm-header-bg          | #161616 |
 | helm-source-header-fg   | #161616 |
 | helm-source-header-bg   | #909636 |
+| whitespace-tab          | #222222 |
 
 * Structure
 #+NAME: structure
@@ -362,6 +363,10 @@ For quick iteration all colors are stored in a table.
    :background @helm-source-header-bg)
   (helm-selection
    :background @bg-hlt)
+
+;; Whitespace
+  (whitespace-tab
+   :background @whitespace-tab)
 )
 #+END_SRC
 

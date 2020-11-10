@@ -49,6 +49,8 @@
 (setq-default c-basic-offset 2)
 (setq-default python-indent-offset 4)
 
+(setq whitespace-style '(face trailing tabs))
+
 (setq dabbrev-case-fold-search nil)
 
 (setq password-cache t)
@@ -70,6 +72,11 @@
   :ensure t
   :config
   (gcmh-mode 1))
+
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
 
 (use-package evil-leader
   :ensure t
