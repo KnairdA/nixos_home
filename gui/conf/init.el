@@ -1,5 +1,6 @@
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
+(setq inhibit-message t)
 
 (require 'package)
 (package-initialize)
