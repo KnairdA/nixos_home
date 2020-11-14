@@ -219,12 +219,12 @@
      "Website (Quote)"
      entry
      (file org-default-notes-file)
-     "* %:description\n%:link %T\n#+BEGIN_QUOTE\n%:initial\n#+END_QUOTE")
+     "* %:description\n%:link %U\n#+BEGIN_QUOTE\n%:initial\n#+END_QUOTE")
     ("w"
      "Website"
      entry
      (file org-default-notes-file)
-     "* %:description\n%:link %T"
+     "* %:description\n%:link %U"
      :immediate-finish t)))
 
 (use-package calfw
