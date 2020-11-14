@@ -65,7 +65,9 @@ in {
       extraEmacsPackages = epkgs: (with epkgs.melpaPackages; [
         pdf-tools
         mu4e-alert
-      ]) ++ [
+      ]) ++ (with epkgs.elpaPackages; [
+        auctex
+      ])++ [
         akr-color-theme
         custom-runtime-env
         pkgs.mu

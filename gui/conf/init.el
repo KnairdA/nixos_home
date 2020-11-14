@@ -490,6 +490,9 @@
      :head "#+title: ${title}\n"
      :unnarrowed t)))
 
+(use-package auctex
+  :defer t)
+
 (use-package expand-region
   :ensure t
   :config
