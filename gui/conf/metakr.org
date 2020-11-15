@@ -367,6 +367,13 @@ For quick iteration all colors are stored in a table.
 ;; Whitespace
   (whitespace-tab
    :background @whitespace-tab)
+
+;; LaTeX
+  (font-latex-sectioning-5-face
+   :foreground @fg)
+  (font-latex-italic-face
+   :inherit italic
+   :foreground @muted)
 )
 #+END_SRC
 
