@@ -57,7 +57,7 @@ in {
       };
       "horst" = {
         proxyCommand = "ssh majestix -W %h:%p";
-        hostname = "172.23.20.188";
+        hostname = "MVMITS177.mvm.kit.edu";
         user = "urdzx";
       };
     };
