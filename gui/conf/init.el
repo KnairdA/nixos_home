@@ -47,6 +47,7 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq-default c-basic-offset 2)
+(c-set-offset 'cpp-macro 0)
 (setq-default python-indent-offset 4)
 
 (setq whitespace-style '(face trailing tabs))
