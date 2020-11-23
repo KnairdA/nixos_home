@@ -6,7 +6,7 @@
     # UI dev utilities (language environments are maintained in project specific nix-shells)
       zeal
       hotspot
-      qcachegrind
+      kcachegrind
       paraview
     # version control
       gitg
