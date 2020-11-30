@@ -14,6 +14,8 @@
 
       disable_ligatures always
 
+      enable_audio_bell no
+
       background #161616
       foreground #F2F2F2
       # black
