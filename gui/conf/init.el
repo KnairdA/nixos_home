@@ -96,6 +96,7 @@
   (setq evil-search-module 'evil-search)
   :config
   (evil-mode 1)
+  (evil-set-undo-system 'undo-tree)
   (evil-set-initial-state 'calendar-mode 'emacs))
 
 (use-package evil-collection
@@ -119,6 +120,7 @@
   :custom
   (undo-tree-visualizer-diff t)
   :config
+  (global-undo-tree-mode)
   (evil-leader/set-key "hu" 'undo-tree-undo)
   (evil-leader/set-key "hr" 'undo-tree-redo)
   (evil-leader/set-key "hv" 'undo-tree-visualize))
