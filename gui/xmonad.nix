@@ -24,6 +24,10 @@ in {
       enableContribAndExtras = true;
       config = ./conf/xmonad.hs;
     };
+
+    initExtra = ''
+      xsetroot -solid "#000000"
+    '';
   };
 
   home.packages = with pkgs; [
