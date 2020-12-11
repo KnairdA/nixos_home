@@ -250,6 +250,9 @@
 (use-package ob-async
   :ensure t)
 
+(use-package org-ql
+  :ensure t)
+
 (custom-theme-set-faces
  'user
  '(org-level-1 ((t (:family "Source Serif Pro"))))
@@ -425,6 +428,9 @@
   :config
   (evil-leader/set-key "or" 'helm-org-rifle-org-directory)
   (evil-leader/set-key "ol" 'helm-org-rifle-current-buffer))
+
+(use-package helm-org-ql
+  :ensure t)
 
 (use-package helm-ag
   :ensure t
