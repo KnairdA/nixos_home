@@ -557,3 +557,7 @@
 (let ((mu4e-config "~/.emacs.d/email.el"))
  (when (file-exists-p mu4e-config)
    (load-file mu4e-config)))
+
+(let ((patches "~/.emacs.d/patches.el"))
+  (when (file-exists-p patches)
+    (load-file patches)))
