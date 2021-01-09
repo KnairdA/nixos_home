@@ -14,4 +14,8 @@
       type = "local-shell";
     };
   };
+
+  services.kdeconnect = {
+    enable = true;
+  };
 }
