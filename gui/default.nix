@@ -10,6 +10,7 @@ in {
     ./emacs.nix
     ./email.nix
     ./zathura.nix
+    ./htop.nix
     ./pass.nix
 
   # applications grouped by purpose
