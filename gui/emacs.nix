@@ -34,6 +34,7 @@ in {
         (add-to-list 'exec-path "${pkgs.sqlite}/bin")
         (add-to-list 'exec-path "${pkgs.universal-ctags}/bin")
         (add-to-list 'exec-path "${pkgs.global}/bin")
+        (add-to-list 'exec-path "${pkgs.pandoc}/bin")
       '';
     };
 

@@ -537,6 +537,11 @@
   :mode "\\.pdf$"
   :config (pdf-tools-install))
 
+(use-package pocket-reader
+  :ensure t
+  :config
+  (evil-set-initial-state 'pocket-reader-mode 'emacs))
+
 (setq browse-url-browser-function 'eww-browse-url)
 
 (add-hook 'eshell-mode-hook
