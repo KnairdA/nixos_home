@@ -50,6 +50,10 @@
 (c-set-offset 'cpp-macro 0)
 (setq-default python-indent-offset 4)
 
+(put 'narrow-to-defun  'disabled nil)
+(put 'narrow-to-page   'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+
 (setq whitespace-style '(face trailing tabs))
 
 (setq dabbrev-case-fold-search nil)
