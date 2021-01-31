@@ -28,7 +28,7 @@ in {
       name = "custom-runtime-env.el";
       text = ''
         (setenv "PATH" (concat (getenv "PATH")
-                               ":${tex}/bin"))
+                               ":${tex}/bin:${pkgs.pandoc}/bin"))
         (add-to-list 'exec-path "${tex}/bin")
         (add-to-list 'exec-path "${pkgs.graphviz}/bin")
         (add-to-list 'exec-path "${pkgs.sqlite}/bin")
