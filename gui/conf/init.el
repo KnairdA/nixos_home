@@ -191,6 +191,7 @@
   (require 'org-protocol)
   :config
   (define-key org-mode-map (kbd "<C-tab>") nil)
+  (evil-leader/set-key "on" 'org-capture)
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1))))
 

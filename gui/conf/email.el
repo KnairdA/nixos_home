@@ -56,3 +56,7 @@
                   (message-sendmail-extra-arguments  . ("--read-envelope-from" "--account=kit"))))))
 
 (evil-leader/set-key "m" 'mu4e)
+
+(add-to-list 'org-capture-templates
+             '("m" "eMail note" entry (file org-default-notes-file)
+               "* TODO /%:subject/\n See %a\n\n%?"))
