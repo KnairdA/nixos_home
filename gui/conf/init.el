@@ -107,7 +107,7 @@
   :after evil
   :ensure t
   :config
-  (setq evil-collection-mode-list '(dired eshell eww pdf))
+  (setq evil-collection-mode-list '(dired eshell eww pdf magit))
   (evil-collection-init))
 
 (use-package which-key
@@ -319,6 +319,7 @@
   ("l" org-toggle-link-display      "Toggle links"   :column "View")
 
   ("s" org-time-stamp-inactive  "Timestamp (inactive)" :column "Fragments")
+  ("S" org-time-stamp           "Timestamp (active)"   :column "Fragments")
 
   ("h" org-html-export-to-html  "HTML export" :column "Export")
 
@@ -446,9 +447,6 @@
   :ensure t
   :config
   (evil-leader/set-key "pg" 'magit))
-
-(use-package evil-magit
-  :ensure t)
 
 (use-package projectile
   :ensure t
