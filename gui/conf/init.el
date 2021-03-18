@@ -43,6 +43,7 @@
 (setq mouse-wheel-scroll-amount '(5))
 (setq mouse-wheel-progressive-speed nil)
 (setq fast-but-imprecise-scrolling t)
+(fset 'yes-or-no-p 'y-or-n-p)
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
