@@ -55,15 +55,7 @@ in {
       alwaysEnsure = false;
       # remove builtin org as in https://github.com/chrisbarrett/.emacs.d/blob/6efd82c8e328e677dbef84331ed54763b89667a3/default.nix
       # this is a workaround until I find a better way to force usage of a non-builtin up-to-date org version
-      package = pkgs-unstable.emacsGcc.overrideAttrs (old: {
-        patches = old.patches ++ [
-          ./patch/optional-org-gnus.patch
-        ];
-        postPatch = ''
-          ${old.postPatch}
-          rm -r test/lisp/org lisp/org etc/org etc/ORG-NEWS doc/misc/org.texi
-        '';
-      });
+      package = pkgs-unstable.emacsGcc;
       extraEmacsPackages = epkgs: (with epkgs.melpaPackages; [
         pdf-tools
         mu4e-alert
@@ -100,11 +92,7 @@ in {
     org-protocol-shortcut
   ];
 
-  # see https://github.com/rycee/home-manager/issues/589#issuecomment-466594137
-  home.activation.linkInitEl = config.lib.dag.entryAfter ["writeBoundary"] ''
-    mkdir -p ~/.emacs.d
-    ln -s ${toString ./conf/init.el} ~/.emacs.d/init.el
-  '';
+  home.file.".emacs.d/init.el".source = config.lib.file.mkOutOfStoreSymlink ./conf/init.el;
 
   systemd.user.services.emacs.Service.ExecStart = pkgs.lib.mkForce "${pkgs.runtimeShell} -l -c 'exec emacs --fg-daemon'";
 
