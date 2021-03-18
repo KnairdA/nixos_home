@@ -4,12 +4,9 @@
   home = {
     packages = with pkgs; [
     # UI dev utilities (language environments are maintained in project specific nix-shells)
-      zeal
       hotspot
       kcachegrind
       paraview
-    # version control
-      gitg
       meld
     # language utilities
       artha

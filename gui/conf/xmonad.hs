@@ -108,8 +108,6 @@ scratchpads host =
        (customFloating $ hideScreenBorder host dropDown)
   , NS "browser"       "env MOZ_USE_XINPUT2=1 firefox --no-remote -P scratchpad --class scratchfire" (className =? "scratchfire")
        (customFloating $ hideScreenBorder host dropDownLarge)
-  , NS "documentation" "zeal"                                                  (className =? "Zeal")
-       (customFloating $ hideScreenBorder host dropDown)
   , NS "thesaurus"     "artha"                                                 (className =? "Artha")
        (customFloating $ hideScreenBorder host sideBarLeft)
   , NS "literature"    "zotero"                                                (className =? "Zotero")
@@ -200,7 +198,6 @@ commonKeybindings host =
 
 -- scratchpads
   , ("M-b"           , namedScratchpadAction (scratchpads host) "browser")
-  , ("M-d"           , namedScratchpadAction (scratchpads host) "documentation")
   , ("M-t"           , namedScratchpadAction (scratchpads host) "thesaurus")
   , ("M-z"           , namedScratchpadAction (scratchpads host) "literature")
   , ("M-r"           , namedScratchpadAction (scratchpads host) "calculator")

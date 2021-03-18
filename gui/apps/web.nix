@@ -4,8 +4,10 @@
   home = {
     packages = (with pkgs; [
       tdesktop
+      tigervnc
     ]) ++ (with pkgs-unstable; [
       zotero
+      teams
     ]);
   };
 
@@ -15,6 +17,7 @@
   };
 
   programs.firefox.enable = true;
+  programs.chromium.enable = true;
 
   services.syncthing.enable = true;
 }
