@@ -55,7 +55,7 @@ in {
       alwaysEnsure = false;
       # remove builtin org as in https://github.com/chrisbarrett/.emacs.d/blob/6efd82c8e328e677dbef84331ed54763b89667a3/default.nix
       # this is a workaround until I find a better way to force usage of a non-builtin up-to-date org version
-      package = pkgs-unstable.emacsGcc;
+      package = pkgs-unstable.emacsGit.override { nativeComp = true; };
       extraEmacsPackages = epkgs: (with epkgs.melpaPackages; [
         pdf-tools
         mu4e-alert
