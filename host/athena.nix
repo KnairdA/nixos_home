@@ -12,6 +12,8 @@
   home.packages = with pkgs; [
     acpi
     brightnessctl
+    arandr
+    blueman
   ];
 
   custom.hidpi = true;

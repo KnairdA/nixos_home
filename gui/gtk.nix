@@ -68,4 +68,8 @@ in {
     enable = true;
     platformTheme = "gtk";
   };
+
+  home.sessionVariables = {
+    QT_AUTO_SCREEN_SCALE_FACTOR = 0;
+  };
 }
