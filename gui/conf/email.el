@@ -47,13 +47,13 @@
           :name "KIT"
           :match-func (lambda (msg)
                         (when msg
-                          (string-match-p "^/kit" (mu4e-message-field msg :maildir))))
-          :vars '((user-mail-address  . "adrian.kummerlaender@student.kit.edu")
+                          (string-match-p "^/KIT" (mu4e-message-field msg :maildir))))
+          :vars '((user-mail-address  . "adrian.kummerlaender@kit.edu")
                   (user-full-name     . "Adrian Kummerländer")
-                  (mu4e-sent-folder   . "/kit/Sent")
-                  (mu4e-drafts-folder . "/kit/Drafts")
-                  (mu4e-trash-folder  . "/kit/Trash")
-                  (message-sendmail-extra-arguments  . ("--read-envelope-from" "--account=kit"))))))
+                  (mu4e-sent-folder   . "/KIT/Sent Items")
+                  (mu4e-trash-folder  . "/KIT/Deleted Items")
+                  (mu4e-drafts-folder . "/KIT/Drafts")
+                  (message-sendmail-extra-arguments  . ("--read-envelope-from" "--account=KIT"))))))
 
 (evil-leader/set-key "m" 'mu4e)
 

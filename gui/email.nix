@@ -40,12 +40,12 @@
       msmtp.enable = true;
     };
 
-    accounts.kit = {
+    accounts.KIT = {
       realName = "Adrian Kummerländer";
-      address = "adrian.kummerlaender@student.kit.edu";
+      address = "adrian.kummerlaender@kit.edu";
 
-      userName = "urdzx@student.kit.edu";
-      passwordCommand = "${pkgs.pass}/bin/pass kit";
+      userName = "sb2380@kit.edu";
+      passwordCommand = "${pkgs.pass}/bin/pass kit/sb2380";
 
       imap = {
         host = "imap.kit.edu";
@@ -54,7 +54,7 @@
 
       mbsync = {
         enable = true;
-        create = "maildir";
+        create = "both";
         expunge = "both";
         extraConfig.account = {
           AuthMechs = "PLAIN";
