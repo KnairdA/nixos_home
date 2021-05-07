@@ -60,6 +60,11 @@ in {
         hostname = "MVMITS177.mvm.kit.edu";
         user = "urdzx";
       };
+      "bwunicluster" = {
+        proxyCommand = "ssh majestix -W %h:%p";
+        hostname = "bwunicluster.scc.kit.edu";
+        user = "urdzx";
+      };
     };
   };
 
