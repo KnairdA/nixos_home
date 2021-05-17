@@ -31,6 +31,7 @@ in {
                                ":${tex}/bin:${pkgs.pandoc}/bin"))
         (add-to-list 'exec-path "${tex}/bin")
         (add-to-list 'exec-path "${pkgs.graphviz}/bin")
+        (add-to-list 'exec-path "${pkgs.gnuplot}/bin")
         (add-to-list 'exec-path "${pkgs.sqlite}/bin")
         (add-to-list 'exec-path "${pkgs.universal-ctags}/bin")
         (add-to-list 'exec-path "${pkgs.global}/bin")

@@ -535,6 +535,9 @@
 (use-package literate-calc-mode
   :ensure t)
 
+(use-package gnuplot
+  :ensure t)
+
 (use-package darkroom
   :ensure t
   :custom
