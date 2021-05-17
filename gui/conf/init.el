@@ -73,6 +73,7 @@
 (setq auto-mode-alist
       (append '(("\\.tikz\\'" . latex-mode))
               auto-mode-alist))
+
 (use-package akr-theme
   :config
   (enable-theme 'akr))
@@ -193,13 +194,15 @@
   :config
   (define-key org-mode-map (kbd "<C-tab>") nil)
   (evil-leader/set-key "on" 'org-capture)
+  (evil-leader/set-key "oa" 'org-agenda)
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1))))
 
 (setq org-todo-keywords
   '((sequence "TODO(t)" "|" "DONE(d)")
-    (sequence "EXAM(e)" "|" "DONE(d)")
     (sequence "TALK(k)" "|" "DONE(d)")
+    (sequence "MEET(e)" "|" "DONE(d)")
+    (sequence "MAIL(m)" "|" "DONE(d)")
     (sequence "IDEA(i)" "TODO(t)" "|" "DONE(d)")))
 
 (setq org-capture-templates
@@ -306,7 +309,9 @@
   :ensure t
   :config
   (add-hook 'org-mode-hook 'evil-org-mode)
-  (evil-org-set-key-theme '(navigation insert textobjects additional todo)))
+  (evil-org-set-key-theme '(navigation insert textobjects additional todo))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (defhydra hydra-org-mode ()
   "Org mode"
