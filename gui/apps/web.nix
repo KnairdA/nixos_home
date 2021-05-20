@@ -8,6 +8,7 @@
     ]) ++ (with pkgs-unstable; [
       zotero
       teams
+      zoom-us
     ]);
   };
 
