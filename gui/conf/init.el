@@ -109,7 +109,7 @@
   :after evil
   :ensure t
   :config
-  (setq evil-collection-mode-list '(dired eshell eww pdf magit))
+  (setq evil-collection-mode-list '(dired eshell eww pdf magit ediff))
   (evil-collection-init))
 
 (use-package which-key
