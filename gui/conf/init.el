@@ -555,6 +555,11 @@
   :config
   (evil-set-initial-state 'pocket-reader-mode 'emacs))
 
+(use-package edit-server
+  :ensure t
+  :init
+  (edit-server-start))
+
 (setq browse-url-browser-function 'eww-browse-url)
 
 (add-hook 'eshell-mode-hook
