@@ -4,12 +4,17 @@
   programs.htop = {
     enable = true;
 
-    treeView = true;
-    showProgramPath = false;
-    highlightBaseName = true;
-    hideThreads = true;
-    hideUserlandThreads = true;
-    meters.left = [ "LeftCPUs4" "Memory" "Swap" ];
-    meters.right = [ "RightCPUs4" "Tasks" "LoadAverage" "Uptime" ];
+    settings = {
+      treeView = true;
+
+      showProgramPath = false;
+      highlightBaseName = true;
+
+      hideThreads         = true;
+      hideUserlandThreads = true;
+
+      left_meter_modes = [ "LeftCPUs4" "Memory" "Swap" ];
+      right_meter_modes = [ "RightCPUs4" "Tasks" "LoadAverage" "Uptime" ];
+    };
   };
 }
