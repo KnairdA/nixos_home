@@ -5,13 +5,13 @@
     enable = true;
 
     settings = {
-      treeView = true;
+      tree_view = true;
 
-      showProgramPath = false;
-      highlightBaseName = true;
+      show_program_path = false;
+      highlight_base_name = true;
 
-      hideThreads         = true;
-      hideUserlandThreads = true;
+      hide_threads         = true;
+      hide_userland_threads = true;
 
       left_meter_modes = [ "LeftCPUs4" "Memory" "Swap" ];
       right_meter_modes = [ "RightCPUs4" "Tasks" "LoadAverage" "Uptime" ];
