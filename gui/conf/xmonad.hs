@@ -150,6 +150,8 @@ hostSpecificKeybindings host = case host of
                , ("M-c p"                   , spawn "flameshot gui") ]
   "obelix"  -> [ ("M-i g" , showNotification "GPU"
                                              "`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`") ]
+  "hephaestus" -> [ ("M-i g" , showNotification "GPU"
+                                             "`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`") ]
   _         -> [ ]
 
 commonKeybindings host =
@@ -357,25 +359,29 @@ hideScreenBorder host (S.RationalRect x0 y0 w h) = S.RationalRect (x0-(bw/sw)) (
         sh = screenHeightOn host
 
 screenWidthOn  host = case host of
-  "obelix"   -> 1920
-  "majestix" -> 1920
-  "asterix"  -> 1366
-  "athena"   -> 2560
+  "hephaestus" -> 1920
+  "majestix"   -> 1920
+  "obelix"     -> 1280
+  "asterix"    -> 1366
+  "athena"     -> 2560
 screenHeightOn host = case host of
-  "obelix"   -> 1200
-  "majestix" -> 1080
-  "asterix"  -> 768
-  "athena"   -> 1440
+  "hephaestus" -> 1200
+  "majestix"   -> 1080
+  "obelix"     -> 1024
+  "asterix"    -> 768
+  "athena"     -> 1440
 borderWidthOn host = case host of
-  "obelix"   -> 3
-  "majestix" -> 3
-  "asterix"  -> 3
-  "athena"   -> 6
+  "hephaestus" -> 3
+  "majestix"   -> 3
+  "obelix"     -> 3
+  "asterix"    -> 3
+  "athena"     -> 6
 decoHeightOn host = case host of
-  "obelix"   -> 20
-  "majestix" -> 20
-  "asterix"  -> 20
-  "athena"   -> 30
+  "hephaestus" -> 20
+  "majestix"   -> 20
+  "obelix"     -> 20
+  "asterix"    -> 20
+  "athena"     -> 30
 
 -------------------------------------------------------------------------------
 -- helper for layout name dependent actions
