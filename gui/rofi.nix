@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
 let
-  hidpiExtraConfig = if config.custom.hidpi then ''
-    rofi.dpi: 160
-  '' else "";
+  hidpiExtraConfig = if config.custom.hidpi then {
+    dpi = 160;
+  } else { };
 
 in {
   programs.rofi = {
@@ -52,12 +52,11 @@ in {
       };
     };
 
-    extraConfig = ''
-      rofi.modi: combi
-      rofi.combi-modi: windowcd,drun,ssh
-      rofi.terminal: kitty
-      rofi.ssh-command: {terminal} {ssh-client} {host}
-      ${hidpiExtraConfig}
-    '';
+    extraConfig = {
+      modi       = "combi";
+      combi-modi = "windowcd,drun,ssh";
+      terminal = "kitty";
+      ssh-command = "{terminal} {ssh-client} {host}";
+    } // hidpiExtraConfig;
   };
 }
