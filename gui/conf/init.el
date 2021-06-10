@@ -241,6 +241,7 @@
 (use-package calfw
   :ensure t
   :custom
+  (calendar-week-start-day 1)
   (calendar-holidays nil)
   (cfw:org-face-agenda-item-foreground-color "#F2F2F2")
   (cfw:face-item-separator-color "#080808")
