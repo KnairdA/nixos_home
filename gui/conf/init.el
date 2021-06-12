@@ -99,7 +99,8 @@
   :config
   (evil-mode 1)
   (evil-set-undo-system 'undo-tree)
-  (evil-set-initial-state 'calendar-mode 'emacs))
+  (evil-set-initial-state 'calendar-mode 'emacs)
+  (define-key evil-motion-state-map (kbd "C-b") nil))
 
 (use-package evil-collection
   :after evil
@@ -188,9 +189,14 @@
   :init
   (require 'org-protocol)
   :config
-  (define-key org-mode-map (kbd "<C-tab>") nil)
+  (evil-leader/set-key "oy" 'org-store-link)
   (evil-leader/set-key "on" 'org-capture)
   (evil-leader/set-key "oa" 'org-agenda)
+  (evil-leader/set-key-for-mode 'org-mode
+    "c"  'org-edit-src-code
+    "g"  'org-goto
+    "e"  'org-ctrl-c-ctrl-c
+    "lp" 'org-insert-link)
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
   (add-hook 'org-mode-hook (lambda () (variable-pitch-mode 1))))
 
@@ -334,70 +340,28 @@
   "m" 'hydra-org-mode/body
   (kbd "<return>") 'org-open-at-point)
 
-(evil-leader/set-key-for-mode 'org-mode
-  "c" 'org-edit-src-code
-  "lp" 'org-insert-link
-  "g" 'org-goto)
-
-(global-set-key (kbd "<print>") 'org-store-link)
-
-(use-package orderless
-  :ensure t)
-
-(use-package selectrum
-  :ensure t
-  :config
-  (setq completion-styles '(orderless))
-  (setq selectrum-prescient-enable-filtering nil)
-  (setq selectrum-max-window-height 16)
-  :init
-  (selectrum-mode +1))
-
-(use-package prescient
-  :ensure t)
-
-(use-package selectrum-prescient
-  :ensure t
-  :after (selectrum prescient)
-  :init
-  (selectrum-prescient-mode +1)
-  (prescient-persist-mode +1))
-
-(use-package consult
-  :ensure t
-  :config
-  (define-key evil-motion-state-map (kbd "C-b") nil)
-  (global-set-key (kbd "C-b") 'consult-buffer)
-  (evil-leader/set-key "s" 'consult-line)
-  (evil-leader/set-key "x" 'execute-extended-command))
-
-(use-package marginalia
-  :ensure t
-  :init
-  (marginalia-mode))
-
-(use-package embark
-  :ensure t
-  :bind
-  (("C-S-a" . embark-act)
-   ("C-h B" . embark-bindings)))
-
-(use-package embark-consult
-  :ensure t
-  :after (embark consult))
-
 (use-package helm
   :ensure t
   :config
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-b") 'helm-mini)
+  (evil-leader/set-key "x" 'helm-M-x)
   (setq helm-split-window-in-side-p       t
         helm-move-to-line-cycle-in-source t
         helm-buffer-max-length            60)
-  (evil-leader/set-key "d" 'helm-etags-select))
+  (evil-leader/set-key "d" 'helm-etags-select)
+  :init
+  (helm-mode 1))
 
 (use-package helm-ls-git
   :ensure t
   :config
   (evil-leader/set-key "pf" 'helm-browse-project))
+
+(use-package helm-swoop
+  :ensure t
+  :config
+  (evil-leader/set-key "s" 'helm-swoop-without-pre-input))
 
 (use-package helm-bibtex
   :ensure t
@@ -429,15 +393,13 @@
 
 (setq org-confirm-babel-evaluate nil)
 
-(evil-leader/set-key-for-mode 'org-mode
-  "e" 'org-ctrl-c-ctrl-c)
-
 (use-package org-roam
   :ensure t
   :hook
   (after-init . org-roam-mode)
   :custom
   (org-roam-directory "~/org")
+  (org-roam-completion-system 'helm)
   (org-roam-rename-file-on-title-change nil))
 
 (defhydra hydra-roam ()
@@ -486,15 +448,21 @@
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
   (evil-leader/set-key "pt" 'projectile-regenerate-tags)
   (evil-leader/set-key "pk" 'projectile-kill-buffers)
-  (evil-leader/set-key "pp" 'projectile-switch-project)
-  (evil-leader/set-key "pb" 'projectile-switch-to-buffer)
   :init
   (projectile-mode))
 
 (use-package helm-ag
+  :ensure t)
+
+(use-package helm-projectile
   :ensure t
   :config
-  (evil-leader/set-key "pa" 'helm-projectile-ag))
+  (evil-leader/set-key "ph" 'helm-projectile)
+  (evil-leader/set-key "pp" 'helm-projectile-switch-project)
+  (evil-leader/set-key "pb" 'helm-projectile-switch-to-buffer)
+  (evil-leader/set-key "pa" 'helm-projectile-ag)
+  :init
+  (helm-projectile-on))
 
 (defun get-related-files ()
   (let ((common-basename-files (seq-filter (lambda (file) (string= (file-name-sans-extension file) (file-name-base)))
