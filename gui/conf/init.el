@@ -35,6 +35,9 @@
 
 (savehist-mode 1)
 (global-eldoc-mode -1)
+(global-visual-line-mode 1)
+
+(setq warning-minimum-level :error)
 
 (setq mouse-wheel-scroll-amount '(5))
 (setq mouse-wheel-progressive-speed nil)
@@ -63,6 +66,10 @@
 (set-face-attribute 'default        nil :family "Iosevka")
 (set-face-attribute 'fixed-pitch    nil :family "Iosevka")
 (set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.1)
+
+(global-set-key (kbd "<M-tab>")         'next-buffer)
+(global-set-key (kbd "<M-iso-lefttab>") 'previous-buffer)
+(global-set-key (kbd "<C-tab>")         'other-window)
 
 (load-library "custom-runtime-env")
 
@@ -106,7 +113,7 @@
   :after evil
   :ensure t
   :config
-  (setq evil-collection-mode-list '(dired eshell eww pdf magit ediff))
+  (setq evil-collection-mode-list '(dired eshell eww pdf magit ediff pdf))
   (evil-collection-init))
 
 (use-package which-key
@@ -165,7 +172,7 @@
   :ensure t)
 
 (use-package org
-  :ensure t
+  :ensure org-plus-contrib
   :custom
   (org-adapt-indentation nil)
   (org-startup-indented t)
@@ -188,6 +195,7 @@
   (org-fontify-done-headline nil)
   :init
   (require 'org-protocol)
+  (require 'ox-bibtex)
   :config
   (evil-leader/set-key "oy" 'org-store-link)
   (evil-leader/set-key "on" 'org-capture)
@@ -292,11 +300,6 @@
   (setq org-bullets-bullet-list '("●" "●" "⤷" "⤷"))
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
-(use-package zotxt
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook 'org-zotxt-mode))
-
 (use-package ox-reveal
   :ensure t)
 
@@ -355,15 +358,24 @@
   :config
   (evil-leader/set-key "s" 'helm-swoop-without-pre-input))
 
+(use-package org-ref
+  :ensure t
+  :custom
+  (reftex-default-bibliography '("~/university/bib/lit.bib"))
+  (org-ref-bibliography-notes "~/org/literature.org")
+  (org-ref-default-bibliography '("~/university/bib/lit.bib"))
+  (org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex))
+
 (use-package helm-bibtex
   :ensure t
   :config
   (setq bibtex-completion-bibliography '("~/university/bib/lit.bib"))
   (setq bibtex-completion-pdf-field "file"))
 
-(global-set-key (kbd "<M-tab>")         'next-buffer)
-(global-set-key (kbd "<M-iso-lefttab>") 'previous-buffer)
-(global-set-key (kbd "<C-tab>")         'other-window)
+(use-package zotxt
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook 'org-zotxt-mode))
 
 (evil-define-key 'normal 'global
   "J" 'evil-forward-paragraph
@@ -532,7 +544,10 @@
 (use-package pdf-tools
   :defer t
   :mode "\\.pdf$"
-  :config (pdf-tools-install))
+  :config
+  (pdf-tools-install)
+  :init
+  (evil-collection-pdf-setup))
 
 (use-package pocket-reader
   :ensure t
