@@ -208,34 +208,26 @@
     (sequence "IDEA(i)" "TODO(t)" "|" "DONE(d)")))
 
 (setq org-capture-templates
-  '(("t"
-     "Todo item"
-     entry
+  '(("t" "Todo item" entry
      (file org-default-notes-file)
-     "* TODO %?\n%a")
-    ("c"
-     "Calendar entry"
-     entry
+     "* TODO %?\n%a"
+     :prepend t)
+    ("c" "Calendar entry" entry
      (file org-default-notes-file)
-     "* TODO %?\nSCHEDULED: %t")
-    ("j"
-     "Journal entry"
-     entry
+     "* TODO %?\nSCHEDULED: %t"
+     :prepend t)
+    ("j" "Journal entry" entry
      (file org-default-notes-file)
-     "* %U %^{Title}\n%?")
-    ("s"
-     "Quote selection"
-     entry
+     "* %U %^{Title}\n%?"
+     :prepend t)
+    ("s" "Quote selection" entry
      (file org-default-notes-file)
-     "* %^{Description}\n%U\n#+BEGIN_QUOTE\n%i#+END_QUOTE")
-    ("wq"
-     "Website (Quote)"
-     entry
-     (file org-default-notes-file)
+     "* %^{Description}\n%U\n#+BEGIN_QUOTE\n%i#+END_QUOTE"
+     :prepend t)
+    ("wq" "Website (Quote)"
+     entry (file org-default-notes-file)
      "* %:description\n%:link %U\n#+BEGIN_QUOTE\n%:initial\n#+END_QUOTE")
-    ("w"
-     "Website"
-     entry
+    ("w" "Website" entry
      (file org-default-notes-file)
      "* %:description\n%:link %U"
      :immediate-finish t)))

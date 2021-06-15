@@ -59,4 +59,5 @@
 
 (add-to-list 'org-capture-templates
              '("m" "eMail note" entry (file org-default-notes-file)
-               "* TODO /%:subject/\n See %a\n\n%?"))
+               "* TODO /%:subject/\n See %a\n\n%?"
+               :prepend t))
