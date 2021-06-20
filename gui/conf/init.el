@@ -492,6 +492,9 @@
 
 (add-hook 'c-mode-common-hook 'hs-minor-mode t)
 (add-hook 'c-mode-common-hook 'hs-hide-initial-comment-block t)
+(defun disable-electric-indent-mode ()
+  (electric-indent-local-mode -1))
+(add-hook 'c-mode-common-hook 'disable-electric-indent-mode t)
 
 (use-package ace-jump-mode
   :ensure t
