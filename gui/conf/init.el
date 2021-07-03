@@ -198,6 +198,7 @@
   (require 'ox-bibtex)
   :config
   (evil-leader/set-key "oy" 'org-store-link)
+  (evil-leader/set-key "op" 'org-insert-link)
   (evil-leader/set-key "on" 'org-capture)
   (evil-leader/set-key "oa" 'org-agenda)
   (evil-leader/set-key-for-mode 'org-mode
