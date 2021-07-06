@@ -41,6 +41,7 @@ in {
       core.editor = "vim";
       merge.tool = "${pkgs.meld}/bin/meld";
       pull.ff = "only";
+      init.defaultBranch = "master";
     };
   };
 
