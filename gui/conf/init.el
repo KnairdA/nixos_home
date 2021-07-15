@@ -62,6 +62,7 @@
 (setq password-cache-expiry 3600)
 
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'prog-mode-hook 'whitespace-mode)
 
 (set-face-attribute 'default        nil :family "Iosevka")
 (set-face-attribute 'fixed-pitch    nil :family "Iosevka")
