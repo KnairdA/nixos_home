@@ -8,19 +8,19 @@ in {
     enable = true;
 
     options = {
-      font = if hidpi then "Iosevka 28px" else "Iosevka 14px";
-      
-      inputbar-bg   = "#161616";
-      inputbar-fg   = "#909737";
+      font = if hidpi then "Iosevka 28px" else "Iosevka 16px";
 
-      statusbar-bg  = "#161616";
-      statusbar-fg  = "#909737";
+      inputbar-fg   = "#161616";
+      inputbar-bg   = "#909737";
 
-      completion-bg = "#161616";
-      completion-fg = "#909737";
+      statusbar-fg  = "#161616";
+      statusbar-bg  = "#909737";
 
-      completion-highlight-bg = "#909737";
-      completion-highlight-fg = "#161616";
+      completion-fg = "#161616";
+      completion-bg = "#909737";
+
+      completion-highlight-fg = "#909737";
+      completion-highlight-bg = "#161616";
 
       recolor-lightcolor      = "#161616";
       recolor-darkcolor       = "#ffffff";
