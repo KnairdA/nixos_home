@@ -198,10 +198,6 @@
   (require 'org-protocol)
   (require 'ox-bibtex)
   :config
-  (evil-leader/set-key "oy" 'org-store-link)
-  (evil-leader/set-key "op" 'org-insert-link)
-  (evil-leader/set-key "on" 'org-capture)
-  (evil-leader/set-key "oa" 'org-agenda)
   (evil-leader/set-key-for-mode 'org-mode
     "c"  'org-edit-src-code
     "g"  'org-goto
@@ -252,9 +248,7 @@
   (cfw:render-line-breaker 'cfw:render-line-breaker-wordwrap))
 
 (use-package calfw-org
-  :ensure t
-  :config
-  (evil-leader/set-key "oc" 'cfw:open-org-calendar))
+  :ensure t)
 
 (use-package org-fragtog
   :ensure t
@@ -313,7 +307,7 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-(defhydra hydra-org-mode ()
+(defhydra hydra-org-mode-local ()
   "Org mode"
   ("e" org-babel-execute-buffer   "Execute buffer"   :column "Babel")
   ("t" org-babel-tangle           "Tangle"           :column "Babel")
@@ -334,7 +328,7 @@
 (evil-define-key 'normal org-mode-map
   "J" 'org-next-visible-heading
   "K" 'org-previous-visible-heading
-  "m" 'hydra-org-mode/body
+  "m" 'hydra-org-mode-local/body
   (kbd "<return>") 'org-open-at-point)
 
 (use-package helm
@@ -405,7 +399,7 @@
   (org-roam-directory "~/org")
   :config
   (org-roam-setup)
-  (evil-leader/set-key "rf" 'org-roam-node-find))
+  (evil-leader/set-key "r" 'org-roam-node-find))
 
 (setq org-roam-capture-templates
   '(("d" "default" plain "%?"
@@ -417,13 +411,27 @@
   :ensure t)
 
 (use-package helm-org-rifle
-  :ensure t
-  :config
-  (evil-leader/set-key "or" 'helm-org-rifle-org-directory)
-  (evil-leader/set-key "ol" 'helm-org-rifle-current-buffer))
+  :ensure t)
 
 (use-package helm-org-ql
   :ensure t)
+
+(defhydra hydra-org-mode (:exit t)
+  "Org mode"
+  ("y" org-store-link   "Store link"   :column "Links")
+  ("p" org-insert-link  "Insert link"  :column "Links")
+
+  ("n" org-capture   "Capture"  :column "Capture")
+
+  ("a" org-agenda             "Agenda"    :column "Agenda")
+  ("c" cfw:open-org-calendar  "Calendar"  :column "Agenda")
+
+  ("r" helm-org-rifle-org-directory  "Rifle (all)"   :column "Search")
+  ("l" helm-org-rifle-current-buffer "Rifle (local)" :column "Search")
+
+  ("q" nil "Exit menu" :column "Other"))
+
+(evil-leader/set-key "o" 'hydra-org-mode/body)
 
 (use-package magit
   :ensure t
@@ -455,10 +463,10 @@
 
 (defun get-related-files ()
   (let ((common-basename-files (seq-filter (lambda (file) (string= (file-name-sans-extension file) (file-name-base)))
-																					 (directory-files "."))))
+                                           (directory-files "."))))
     (sort (seq-remove (lambda (file) (string= file (buffer-name)))
-											common-basename-files)
-					#'string-greaterp)))
+                      common-basename-files)
+          #'string-greaterp)))
 
 (defun jump-to-related ()
   (interactive)
@@ -543,7 +551,7 @@
 (setq browse-url-browser-function 'eww-browse-url)
 
 (add-hook 'eshell-mode-hook
-  (lambda () 
+  (lambda ()
     (define-key eshell-mode-map (kbd "<tab>")
       (lambda () (interactive) (completion-at-point)))))
 
