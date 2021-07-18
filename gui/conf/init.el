@@ -401,34 +401,17 @@
 
 (use-package org-roam
   :ensure t
-  :hook
-  (after-init . org-roam-mode)
   :custom
   (org-roam-directory "~/org")
-  (org-roam-completion-system 'helm)
-  (org-roam-rename-file-on-title-change nil))
+  :config
+  (org-roam-setup)
+  (evil-leader/set-key "rf" 'org-roam-node-find))
 
-(defhydra hydra-roam ()
-  "Roam"
-  ("s" org-roam                "Toggle sidebar" :column "View")
-  ("r" org-roam-db-build-cache "Update cache" :column "View")
-
-  ("f" org-roam-find-file "Find file" :column "Navigation")
-
-  ("c" org-roam-insert     "Create link" :column "Links")
-  ("y" org-store-link      "Store link"  :column "Links")
-  ("p" org-insert-link     "Insert link" :column "Links")
-
-  ("dy" org-roam-dailies-yesterday "Yesterday" :column "Dailies")
-  ("dc" org-roam-dailies-today     "Today"     :column "Dailies")
-  ("da" org-roam-dailies-date      "Arbitrary" :column "Dailies")
-  ("dt" org-roam-dailies-tomorrow  "Tomorrow"  :column "Dailies")
-
-  ("q" nil "Exit menu" :column "Other"))
-
-(global-set-key (kbd "C-c r") 'hydra-roam/body)
-(evil-leader/set-key "rh" 'hydra-roam/body)
-(evil-leader/set-key "rf" 'org-roam-find-file)
+(setq org-roam-capture-templates
+  '(("d" "default" plain "%?"
+     :if-new (file+head "${slug}.org"
+                        "#+title: ${title}\n")
+     :unnarrowed t)))
 
 (use-package org-noter
   :ensure t)
@@ -502,13 +485,6 @@
   :ensure t
   :config
   (evil-leader/set-key "SPC" 'ace-jump-mode))
-
-(setq org-roam-capture-templates
-  '(("d" "default" plain (function org-roam-capture--get-point)
-     "%?"
-     :file-name "${slug}"
-     :head "#+title: ${title}\n"
-     :unnarrowed t)))
 
 (use-package auctex
   :defer t)
