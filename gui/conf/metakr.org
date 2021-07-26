@@ -6,7 +6,7 @@ For quick iteration all colors are stored in a table.
 * Tangle scaffold
 #+BEGIN_SRC emacs-lisp :tangle ./akr-theme.el :noweb yes
 (deftheme akr "A theme of my own making.")
-  
+
 <<theme-generator(palette=akr-palette, theme-name="akr")>>
 
 (when (and (boundp 'custom-theme-load-path)
@@ -338,16 +338,24 @@ For quick iteration all colors are stored in a table.
    :box (:line-width 3 :color @org-agenda-today-bg)
    :foreground @org-agenda-today-fg
    :background @org-agenda-today-bg)
-  (org-special-keyword
-   :inherit fixed-pitch
-   :foreground @org-special-keyword)
   (org-scheduled-previously
    :foreground @org-sched-prev)
   (org-agenda-done
    :foreground @org-agenda-done)
   (org-footnote
    :foreground @link)
-   
+  (org-drawer
+   :inherit fixed-pitch
+   :foreground @org-meta
+   :height 0.6)
+  (org-special-keyword
+   :inherit fixed-pitch
+   :foreground @org-special-keyword
+   :height 0.6)
+  (org-property-value
+   :inherit fixed-pitch
+   :height 0.6)
+
 ;; Eshell
   (eshell-prompt
    :foreground @eshell-prompt)
@@ -390,7 +398,7 @@ This block resolves the =@=-prefixed variables of the theme structure using a gi
    ((and (symbolp x)
          (string-prefix-p "@" (symbol-name x))) (cadr (assoc (substring (symbol-name x) 1) (cdr palette))))
    (t                                           x)))
-   
+
 (print `(apply
           'custom-theme-set-faces
           ',(make-symbol theme-name)
