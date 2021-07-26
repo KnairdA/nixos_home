@@ -397,6 +397,8 @@
   :ensure t
   :custom
   (org-roam-directory "~/org")
+  :init
+  (setq org-roam-v2-ack t)
   :config
   (org-roam-setup)
   (evil-leader/set-key "r" 'org-roam-node-find))
