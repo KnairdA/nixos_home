@@ -53,7 +53,21 @@
                   (mu4e-sent-folder   . "/KIT/Sent Items")
                   (mu4e-trash-folder  . "/KIT/Deleted Items")
                   (mu4e-drafts-folder . "/KIT/Drafts")
-                  (message-sendmail-extra-arguments  . ("--read-envelope-from" "--account=KIT"))))))
+                  (message-sendmail-extra-arguments  . ("--read-envelope-from" "--account=KIT"))
+                  (mu4e-compose-signature-auto-include . nil)
+                  (mu4e-compose-signature . (concat "\n"
+                                                    "Karlsruhe Institute of Technology (KIT)\n"
+                                                    "Institute for Mechanical Process Engineering and Mechanics (MVM)\n"
+                                                    "Institute for Applied and Numerical Mathematics (IANM)\n"
+                                                    "Lattice Boltzmann Research Group (LBRG)\n\n"
+                                                    "M.Sc. Adrian Kummerländer\n"
+                                                    "Research Associate\n\n"
+                                                    "E-mail: adrian.kummerlaender@kit.edu\n"
+                                                    "Phone: +49 721 608 43157\n\n"
+                                                    "Room 3.016\n"
+                                                    "Building 20.30\n"
+                                                    "Englerstr. 2\n"
+                                                    "D-76131 Karlsruhe"))))))
 
 (evil-leader/set-key "m" 'mu4e)
 
