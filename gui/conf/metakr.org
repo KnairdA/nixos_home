@@ -254,6 +254,7 @@ For quick iteration all colors are stored in a table.
    :inherit default
    :foreground @org-document-info)
   (org-verbatim ; inline code
+   :foreground @fg
    :inherit fixed-pitch)
   (org-code
    :inherit fixed-pitch)
@@ -346,15 +347,12 @@ For quick iteration all colors are stored in a table.
    :foreground @link)
   (org-drawer
    :inherit fixed-pitch
-   :foreground @org-meta
-   :height 0.6)
+   :foreground @org-meta)
   (org-special-keyword
    :inherit fixed-pitch
-   :foreground @org-special-keyword
-   :height 0.6)
+   :foreground @org-special-keyword)
   (org-property-value
-   :inherit fixed-pitch
-   :height 0.6)
+   :inherit fixed-pitch)
 
 ;; Eshell
   (eshell-prompt
