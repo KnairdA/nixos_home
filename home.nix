@@ -10,19 +10,22 @@ in {
   _module.args.sources = sources;
   _module.args.pkgs-unstable = pkgs-unstable;
   _module.args.pkgs-personal = pkgs-personal;
-  
+
   imports = [
   # define options custom to this config
     ./custom.nix
   # load host specific stuff
     ./host/current.nix
   # task shortcuts
-    ./module/tasker.nix 
+    ./module/tasker.nix
     ./tasks/default.nix
   ];
 
   home = {
-    keyboard.layout = "de";
+    keyboard = {
+      layout = "de";
+      options = [ "caps:escape" ];
+    };
 
     packages = [
       pkgs-personal.persistent-nix-shell
