@@ -23,27 +23,32 @@
       config = { allowUnfree = true; };
     };
 
-  in {
-    homeManagerConfigurations = {
-      common = home-manager.lib.homeManagerConfiguration {
-        configuration = { pkgs, ... }: {
-          _module.args = {
-            pkgs-personal = import personal { };
-            pkgs-unstable = import nixpkgs-unstable {
-              inherit system;
-              config = { allowUnfree = true; };
-              overlays = [ emacs.overlay ];
-            };
-          };
-          imports = [ ./home.nix ];
-          nixpkgs = {
+    home = home-manager.lib.homeManagerConfiguration {
+      configuration = { pkgs, ... }: {
+        _module.args = {
+          pkgs-personal = import personal { };
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
             config = { allowUnfree = true; };
+            overlays = [ emacs.overlay ];
           };
         };
-        system = system;
-        homeDirectory = "/home/common";
-        username = "common";
+        imports = [ ./home.nix ];
+        nixpkgs = {
+          config = { allowUnfree = true; };
+        };
       };
+      system = system;
+      homeDirectory = "/home/common";
+      username = "common";
+    };
+
+  in {
+    defaultPackage.x86_64-linux = home.activationPackage;
+
+    defaultApp.x86_64-linux = {
+      type = "app";
+      program = "${home.activationPackage}/activate";
     };
   };
 }

@@ -2,7 +2,7 @@
 
 This repository fully describes my current NixOS user environment in a completely reproducible manner using [home-manager](https://github.com/rycee/home-manager/).
 Coupling this with the declarative system configuration in [nixos_system](https://code.kummerlaender.eu/nixos_system) I am able to trivially maintain a common computing environment across multiple machines.
-Furthermore it is possible to reproduce this environment on a new computer within half an hour given a sufficiently good network connection.
+Furthermore it is possible to reproduce this environment on a new computer in the time it takes to download and build the derivations.
 
 ## Overview
 
@@ -10,15 +10,20 @@ The desktop environment consisting of XMonad, custom theming and a selection of 
 
 `home-manager` doesn't have to be installed in the user environment and is only required for applying the configuration.
 
-```sh
-nix-shell --command "home-manager switch"
-```
-
-This shell also provides the `niv` utility used for updating the fixed channels.
-
 ## Host specific config
 
-The `host` folder contains a selection of host specific definitions to be selected by symlinking the desired configuration as `host/current.nix`.
+The `host` folder contains a selection of host specific definitions to be selected via the hostname declared by the global system config.
+
+## Instantiation
+
+If you are me and want to instantiate the setup on a new host:
+
+```sh
+nix flake clone git+https://code.kummerlaender.eu/nixos_home -f dotfiles 
+cd dotfiles
+cp host/$template.nix host/$hostname.nix
+nix run --impure
+```
 
 ## Modules
 
