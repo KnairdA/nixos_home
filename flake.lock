@@ -1,0 +1,96 @@
+{
+  "nodes": {
+    "emacs": {
+      "locked": {
+        "lastModified": 1629250486,
+        "narHash": "sha256-L9izjLJUC9wzANrWAEYB1srD7Mf10XXtm3nv2XJHTcM=",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "203f890b687c2d981200130549bda4df65349789",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "master",
+        "repo": "emacs-overlay",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1627649712,
+        "narHash": "sha256-AJBasvMKpsyJmCLdjroBElCHY5AlalbVy+XY5vjbgXc=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "b39647e52ed3c0b989e9d5c965e598ae4c38d7ef",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-21.05",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1629139728,
+        "narHash": "sha256-XuddZZNg61qSLsczyYGg/bugA+zR7I394Ev8A8SrdoY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "94c989365d563238068841763ecc5f7f4b25b22c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-21.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1629169812,
+        "narHash": "sha256-krVVUNxRjSBJaFWKelNe0MWvxhklXSGKmisoJP4P5/Q=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "70dc433f2eb84cc7ed848a30feaa5aab5890d23c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "personal": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-wQkw+oZMiSvWVVLWJ4AzsQk9uuqYmtWAElxhWGN6tPs=",
+        "type": "tarball",
+        "url": "https://pkgs.kummerlaender.eu/nixexprs.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://pkgs.kummerlaender.eu/nixexprs.tar.xz"
+      }
+    },
+    "root": {
+      "inputs": {
+        "emacs": "emacs",
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "personal": "personal"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

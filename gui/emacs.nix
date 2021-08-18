@@ -1,11 +1,6 @@
-{ config, pkgs, sources, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
-let
-  pkgs-unstable = import sources.nixpkgs-unstable {
-    overlays = [ (import sources.emacs-overlay) ];
-  };
-
-in {
+{
   programs.emacs = let
     akr-color-theme = pkgs.stdenv.mkDerivation {
       name = "emacs-color-theme-akr";

@@ -1,15 +1,17 @@
 { pkgs, ... }:
 
 {
-  programs.mbsync.enable = true;
-  programs.msmtp.enable = true;
+  programs = {
+    mbsync.enable = true;
+    msmtp.enable = true;
+  };
 
   accounts.email = {
     maildirBasePath = "mail";
-    
+
     accounts.automatix = {
       primary = true;
-      
+
       realName = "Adrian Kummerländer";
       address  = "adrian@kummerlaender.eu";
 

@@ -1,21 +1,14 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-personal, ... }:
 
-let
-  sources = import ./nix/sources.nix;
-  pkgs = import sources.nixpkgs { };
-  pkgs-unstable = import sources.nixpkgs-unstable { };
-  pkgs-personal = import sources.mypkgs { };
-
-in {
-  _module.args.sources = sources;
-  _module.args.pkgs-unstable = pkgs-unstable;
-  _module.args.pkgs-personal = pkgs-personal;
-
-  imports = [
+{
+  imports = let
+  # impure access to system config
+    hostname = (import <nixpkgs/nixos> { }).config.networking.hostName;
+  in [
   # define options custom to this config
     ./custom.nix
   # load host specific stuff
-    ./host/current.nix
+    (./host + ("/" + hostname + ".nix"))
   # task shortcuts
     ./module/tasker.nix
     ./tasks/default.nix

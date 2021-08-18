@@ -3,6 +3,7 @@
 let
   mkOption = pkgs.lib.mkOption;
   types = pkgs.lib.types;
+
 in {
   options.custom = {
     hidpi = mkOption {
