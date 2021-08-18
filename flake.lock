@@ -37,6 +37,22 @@
         "type": "github"
       }
     },
+    "jupyter": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1627572257,
+        "narHash": "sha256-0zNm9EM7xJbYfaWylPvwApo1MM65eJiFkVlZRwJzGgY=",
+        "owner": "tweag",
+        "repo": "jupyterWith",
+        "rev": "37cd8caefd951eaee65d9142544aa4bd9dfac54f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tweag",
+        "repo": "jupyterWith",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1629139728,
@@ -85,6 +101,7 @@
       "inputs": {
         "emacs": "emacs",
         "home-manager": "home-manager",
+        "jupyter": "jupyter",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "personal": "personal"

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, jupyter, ... }:
 
 let
   mkShellDerivation = n: ps: pkgs.stdenvNoCC.mkDerivation rec {
@@ -26,11 +26,6 @@ let
       export PYTHONSTARTUP=${startup}
     '';
   };
-
-  jupyter = import (builtins.fetchGit {
-    url = https://github.com/tweag/jupyterWith;
-    rev = "35eb565c6d00f3c61ef5e74e7e41870cfa3926f7";
-  }) {};
 
   mkJupyterEnv = kernel: jupyter.jupyterlabWith {
     kernels = [ kernel ];

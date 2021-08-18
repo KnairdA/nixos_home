@@ -13,9 +13,15 @@
       url = https://pkgs.kummerlaender.eu/nixexprs.tar.xz;
       flake = false;
     };
+    jupyter = {
+      url = github:tweag/jupyterWith;
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, emacs, home-manager, personal, ... }: let
+  outputs = {
+    self, nixpkgs, nixpkgs-unstable, emacs, home-manager, personal, jupyter, ...
+  }: let
     system = "x86_64-linux";
 
     pkgs = import nixpkgs {
@@ -32,6 +38,7 @@
             config = { allowUnfree = true; };
             overlays = [ emacs.overlay ];
           };
+          jupyter = import jupyter { };
         };
         imports = [ ./home.nix ];
         nixpkgs = {
