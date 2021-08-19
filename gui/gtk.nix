@@ -9,7 +9,7 @@ in {
 
     theme = {
       name = "oomox";
-      package = pkgs-personal.oomox-gtk-theme {
+      package = pkgs-personal.customizable.oomox-gtk-theme {
         accent_bg  = "aadb0f";
         bg         = "d8d8d8";
         fg         = "101010";
@@ -38,7 +38,7 @@ in {
 
     iconTheme = {
       name    = "oomox-archdroid";
-      package = pkgs-personal.oomox-archdroid-icon-theme "909636";
+      package = pkgs-personal.customizable.oomox-archdroid-icon-theme "909636";
     };
 
     font = {

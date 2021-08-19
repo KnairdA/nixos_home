@@ -1,10 +1,7 @@
-{ config, pkgs, pkgs-personal, ... }:
+{ config, pkgs, pkgs-personal, hostname, ... }:
 
 {
-  imports = let
-  # impure access to system config
-    hostname = (import <nixpkgs/nixos> { }).config.networking.hostName;
-  in [
+  imports = [
   # define options custom to this config
     ./custom.nix
   # load host specific stuff

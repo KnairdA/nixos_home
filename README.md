@@ -16,13 +16,12 @@ The `host` folder contains a selection of host specific definitions to be select
 
 ## Instantiation
 
-If you are me and want to instantiate the setup on a new host:
+If you are me and want to instantiate the setup on a given host:
 
 ```sh
-nix flake clone git+https://code.kummerlaender.eu/nixos_home -f dotfiles 
+nix flake clone git+https://code.kummerlaender.eu/nixos_home --dest dotfiles 
 cd dotfiles
-cp host/$template.nix host/$hostname.nix
-nix run --impure
+nix run .#host
 ```
 
 ## Modules

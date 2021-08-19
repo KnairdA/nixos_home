@@ -1,4 +1,4 @@
-{ pkgs, jupyter, ... }:
+{ pkgs, ... }:
 
 let
   mkShellDerivation = n: ps: pkgs.stdenvNoCC.mkDerivation rec {
@@ -27,7 +27,7 @@ let
     '';
   };
 
-  mkJupyterEnv = kernel: jupyter.jupyterlabWith {
+  mkJupyterEnv = kernel: pkgs.jupyterWith.jupyterlabWith {
     kernels = [ kernel ];
   };
 
@@ -59,7 +59,7 @@ in {
       directory = "~/";
       type = "jupyter-lab";
       environment = mkJupyterEnv (
-        jupyter.kernels.iPythonWith {
+        pkgs.jupyterWith.kernels.iPythonWith {
           name = "python";
           packages = p: with p; [
             numpy
