@@ -2,14 +2,13 @@
 
 {
   home = {
-    packages = (with pkgs; [
-      tdesktop
-      tigervnc
-    ]) ++ (with pkgs-unstable; [
+    packages = with pkgs-unstable; [
       zotero
       teams
       zoom-us
-    ]);
+      tdesktop
+      tigervnc
+    ];
   };
 
   xdg.mimeApps.defaultApplications = {
