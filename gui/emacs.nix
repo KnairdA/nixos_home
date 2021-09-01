@@ -88,7 +88,7 @@
     org-protocol-shortcut
   ];
 
-  home.file.".emacs.d/init.el".source = config.lib.file.mkOutOfStoreSymlink ./conf/init.el;
+  home.file.".emacs.d/init.el".source = ./conf/init.el;
 
   systemd.user.services.emacs.Service.ExecStart = pkgs.lib.mkForce "${pkgs.runtimeShell} -l -c 'exec emacs --fg-daemon'";
 
