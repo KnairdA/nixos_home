@@ -301,6 +301,23 @@
   :custom
   (org-re-reveal-revealjs-version "4"))
 
+(use-package org-present
+  :ensure t
+  :config
+  (evil-make-overriding-map org-present-mode-keymap 'normal)
+  (add-hook 'org-present-mode-hook
+            (lambda ()
+              (org-present-big)
+              (evil-normalize-keymaps)))
+  (add-hook 'org-present-mode-quit-hook
+            (lambda ()
+              (org-present-small)))
+  :bind
+  (:map org-present-mode-keymap
+        ("<right>" . org-present-next)
+        ("<left>"  . org-present-prev)
+        ("q"       . org-present-quit)))
+
 (use-package evil-org
   :ensure t
   :config
