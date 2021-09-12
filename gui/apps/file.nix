@@ -15,9 +15,14 @@
       custom-sxiv
       mpv
       gthumb
+    # audio
+      pulseaudio
+      pavucontrol
+      pulseeffects-pw
     # office
       libreoffice
       gimp
+      simplescreenrecorder
     ];
 
     sessionVariables = {

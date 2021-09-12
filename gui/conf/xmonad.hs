@@ -242,9 +242,9 @@ commonKeybindings host =
   , ("M-i l"         , showNotification "Load" "`cut -c -14 /proc/loadavg`")
 
 -- system control
-  , ("M-c <Up>"      , spawn "amixer sset Master 10%+")
-  , ("M-c <Down>"    , spawn "amixer sset Master 10%-")
-  , ("M-c m"         , spawn "amixer sset Master toggle")
+  , ("M-c <Up>"      , spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
+  , ("M-c <Down>"    , spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
+  , ("M-c m"         , spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
   , ("M-c s"         , spawn "systemctl suspend")
   , ("M-c h"         , spawn "systemctl hibernate") ]
 
