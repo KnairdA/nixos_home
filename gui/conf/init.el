@@ -526,13 +526,13 @@
 (use-package nix-mode
   :ensure t)
 
+(use-package cuda-mode
+  :ensure t)
+
 (use-package glsl-mode
   :ensure t)
 
 (use-package cmake-mode
-  :ensure t)
-
-(use-package rainbow-delimiters
   :ensure t)
 
 (use-package rainbow-mode
@@ -558,11 +558,6 @@
   (pdf-tools-install)
   :init
   (evil-collection-pdf-setup))
-
-(use-package pocket-reader
-  :ensure t
-  :config
-  (evil-set-initial-state 'pocket-reader-mode 'emacs))
 
 (use-package edit-server
   :ensure t
