@@ -459,6 +459,10 @@
   :config
   (evil-leader/set-key "pg" 'magit))
 
+(use-package forge
+  :ensure t
+  :after magit)
+
 (use-package projectile
   :ensure t
   :config
