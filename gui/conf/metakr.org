@@ -33,7 +33,7 @@ For quick iteration all colors are stored in a table.
 | link-underline          | #AADB0F |
 | header                  | #AADB0F |
 | button                  | #aaaaaa |
-| glyph                   | #f7ffd1 |
+| glyph                   | #F7FFD1 |
 | cursor                  | #AADB0F |
 | paren-match-fg          | #161616 |
 | paren-match-bg          | #AADB0F |
@@ -46,7 +46,7 @@ For quick iteration all colors are stored in a table.
 | secondary-bg            | #080808 |
 | trailing-bg             | #8C3346 |
 | lazy-hlt-fg             | #000000 |
-| lazy-hlt-bg             | #ffffff |
+| lazy-hlt-bg             | #FFFFFF |
 | evil-rep-fg             | #F2F2F2 |
 | evil-rep-bg             | #161616 |
 | header-line-bg          | #080808 |
@@ -69,14 +69,15 @@ For quick iteration all colors are stored in a table.
 | org-quote-bg            | #080808 |
 | org-date                | #c6b6ad |
 | org-title               | #AADB0F |
+| org-ellipsis            | #AADB0F |
 | org-title-underline     | #F2F2F2 |
 | org-checkbox            | #999999 |
 | org-scheduled           | #dddddd |
-| org-scheduled-today     | #ffffff |
+| org-scheduled-today     | #FFFFFF |
 | org-done                | #909636 |
 | org-todo                | #D80F32 |
 | org-tag                 | #E4E093 |
-| org-block-line          | #080808 |
+| org-block-line          | #161616 |
 | org-block-bg            | #080808 |
 | org-agenda-structure-fg | #aaaaaa |
 | org-agenda-structure-bg | #080808 |
@@ -242,8 +243,8 @@ For quick iteration all colors are stored in a table.
 ;; Org
   (org-level-1 :inherit default :foreground @header :weight regular :height 1.4)
   (org-level-2 :inherit default :foreground @header :weight regular :height 1.3)
-  (org-level-3 :inherit default :foreground @header :weight regular :height 1.1)
-  (org-level-4 :inherit default :foreground @header :weight regular :height 1.0)
+  (org-level-3 :inherit default :foreground @header :weight regular :height 1.2)
+  (org-level-4 :inherit default :foreground @header :weight regular :height 1.1)
   (org-meta-line
    :inherit fixed-pitch
    :foreground @org-meta)
@@ -283,6 +284,8 @@ For quick iteration all colors are stored in a table.
   (org-hide
    :inherit fixed-pitch
    :foreground @bg)
+  (org-ellipsis
+   :foreground @org-ellipsis)
   (org-indent
    :inherit org-hide)
   (org-date
@@ -303,6 +306,7 @@ For quick iteration all colors are stored in a table.
    :foreground @org-done)
   (org-todo
    :inherit fixed-pitch
+   :weight bold
    :foreground @org-todo)
   (org-tag
    :inherit fixed-pitch

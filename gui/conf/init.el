@@ -25,6 +25,8 @@
 (defun startup (frame)
   (select-frame frame)
   (set-frame-font "Iosevka 11" nil t)
+  (set-fontset-font "fontset-default" 'unicode "Iosevka")
+  (set-face-font 'default "Iosevka 11")
   (menu-bar-mode -1)
   (toggle-scroll-bar -1)
   (tool-bar-mode -1))
@@ -66,7 +68,7 @@
 
 (set-face-attribute 'default        nil :family "Iosevka")
 (set-face-attribute 'fixed-pitch    nil :family "Iosevka")
-(set-face-attribute 'variable-pitch nil :family "Source Sans Pro" :height 1.1)
+(set-face-attribute 'variable-pitch nil :family "Iosevka Aile Light")
 
 (global-set-key (kbd "<M-tab>")         'next-buffer)
 (global-set-key (kbd "<M-iso-lefttab>") 'previous-buffer)
@@ -194,6 +196,7 @@
   (org-latex-preview-ltxpng-directory "~/.emacs.d/ltxpng/")
   (org-image-actual-width nil)
   (org-fontify-done-headline nil)
+  (org-ellipsis "…")
   :init
   (require 'org-protocol)
   (require 'ox-bibtex)
@@ -263,15 +266,15 @@
 
 (custom-theme-set-faces
  'user
- '(org-level-1 ((t (:family "Source Serif Pro"))))
- '(org-level-2 ((t (:family "Source Serif Pro"))))
- '(org-level-3 ((t (:family "Source Serif Pro"))))
- '(org-level-4 ((t (:family "Source Serif Pro"))))
- '(org-document-title ((t (:family "Source Serif Pro"))))
- '(font-latex-sectioning-5-face ((t (:family "Source Serif Pro" :height 1.1))))
+ '(org-level-1 ((t (:family "Iosevka Aile Light"))))
+ '(org-level-2 ((t (:family "Iosevka Aile Light"))))
+ '(org-level-3 ((t (:family "Iosevka Aile Light"))))
+ '(org-level-4 ((t (:family "Iosevka Aile Light"))))
+ '(org-document-title ((t (:family "Iosevka Etoile"))))
+ '(font-latex-sectioning-5-face ((t (:family "Iosevka Etoile" :height 1.1))))
 
  ;; calfw
- '(cfw:face-title ((t (:inherit variable-pitch :family "Source Serif Pro" :foreground "#AADB0F" :height 2.0))))
+ '(cfw:face-title ((t (:inherit variable-pitch :family "Isoevka Etoile" :foreground "#AADB0F" :height 2.0))))
  '(cfw:face-header ((t (:inherit fixed-pitch))))
  '(cfw:face-sunday ((t (:inherit fixed-pitch))))
  '(cfw:face-saturday ((t (:inherit fixed-pitch))))
@@ -293,7 +296,7 @@
 (use-package org-bullets
   :ensure t
   :config
-  (setq org-bullets-bullet-list '("●" "●" "⤷" "⤷"))
+  (setq org-bullets-bullet-list '("◉" "◉" "⤷" "⤷"))
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
 (use-package org-re-reveal
@@ -458,10 +461,6 @@
   :ensure t
   :config
   (evil-leader/set-key "pg" 'magit))
-
-(use-package forge
-  :ensure t
-  :after magit)
 
 (use-package projectile
   :ensure t

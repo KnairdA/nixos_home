@@ -81,9 +81,9 @@
     };
 
   in with pkgs; [
-    source-sans-pro
-    source-serif-pro
     emacs-all-the-icons-fonts
+    (iosevka-bin.override { variant = "aile"; })
+    (iosevka-bin.override { variant = "etoile"; })
     mu
     org-protocol-shortcut
   ];
