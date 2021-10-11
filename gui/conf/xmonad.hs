@@ -6,6 +6,7 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.InsertPosition
+import XMonad.Hooks.SetWMName
 
 import XMonad.Layout.Tabbed
 import XMonad.Layout.MultiColumns
@@ -279,6 +280,10 @@ customLogHook = do
   updatePointer (0.5, 0.5) (0, 0)
   customizeBorderWhen (isFloat <&&> isNotFullscreen) "#aadb0f" 6
 
+customStartupHook host = do
+  checkKeymap def (customKeybindings host)
+  setWMName "LG3D"
+
 main = do
   host <- fmap nodeName getSystemID
   xmonad $ ewmh
@@ -290,7 +295,7 @@ main = do
     , focusedBorderColor  = "#909636"
     , keys                = \c -> mkKeymap c (customKeybindings host)
     , mouseBindings       = customMousebindings
-    , startupHook         = return () >> checkKeymap def (customKeybindings host)
+    , startupHook         = customStartupHook host
     , handleEventHook     = customEventHook
     , manageHook          = customManageHook host
     , logHook             = customLogHook
