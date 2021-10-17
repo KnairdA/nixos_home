@@ -538,6 +538,9 @@
 (use-package cmake-mode
   :ensure t)
 
+(use-package csv-mode
+  :ensure t)
+
 (use-package rainbow-mode
   :ensure t)
 
