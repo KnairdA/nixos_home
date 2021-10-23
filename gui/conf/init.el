@@ -1,6 +1,9 @@
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 
+(setq load-path (seq-filter (lambda (x) (not (string-match-p "org-202109" x)))
+                            load-path))
+
 (require 'package)
 (package-initialize)
 
@@ -175,7 +178,6 @@
   :ensure t)
 
 (use-package org
-  :ensure org-plus-contrib
   :custom
   (org-adapt-indentation nil)
   (org-startup-indented t)

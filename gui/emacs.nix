@@ -49,12 +49,16 @@
     package = pkgs-unstable.emacsWithPackagesFromUsePackage {
       config = ./conf/init.el;
       alwaysEnsure = false;
+
       package = pkgs-unstable.emacsGit.override { nativeComp = true; };
+
       extraEmacsPackages = epkgs: (with epkgs.melpaPackages; [
         pdf-tools
         mu4e-alert
       ]) ++ (with epkgs.elpaPackages; [
         auctex
+      ]) ++ (with epkgs.nongnuPackages; [
+        org-contrib
       ])++ [
         akr-color-theme
         custom-runtime-env
