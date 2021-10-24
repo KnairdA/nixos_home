@@ -243,18 +243,6 @@
      "* %:description\n%:link %U"
      :immediate-finish t)))
 
-(use-package calfw
-  :ensure t
-  :custom
-  (calendar-week-start-day 1)
-  (calendar-holidays nil)
-  (cfw:org-face-agenda-item-foreground-color "#F2F2F2")
-  (cfw:face-item-separator-color "#080808")
-  (cfw:render-line-breaker 'cfw:render-line-breaker-wordwrap))
-
-(use-package calfw-org
-  :ensure t)
-
 (use-package org-fragtog
   :ensure t
   :config
@@ -273,27 +261,7 @@
  '(org-level-3 ((t (:family "Iosevka Aile Light"))))
  '(org-level-4 ((t (:family "Iosevka Aile Light"))))
  '(org-document-title ((t (:family "Iosevka Etoile"))))
- '(font-latex-sectioning-5-face ((t (:family "Iosevka Etoile" :height 1.1))))
-
- ;; calfw
- '(cfw:face-title ((t (:inherit variable-pitch :family "Isoevka Etoile" :foreground "#AADB0F" :height 2.0))))
- '(cfw:face-header ((t (:inherit fixed-pitch))))
- '(cfw:face-sunday ((t (:inherit fixed-pitch))))
- '(cfw:face-saturday ((t (:inherit fixed-pitch))))
- '(cfw:face-holiday ((t (:inherit fixed-pitch))))
- '(cfw:face-grid ((t (:inherit fixed-pitch))))
- '(cfw:face-default-content ((t (:inherit fixed-pitch))))
- '(cfw:face-periods ((t (:foreground "#909636"))))
- '(cfw:face-day-title ((t :background "#161616")))
- '(cfw:face-default-day ((t :weight bold :inherit cfw:face-day-title)))
- '(cfw:face-annotation ((t :foreground "#909636" :inherit cfw:face-day-title)))
- '(cfw:face-disable ((t :inherit cfw:face-day-title)))
- '(cfw:face-today-title ((t :foreground "#161616" :background "#AADB0F" :weight bold)))
- '(cfw:face-today ((t (:inherit fixed-pitch))))
- '(cfw:face-select ((t (:background "#F2F2F2" :foreground "#161616"))))
- '(cfw:face-toolbar ((t (:inherit fixed-pitch))))
- '(cfw:face-toolbar-button-off ((t (:inherit fixed-pitch))))
- '(cfw:face-toolbar-button-on  ((t (:inherit fixed-pitch)))))
+ '(font-latex-sectioning-5-face ((t (:family "Iosevka Etoile" :height 1.1)))))
 
 (use-package org-bullets
   :ensure t
@@ -433,9 +401,6 @@
                         "#+title: ${title}\n")
      :unnarrowed t)))
 
-(use-package org-noter
-  :ensure t)
-
 (use-package helm-org-rifle
   :ensure t)
 
@@ -449,8 +414,8 @@
 
   ("n" org-capture   "Capture"  :column "Capture")
 
-  ("a" org-agenda             "Agenda"    :column "Agenda")
-  ("c" cfw:open-org-calendar  "Calendar"  :column "Agenda")
+  ("a" org-agenda      "Agenda"    :column "Agenda")
+  ("c" org-agenda-list "Calendar"  :column "Agenda")
 
   ("r" helm-org-rifle-org-directory  "Rifle (all)"   :column "Search")
   ("l" helm-org-rifle-current-buffer "Rifle (local)" :column "Search")
@@ -537,6 +502,9 @@
 (use-package glsl-mode
   :ensure t)
 
+(use-package haskell-mode
+  :ensure t)
+
 (use-package cmake-mode
   :ensure t)
 
@@ -544,9 +512,6 @@
   :ensure t)
 
 (use-package rainbow-mode
-  :ensure t)
-
-(use-package literate-calc-mode
   :ensure t)
 
 (use-package gnuplot
