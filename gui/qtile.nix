@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 let
   hidpi = config.custom.hidpi;
@@ -19,14 +19,18 @@ in {
       size    = if hidpi then 48 else 16;
     };
 
-    windowManager.command = "qtile";
+    windowManager.command = "qtile start";
+
+    initExtra = ''
+      xsetroot -solid "#000000"
+    '';
   };
 
-  home.packages = with pkgs; [
+  home.packages = [
   # wm
-    qtile
+    pkgs-unstable.qtile
   # lockscreen
-    i3lock
+    pkgs.i3lock
   ];
 
   home.file.".config/qtile/config.py".source = ./conf/qtile.py;

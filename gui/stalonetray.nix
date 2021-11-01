@@ -13,7 +13,7 @@
       background   = "#000000";
       dockapp_mode = "none";
       window_layer = "bottom";
-      window_strut = "bottom";
+      window_strut = "none";
       window_type  = "dock";
     };
   };
