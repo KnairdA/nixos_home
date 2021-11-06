@@ -293,6 +293,9 @@
 
 (use-package evil-org
   :ensure t
+  :init
+  (fset 'evil-indirect-digit-argument 'ignore)
+  (fset 'evil-redirect-digit-argument 'ignore)
   :config
   (add-hook 'org-mode-hook 'evil-org-mode)
   (evil-org-set-key-theme '(navigation insert textobjects additional todo))
