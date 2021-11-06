@@ -10,8 +10,6 @@
   (message-send-mail-function 'message-send-mail-with-sendmail)
   (mu4e-change-filenames-when-moving t)
 
-  (mu4e-compose-dont-reply-to-self t)
-  (mu4e-compose-complete-only-personal t)
   (mu4e-compose-complete-only-after "2016-01-01")
 
   (mu4e-use-fancy-chars t)
