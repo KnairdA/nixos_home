@@ -392,11 +392,15 @@
   :ensure t
   :custom
   (org-roam-directory "~/org")
+  (org-roam-node-display-template (concat "${title:80} " (propertize "${tags:20}" 'face 'org-tag)))
   :init
   (setq org-roam-v2-ack t)
   :config
   (org-roam-setup)
-  (evil-leader/set-key "r" 'org-roam-node-find))
+  (evil-leader/set-key "r" 'org-roam-node-find)
+  (add-to-list 'helm-completing-read-handlers-alist
+               '(org-roam-node-find . helm-completing-read-sync-default-handler)))
+
 
 (setq org-roam-capture-templates
   '(("d" "default" plain "%?"
