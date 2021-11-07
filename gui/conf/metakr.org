@@ -84,7 +84,8 @@ For quick iteration all colors are stored in a table.
 | org-agenda-today-fg     | #dddddd |
 | org-agenda-today-bg     | #000000 |
 | org-special-keyword     | #777777 |
-| org-sched-prev          | #8C3346 |
+| org-sched-prev          | #F2F2F2 |
+| org-deadline            | #F2F2F2 |
 | org-agenda-done         | #909636 |
 | eshell-prompt           | #AADB0F |
 | helm-header-fg          | #909636 |
@@ -345,6 +346,8 @@ For quick iteration all colors are stored in a table.
    :background @org-agenda-today-bg)
   (org-scheduled-previously
    :foreground @org-sched-prev)
+  (org-imminent-deadline
+   :foreground @org-deadline)
   (org-agenda-done
    :foreground @org-agenda-done)
   (org-footnote

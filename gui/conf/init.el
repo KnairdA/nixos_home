@@ -421,8 +421,8 @@
 
   ("n" org-capture   "Capture"  :column "Capture")
 
-  ("a" org-agenda      "Agenda"    :column "Agenda")
-  ("c" org-agenda-list "Calendar"  :column "Agenda")
+  ("a" org-agenda                                            "Agenda"    :column "Agenda")
+  ("c" (progn (org-agenda-list) (org-agenda-fortnight-view)) "Calendar"  :column "Agenda")
 
   ("r" helm-org-rifle-org-directory  "Rifle (all)"   :column "Search")
   ("l" helm-org-rifle-current-buffer "Rifle (local)" :column "Search")
