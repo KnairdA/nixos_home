@@ -187,9 +187,10 @@
   (org-src-tab-acts-natively t)
   (org-default-notes-file "~/org/inbox.org")
   (org-agenda-files '("~/org"))
-  (org-refile-targets '((nil :maxlevel . 3)
+  (org-refile-targets '((nil :maxlevel . 1)
                         (org-agenda-files :maxlevel . 1)))
   (org-refile-use-outline-path 'file)
+  (org-reverse-note-order t)
   (org-link-frame-setup '((file . find-file))) ; open links in same frame
   (org-goto-interface 'outline-path-completion)
   (org-outline-path-complete-in-steps nil)
@@ -235,8 +236,8 @@
      (file org-default-notes-file)
      "* %^{Description}\n%U\n#+BEGIN_QUOTE\n%i#+END_QUOTE"
      :prepend t)
-    ("wq" "Website (Quote)"
-     entry (file org-default-notes-file)
+    ("wq" "Website (Quote)" entry
+     (file org-default-notes-file)
      "* %:description\n%:link %U\n#+BEGIN_QUOTE\n%:initial\n#+END_QUOTE")
     ("w" "Website" entry
      (file org-default-notes-file)
