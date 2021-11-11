@@ -3,11 +3,15 @@
 {
   home = {
     packages = with pkgs-unstable; [
+      tdesktop
+
       zotero
+
       teams
       zoom-us
-      tdesktop
+
       tigervnc
+      remmina
     ];
   };
 
