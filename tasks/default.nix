@@ -45,12 +45,22 @@ in {
       ]);
     };
 
+    java_shell = {
+      description = "Generic Java shell environment";
+      directory = "~/";
+      type = "environment";
+      environment = mkShellDerivation "java-env" (with pkgs; [
+        gnumake
+        openjdk
+      ]);
+    };
+
     latex_shell = {
       description = "Generic LaTeX shell environment";
       directory = "~/";
       type = "environment";
       environment = mkShellDerivation "latex-env" (with pkgs; [
-        tectonic
+        texlive.combined.scheme-full
       ]);
     };
 
