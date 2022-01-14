@@ -30,6 +30,7 @@
   (set-frame-font "Iosevka 11" nil t)
   (set-fontset-font "fontset-default" 'unicode "Iosevka")
   (set-face-font 'default "Iosevka 11")
+  (set-fontset-font t 'unicode (font-spec :name "Symbola") nil 'append)
   (menu-bar-mode -1)
   (toggle-scroll-bar -1)
   (tool-bar-mode -1))
