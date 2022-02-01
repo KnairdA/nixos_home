@@ -386,6 +386,7 @@
    (shell   . t)
    (latex   . t)
    (org     . t)
+   (dot     . t)
    (C       . t)))
 
 (setq org-confirm-babel-evaluate nil)
