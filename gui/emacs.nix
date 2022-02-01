@@ -17,7 +17,7 @@
 
     custom-runtime-env-el = let
       tex = pkgs.texlive.combine {
-        inherit (pkgs.texlive) scheme-small dvipng;
+        inherit (pkgs.texlive) scheme-full dvipng;
       };
     in pkgs.writeTextFile {
       name = "custom-runtime-env.el";
