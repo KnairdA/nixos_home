@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
-let
-  hidpi = config.custom.hidpi;
-
-in {
+{
   home.packages = with pkgs; [
     twmn
     libnotify
@@ -31,8 +28,8 @@ in {
     [gui]
     background_color=#909737
     font=Iosevka
-    font_size=${if hidpi then "24" else "14"}
-    height=${if hidpi then "32" else "20"}
+    font_size=14
+    height=20
     foreground_color=#111111
     always_on_top=true
     position=bottom_right

@@ -368,25 +368,25 @@ screenWidthOn  host = case host of
   "majestix"   -> 1920
   "obelix"     -> 1280
   "asterix"    -> 1366
-  "athena"     -> 2560
+  "athena"     -> 1920
 screenHeightOn host = case host of
   "hephaestus" -> 1200
   "majestix"   -> 1080
   "obelix"     -> 1024
   "asterix"    -> 768
-  "athena"     -> 1440
+  "athena"     -> 1080
 borderWidthOn host = case host of
   "hephaestus" -> 3
   "majestix"   -> 3
   "obelix"     -> 3
   "asterix"    -> 3
-  "athena"     -> 6
+  "athena"     -> 3
 decoHeightOn host = case host of
   "hephaestus" -> 20
   "majestix"   -> 20
   "obelix"     -> 20
   "asterix"    -> 20
-  "athena"     -> 30
+  "athena"     -> 20
 
 -------------------------------------------------------------------------------
 -- helper for layout name dependent actions
