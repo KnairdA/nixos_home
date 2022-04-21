@@ -10,8 +10,8 @@
       teams
       zoom-us
 
-      tigervnc
-      remmina
+      pkgs.tigervnc
+      pkgs.remmina
     ];
   };
 
