@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 
 {
   home = {
@@ -6,7 +6,7 @@
     # UI dev utilities (language environments are maintained in project specific nix-shells)
       hotspot
       kcachegrind
-      paraview
+      pkgs-unstable.paraview
       meld
     # language utilities
       artha
