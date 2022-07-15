@@ -15,6 +15,7 @@
       disable_ligatures always
 
       enable_audio_bell no
+      confirm_os_window_close 0
 
       background #161616
       foreground #F2F2F2

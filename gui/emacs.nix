@@ -84,7 +84,7 @@
 
   in with pkgs; [
     emacs-all-the-icons-fonts
-    symbola
+    pkgs-unstable.symbola
     (iosevka-bin.override { variant = "aile"; })
     (iosevka-bin.override { variant = "etoile"; })
     mu

@@ -7,7 +7,7 @@
     in with pkgs; [
       pcmanfm
     # automounting
-      gvfs lxmenu-data shared_mime_info
+      gvfs lxmenu-data shared-mime-info
       xfce.gigolo
     # viewers
       bat

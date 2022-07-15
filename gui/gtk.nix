@@ -60,7 +60,7 @@ in {
 
   home.packages = [
   # enable persistent settings in e.g. file chooser dialogs
-    pkgs.gnome3.dconf
+    pkgs.dconf
     pkgs.gnome3.dconf-editor
   ];
 
