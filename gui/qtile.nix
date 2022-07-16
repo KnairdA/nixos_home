@@ -13,17 +13,18 @@ in {
   xsession = {
     enable = true;
 
-    pointerCursor = {
-      package = pkgs.vanilla-dmz;
-      name    = "Vanilla-DMZ-AA";
-      size    = if hidpi then 48 else 16;
-    };
-
     windowManager.command = "qtile start";
 
     initExtra = ''
       xsetroot -solid "#000000"
     '';
+  };
+
+  home.pointerCursor = {
+    x11.enable = true;
+    package = pkgs.vanilla-dmz;
+    name    = "Vanilla-DMZ-AA";
+    size    = if hidpi then 48 else 16;
   };
 
   home.packages = [
