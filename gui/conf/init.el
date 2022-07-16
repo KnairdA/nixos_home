@@ -136,6 +136,7 @@
   :ensure t
   :custom
   (undo-tree-visualizer-diff t)
+  (undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
   :config
   (global-undo-tree-mode)
   (evil-leader/set-key "hu" 'undo-tree-undo)
