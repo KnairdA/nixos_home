@@ -72,7 +72,7 @@
 
 (set-face-attribute 'default        nil :family "Iosevka")
 (set-face-attribute 'fixed-pitch    nil :family "Iosevka")
-(set-face-attribute 'variable-pitch nil :family "Iosevka Aile Light")
+(set-face-attribute 'variable-pitch nil :family "Iosevka Aile" :weight 'light)
 
 (global-set-key (kbd "<M-tab>")         'next-buffer)
 (global-set-key (kbd "<M-iso-lefttab>") 'previous-buffer)
@@ -259,10 +259,10 @@
 
 (custom-theme-set-faces
  'user
- '(org-level-1 ((t (:family "Iosevka Aile Light"))))
- '(org-level-2 ((t (:family "Iosevka Aile Light"))))
- '(org-level-3 ((t (:family "Iosevka Aile Light"))))
- '(org-level-4 ((t (:family "Iosevka Aile Light"))))
+ '(org-level-1 ((t (:family "Iosevka Aile" :weight light))))
+ '(org-level-2 ((t (:family "Iosevka Aile" :weight light))))
+ '(org-level-3 ((t (:family "Iosevka Aile" :weight light))))
+ '(org-level-4 ((t (:family "Iosevka Aile" :weight light))))
  '(org-document-title ((t (:family "Iosevka Etoile"))))
  '(font-latex-sectioning-5-face ((t (:family "Iosevka Etoile" :height 1.1)))))
 

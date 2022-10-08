@@ -141,11 +141,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1629367653,
-        "narHash": "sha256-TYovgHylzgcVC7M714mPVdCCsnHV9Uh2DiLWhi/KWe8=",
+        "lastModified": 1629652608,
+        "narHash": "sha256-eNcsdqMyK/Q3P0Tj16uDNcQzKIFf4CJkM7qTq3BdtF0=",
         "owner": "KnairdA",
         "repo": "pkgs",
-        "rev": "5e27bc6838920fe2948bc0953a519232bced0397",
+        "rev": "fb63603b5eec859c84464e1a7f6f14931303f679",
         "type": "github"
       },
       "original": {
