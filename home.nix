@@ -89,5 +89,8 @@
     nix-direnv.enable = true;
   };
 
-  xdg.mimeApps.enable = true;
+  xdg = {
+    mimeApps.enable = true;
+    configFile."mimeapps.list".force = true;
+  };
 }
