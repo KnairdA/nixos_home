@@ -84,7 +84,14 @@
                "* TODO /%:subject/\n See %a\n%?"
                :prepend t))
 (add-to-list 'org-capture-templates
-             '("r" "Respond to eMail" entry (file org-default-notes-file)
+             '("rm" "Respond to eMail" entry (file org-default-notes-file)
                "* TODO Respond to /%:subject/\n See %a\n%?"
                :prepend t
                :immediate-finish t))
+
+(defun org-mail-capture-response ()
+  (interactive)
+  (call-interactively 'org-store-link)
+  (org-capture nil "rm"))
+
+(define-key mu4e-headers-mode-map (kbd "C-c r") 'org-mail-capture-response)
