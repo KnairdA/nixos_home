@@ -81,5 +81,10 @@
 
 (add-to-list 'org-capture-templates
              '("m" "eMail note" entry (file org-default-notes-file)
-               "* TODO /%:subject/\n See %a\n\n%?"
+               "* TODO /%:subject/\n See %a\n%?"
                :prepend t))
+(add-to-list 'org-capture-templates
+             '("r" "Respond to eMail" entry (file org-default-notes-file)
+               "* TODO Respond to /%:subject/\n See %a\n%?"
+               :prepend t
+               :immediate-finish t))
