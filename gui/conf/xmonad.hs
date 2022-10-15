@@ -217,7 +217,7 @@ commonKeybindings host =
   , ("M-s j"           , moveTo  Next nonEmptyWS)
   , ("M-s k"           , moveTo  Prev nonEmptyWS)
   , ("M-S-s j"         , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
-  , ("N-S-s k"         , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
+  , ("M-S-s k"         , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
 
 -- workspace layout management
   , ("M-y"           , refresh)
