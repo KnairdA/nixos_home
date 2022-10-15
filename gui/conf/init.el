@@ -202,6 +202,10 @@
   (org-image-actual-width nil)
   (org-fontify-done-headline nil)
   (org-ellipsis "…")
+  (org-icalendar-combined-agenda-file "~/org/calendar.ics")
+  (org-icalendar-timezone "Europe/Berlin")
+  (org-icalendar-use-deadline  '(event-if-not-todo event-if-todo))
+  (org-icalendar-use-scheduled '(event-if-not-todo event-if-todo))
   :init
   (require 'org-protocol)
   (require 'ox-bibtex)
