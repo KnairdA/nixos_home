@@ -1,17 +1,14 @@
 { config, pkgs, ... }:
 
-let
-  hidpi = config.custom.hidpi;
-
-in {
+{
   imports = [
-    ./xmonad.nix
     ./kitty.nix
     ./emacs.nix
     ./email.nix
     ./zathura.nix
     ./htop.nix
     ./pass.nix
+    ./rofi.nix
 
   # applications grouped by purpose
     ./apps/file.nix
@@ -20,15 +17,17 @@ in {
   ];
 
   fonts.fontconfig.enable = true;
+  home.packages = with pkgs; [
+    iosevka
+  ];
 
-# hidpi specific xorg flags
-  xresources.extraConfig = pkgs.lib.mkIf hidpi ''
-    Xft.dpi: 160
-    Xft.autohint: 0
-    Xft.lcdfilter: lcddefault
-    Xft.hintstyle: hintfull
-    Xft.hinting: 1
-    Xft.antialias: 1
-    Xft.rgba: rgb
-  '';
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+  };
+
+  home.sessionVariables = {
+    QT_AUTO_SCREEN_SCALE_FACTOR = 0;
+  };
+
 }

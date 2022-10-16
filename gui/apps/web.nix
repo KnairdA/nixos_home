@@ -20,8 +20,10 @@
     "x-scheme-handler/https" = [ "firefox.desktop" ];
   };
 
-  programs.firefox.enable = true;
-  programs.chromium.enable = true;
+  programs = {
+    firefox.enable = true;
+    chromium.enable = true;
+  };
 
   services.syncthing.enable = true;
 }

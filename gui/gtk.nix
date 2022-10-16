@@ -1,9 +1,6 @@
 { config, pkgs, pkgs-personal, ... }:
 
-let
-  hidpi = config.custom.hidpi;
-
-in {
+{
   gtk = {
     enable = true;
 
@@ -28,7 +25,7 @@ in {
         txt_fg     = "101010";
         gradient   = 0.0;
         roundness  = 0;
-        spacing    = if hidpi then 5 else 1;
+        spacing    = 1;
         wm_border_focus   = "909636";
         wm_border_unfocus = "909636";
         gtk3_generate_dark = false;

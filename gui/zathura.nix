@@ -1,14 +1,11 @@
 { config, pkgs, ... }:
 
-let
-  hidpi = config.custom.hidpi;
-
-in {
+{
   programs.zathura = {
     enable = true;
 
     options = {
-      font = if hidpi then "Iosevka 28px" else "Iosevka 16px";
+      font = "Iosevka 16px";
 
       inputbar-fg   = "#161616";
       inputbar-bg   = "#909737";

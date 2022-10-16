@@ -3,7 +3,6 @@
 {
   imports = [
     ../gui/default.nix
+    ../gui/xmonad.nix
   ];
-
-  custom.hidpi = false;
 }

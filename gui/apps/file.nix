@@ -36,7 +36,14 @@
       XDG_TEMPLATES_DIR="$HOME/"
       XDG_DESKTOP_DIR="$HOME/"
       XDG_DOWNLOAD_DIR="$HOME/downloads/"
+      XDG_DOCUMENTS_DIR="$HOME/"
+      XDG_MUSIC_DIR="$HOME/"
+      XDG_PICTURES_DIR="$HOME/"
+      XDG_PUBLICSHARE_DIR="$HOME/"
+      XDG_TEMPLATES_DIR="$HOME/"
+      XDG_VIDEOS_DIR="$HOME/"
     '';
+    file.".config/user-dirs.dirs".force = true;
   };
 
   xdg.mimeApps.defaultApplications = {

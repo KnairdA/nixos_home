@@ -1,9 +1,6 @@
 { config, pkgs, pkgs-unstable, ... }:
 
-let
-  hidpi = config.custom.hidpi;
-
-in {
+{
   imports = [
     ./gtk.nix
     ./rofi.nix
@@ -24,7 +21,7 @@ in {
     x11.enable = true;
     package = pkgs.vanilla-dmz;
     name    = "Vanilla-DMZ-AA";
-    size    = if hidpi then 48 else 16;
+    size    = 16;
   };
 
   home.packages = [

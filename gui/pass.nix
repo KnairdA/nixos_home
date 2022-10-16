@@ -4,7 +4,7 @@ let
   emumenu = pkgs.writeTextFile {
     name        = "emumenu";
     executable  = true;
-    destination = "/bin/dmenu";
+    destination = "/bin/dmenu-wl";
 
     text = ''
       #!/usr/bin/env bash
@@ -23,7 +23,7 @@ let
       ${pkgs.pass}/bin/.passmenu-wrapped
     '';
   };
-  
+
 in {
   home.packages = [
     pkgs.pass

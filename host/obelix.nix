@@ -3,9 +3,8 @@
 {
   imports = [
     ../gui/default.nix
+    ../gui/xmonad.nix
   ];
-
-  custom.hidpi = false;
 
   custom.tasks = {
     "compustream_shell" = {
@@ -13,9 +12,5 @@
       directory = "~/projects/dev/compustream";
       type = "local-shell";
     };
-  };
-
-  services.kdeconnect = {
-    enable = true;
   };
 }

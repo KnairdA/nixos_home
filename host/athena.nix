@@ -3,6 +3,7 @@
 {
   imports = [
     ../gui/default.nix
+    ../gui/xmonad.nix
     ../gui/networkmanager.nix
     ../gui/stalonetray.nix
     ../gui/redshift.nix
@@ -14,6 +15,4 @@
     arandr
     blueman
   ];
-
-  custom.hidpi = false;
 }

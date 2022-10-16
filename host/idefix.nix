@@ -3,12 +3,9 @@
 {
   imports = [
     ../gui/default.nix
-    ../gui/networkmanager.nix
-    ../gui/stalonetray.nix
-    ../gui/autorandr.nix
   ];
 
   home.packages = with pkgs; [
-    acpi
+    gnome3.gnome-tweaks
   ];
 }

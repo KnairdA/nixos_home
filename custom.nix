@@ -6,11 +6,6 @@ let
 
 in {
   options.custom = {
-    hidpi = mkOption {
-      type = types.bool;
-      description = "Configure UI for high DPI displays";
-    };
-
     tasks = mkOption {
       type = types.attrsOf (types.submodule {
         options = {
