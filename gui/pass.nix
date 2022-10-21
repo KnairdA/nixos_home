@@ -4,7 +4,7 @@ let
   emumenu = pkgs.writeTextFile {
     name        = "emumenu";
     executable  = true;
-    destination = "/bin/dmenu-wl";
+    destination = "/bin/dmenu";
 
     text = ''
       #!/usr/bin/env bash
