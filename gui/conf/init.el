@@ -141,7 +141,13 @@
   (global-undo-tree-mode)
   (evil-leader/set-key "hu" 'undo-tree-undo)
   (evil-leader/set-key "hr" 'undo-tree-redo)
-  (evil-leader/set-key "hv" 'undo-tree-visualize))
+  (evil-leader/set-key "hv" 'undo-tree-visualize)
+  (defun undo-tree-suppress-buffer-modified-message
+      (undo-tree-load-history &rest args)
+    (let ((inhibit-message t))
+      (apply undo-tree-load-history args)))
+  (advice-add #'undo-tree-load-history :around
+              #'undo-tree-suppress-buffer-modified-message))
 
 (use-package minions
   :ensure t
