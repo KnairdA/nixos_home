@@ -8,7 +8,6 @@
       zotero
 
       teams
-      zoom-us
 
       pkgs.tigervnc
       pkgs.remmina
