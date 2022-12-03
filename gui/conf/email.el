@@ -28,9 +28,6 @@
   :config
   (require 'org-mu4e)
   (evil-collection-init 'mu4e)
-  (define-obsolete-function-alias 'mu4e-search-bookmark 'mu4e-headers-search-bookmark nil)
-  (define-obsolete-function-alias 'mu4e-search 'mu4e-headers-search nil)
-  (define-obsolete-function-alias 'mu4e-search-narrow 'mu4e-headers-search-narrow nil)
   (add-hook 'mu4e-compose-mode-hook #'(lambda () (auto-save-mode -1))))
 
 (use-package mu4e-alert

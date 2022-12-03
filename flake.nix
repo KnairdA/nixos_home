@@ -2,11 +2,11 @@
   description = "Computing environment of Adrian Kummerlaender";
 
   inputs = {
-    stable.url = github:NixOS/nixpkgs/nixos-22.05;
+    stable.url = github:NixOS/nixpkgs/nixos-22.11;
     unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
     personal.url = github:KnairdA/pkgs;
     home-manager = {
-      url = github:nix-community/home-manager/release-22.05;
+      url = github:nix-community/home-manager/release-22.11;
       inputs = { nixpkgs.follows = "stable"; };
     };
     emacs.url = github:nix-community/emacs-overlay/master;
@@ -18,6 +18,16 @@
   }: let
     system = "x86_64-linux";
 
+    jupyter-overlay = (final: prev: {
+      jupyterWith = jupyter.defaultPackage."${final.system}";
+    });
+
+    pkgs = import stable {
+      inherit system;
+      config = { allowUnfree = true; };
+      overlays = [ jupyter-overlay ];
+    };
+
     pkgs-unstable = import unstable {
       inherit system;
       config = { allowUnfree = true; };
@@ -26,26 +36,16 @@
 
     pkgs-personal = personal;
 
-    jupyter-overlay = (final: prev: {
-      jupyterWith = jupyter.defaultPackage."${final.system}";
-    });
-
     config = hostname: home-manager.lib.homeManagerConfiguration {
-      system = system;
-      homeDirectory = "/home/common";
-      username = "common";
+      inherit pkgs;
+
       extraSpecialArgs = {
         inherit pkgs-unstable;
         inherit pkgs-personal;
         inherit hostname;
       };
-      configuration = { ... }: {
-        imports = [ ./home.nix ];
-        nixpkgs = {
-          config = { allowUnfree = true; };
-          overlays = [ jupyter-overlay ];
-        };
-      };
+
+      modules = [ ./home.nix ];
     };
 
     hostnames = builtins.map

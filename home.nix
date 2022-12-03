@@ -12,6 +12,11 @@
   ];
 
   home = {
+    stateVersion = "22.11";
+
+    username = "common";
+    homeDirectory = "/home/common";
+
     keyboard = {
       layout = "de";
       options = [ "caps:escape" ];
