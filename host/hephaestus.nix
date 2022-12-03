@@ -8,7 +8,8 @@
     ../gui/stalonetray.nix
   ];
 
-  services.kdeconnect = {
-    enable = true;
+  services = {
+    kdeconnect.enable = true;
+    screen-locker.enable = pkgs.lib.mkForce false;
   };
 }
