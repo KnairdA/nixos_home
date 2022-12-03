@@ -50,16 +50,6 @@
         hostname = "10.100.0.3";
         user = "common";
       };
-      "horst" = {
-        proxyCommand = "ssh majestix -W %h:%p";
-        hostname = "MVMITS177.mvm.kit.edu";
-        user = "urdzx";
-      };
-      "bwunicluster" = {
-        proxyCommand = "ssh majestix -W %h:%p";
-        hostname = "bwunicluster.scc.kit.edu";
-        user = "urdzx";
-      };
     };
   };
 
