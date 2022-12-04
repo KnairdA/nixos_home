@@ -74,11 +74,14 @@
       destination = "/share/applications/org-protocol.desktop";
       text = ''
         [Desktop Entry]
-        Type=Application
         Name=Emacs (Client, Protocol)
-        Exec=emacsclient %u
+        Keywords=org-protocol;
+        Icon=emacs
+        Type=Application
+        Exec=emacsclient -- %u
         Terminal=false
-        MimeType=x-scheme-handler/org-protocol
+        StartupWMClass=Emacs
+        MimeType=x-scheme-handler/org-protocol;
       '';
     };
 
