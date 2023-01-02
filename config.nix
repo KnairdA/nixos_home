@@ -1,13 +1,3 @@
 {
   allowUnfree = true;
-
-  packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
-  };
-
-  permittedInsecurePackages = [
-    "go-1.14.15"
-  ];
 }
