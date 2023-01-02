@@ -176,12 +176,6 @@
   (evil-define-key 'normal dired-mode-map
     (kbd "TAB") 'dired-subtree-toggle))
 
-(use-package direnv
-  :ensure t
-  :config
-  (setq direnv-always-show-summary nil)
-  (direnv-mode))
-
 (use-package htmlize
   :ensure t)
 
@@ -582,3 +576,8 @@
 (let ((patches "~/.emacs.d/patches.el"))
   (when (file-exists-p patches)
     (load-file patches)))
+
+(use-package envrc
+  :ensure t)
+
+(envrc-global-mode)
