@@ -365,25 +365,25 @@ hideScreenBorder host (S.RationalRect x0 y0 w h) = S.RationalRect (x0-(bw/sw)) (
 
 screenWidthOn  host = case host of
   "hephaestus" -> 1920
-  "majestix"   -> 1920
+  "atlas"      -> 1920
   "obelix"     -> 1280
   "asterix"    -> 1366
   "athena"     -> 1920
 screenHeightOn host = case host of
   "hephaestus" -> 1200
-  "majestix"   -> 1080
+  "atlas"      -> 1080
   "obelix"     -> 1024
   "asterix"    -> 768
   "athena"     -> 1080
 borderWidthOn host = case host of
   "hephaestus" -> 3
-  "majestix"   -> 3
+  "atlas"      -> 3
   "obelix"     -> 3
   "asterix"    -> 3
   "athena"     -> 3
 decoHeightOn host = case host of
   "hephaestus" -> 20
-  "majestix"   -> 20
+  "atlas"      -> 20
   "obelix"     -> 20
   "asterix"    -> 20
   "athena"     -> 20
