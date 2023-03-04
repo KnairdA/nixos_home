@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./fish.nix
     ./kitty.nix
     ./emacs.nix
     ./email.nix

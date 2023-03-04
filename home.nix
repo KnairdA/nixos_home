@@ -73,10 +73,6 @@
 
   programs.fish = {
     enable = true;
-    shellAliases = {
-      ns  = "persistent-nix-shell -s";
-      cat = "bat --plain";
-    };
   };
 
   programs.direnv = {
