@@ -51,7 +51,7 @@
         hostname = "kummerlaender.eu";
         user = "common";
       };
-      "majestix" = {
+      "atlas" = {
         hostname = "10.100.0.3";
         user = "common";
       };
