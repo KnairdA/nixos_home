@@ -17,6 +17,8 @@ import XMonad.Layout.Grid
 import XMonad.Layout.Groups.Examples
 import XMonad.Layout.Groups.Helpers
 
+import XMonad.Actions.PhysicalScreens
+
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Reflect
 import XMonad.Layout.MultiToggle
@@ -214,13 +216,15 @@ commonKeybindings host =
   [ ("C-<Backspace>" , toggleWS' ["NSP"])
 
 -- workspace movement
-  , ("M-s j"           , moveTo  Next nonEmptyWS)
-  , ("M-s k"           , moveTo  Prev nonEmptyWS)
-  , ("M-S-s j"         , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
-  , ("M-S-s k"         , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
+  , ("M-s j"         , moveTo  Next nonEmptyWS)
+  , ("M-s k"         , moveTo  Prev nonEmptyWS)
+  , ("M-S-s j"       , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
+  , ("M-S-s k"       , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
+
+-- physical screen change
+  , ("M-<Tab>"       , nextScreen)
 
 -- workspace layout management
-  , ("M-y"           , refresh)
   , ("M-v"           , layoutMenu)
   , ("M-s l"         , sendMessage NextLayout)
   , ("M-s +"         , sendMessage $ IncMasterN   1)
