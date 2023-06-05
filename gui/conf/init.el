@@ -165,10 +165,8 @@
 
 (setq dired-listing-switches "-Bahl --group-directories-first")
 
-(use-package all-the-icons-dired
-  :ensure t
-  :config
-  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+(use-package nerd-icons
+  :ensure t)
 
 (use-package dired-subtree
   :ensure t
