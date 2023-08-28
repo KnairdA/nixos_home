@@ -50,7 +50,7 @@
       config = ./conf/init.el;
       alwaysEnsure = false;
 
-      package = pkgs-unstable.emacsGit.override { nativeComp = true; };
+      package = pkgs-unstable.emacs-git.override { withNativeCompilation = true; };
 
       extraEmacsPackages = epkgs: (with epkgs.melpaPackages; [
         pdf-tools

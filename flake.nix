@@ -2,11 +2,11 @@
   description = "Computing environment of Adrian Kummerlaender";
 
   inputs = {
-    stable.url = github:NixOS/nixpkgs/nixos-22.11;
+    stable.url = github:NixOS/nixpkgs/nixos-23.05;
     unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
     personal.url = github:KnairdA/pkgs;
     home-manager = {
-      url = github:nix-community/home-manager/release-22.11;
+      url = github:nix-community/home-manager/release-23.05;
       inputs = { nixpkgs.follows = "stable"; };
     };
     emacs.url = github:nix-community/emacs-overlay/master;
