@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-oldstable, pkgs-unstable, ... }:
 
 {
   programs.emacs = let
@@ -46,11 +46,9 @@
   in {
     enable = true;
 
-    package = pkgs-unstable.emacsWithPackagesFromUsePackage {
+    package = pkgs.emacsWithPackagesFromUsePackage {
       config = ./conf/init.el;
       alwaysEnsure = false;
-
-      package = pkgs-unstable.emacs-git.override { withNativeCompilation = true; };
 
       extraEmacsPackages = epkgs: (with epkgs.melpaPackages; [
         pdf-tools
@@ -62,7 +60,7 @@
       ])++ [
         akr-color-theme
         custom-runtime-env
-        pkgs.mu
+        pkgs-oldstable.mu
       ];
     };
   };
@@ -86,10 +84,10 @@
     };
 
   in with pkgs; [
-    pkgs-unstable.symbola
+    symbola
     (iosevka-bin.override { variant = "aile"; })
     (iosevka-bin.override { variant = "etoile"; })
-    mu
+    pkgs-oldstable.mu
     org-protocol-shortcut
   ];
 

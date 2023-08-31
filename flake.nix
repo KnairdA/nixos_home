@@ -4,6 +4,7 @@
   inputs = {
     stable.url = github:NixOS/nixpkgs/nixos-23.05;
     unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+    oldstable.url = github:NixOS/nixpkgs/nixos-22.11;
     personal.url = github:KnairdA/pkgs;
     home-manager = {
       url = github:nix-community/home-manager/release-23.05;
@@ -14,7 +15,7 @@
   };
 
   outputs = {
-    self, stable, unstable, personal, emacs, home-manager, jupyter, ...
+    self, stable, unstable, oldstable, personal, emacs, home-manager, jupyter, ...
   }: let
     system = "x86_64-linux";
 
@@ -25,13 +26,17 @@
     pkgs = import stable {
       inherit system;
       config = { allowUnfree = true; };
-      overlays = [ jupyter-overlay ];
+      overlays = [ jupyter-overlay emacs.overlay ];
     };
 
     pkgs-unstable = import unstable {
       inherit system;
       config = { allowUnfree = true; };
-      overlays = [ emacs.overlay ];
+    };
+
+    pkgs-oldstable = import oldstable {
+      inherit system;
+      config = { allowUnfree = true; };
     };
 
     pkgs-personal = personal;
@@ -41,6 +46,7 @@
 
       extraSpecialArgs = {
         inherit pkgs-unstable;
+        inherit pkgs-oldstable;
         inherit pkgs-personal;
         inherit hostname;
       };
