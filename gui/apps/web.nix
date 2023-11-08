@@ -2,13 +2,9 @@
 
 {
   home = {
-    packages = with pkgs-unstable; [
-      tdesktop
-
-      zotero
-
-      teams
-
+    packages = [
+      pkgs-unstable.tdesktop
+      pkgs-unstable.zotero
       pkgs.tigervnc
       pkgs.remmina
     ];

@@ -6,12 +6,12 @@
     # UI dev utilities (language environments are maintained in project specific nix-shells)
       hotspot
       kcachegrind
-      pkgs-unstable.paraview
+      paraview
       meld
     # language utilities
       artha
     # calculator
-      speedcrunch
+      qalculate-gtk
     # ctag to override the emacs provided ones (placeholder)
       universal-ctags
       fzf
