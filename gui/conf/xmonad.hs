@@ -267,6 +267,7 @@ customEventHook = do
 
 customManageHook host = manageMonitor (hudMonitor host) <+> composeOne
   [ hasRole "GtkFileChooserDialog" -?> doRectFloat $ hideScreenBorder host dropDown
+  , isTeamsGarbage                 -?> doHideIgnore
   , isParaviewDialog               -?> doRectFloat $ hideScreenBorder host dropDown
   , isTelegramMediaViewer          -?> doFullFloat
   , isDialog                       -?> doCenterFloat
@@ -275,6 +276,7 @@ customManageHook host = manageMonitor (hudMonitor host) <+> composeOne
   , pure True -?> insertPosition Below Newer <+> namedScratchpadManageHook (scratchpads host) ]
   where
     hasRole x = stringProperty "WM_WINDOW_ROLE" =? x
+    isTeamsGarbage        = (title =? "teams.microsoft.com is sharing your screen.")
     isParaviewDialog      = (className =? "ParaView") <&&> isDialog
     isPrompter            = (className =? "Gcr-prompter")
     isTelegramMediaViewer = (className =? "TelegramDesktop") <&&> (title =? "Media viewer")
