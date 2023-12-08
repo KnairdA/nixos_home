@@ -19,7 +19,7 @@
     firefox = {
       enable = true;
       package = pkgs.firefox.override {
-        extraNativeMessagingHosts = with pkgs; [ passff-host ];
+        nativeMessagingHosts = with pkgs; [ passff-host ];
       };
     };
     chromium.enable = true;

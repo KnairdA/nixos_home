@@ -18,7 +18,6 @@
     # audio
       pulseaudio
       pavucontrol
-      pulseeffects-pw
     # office
       libreoffice
       gimp

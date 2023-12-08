@@ -47,6 +47,8 @@
     enable = true;
 
     package = pkgs.emacsWithPackagesFromUsePackage {
+      package = pkgs.emacs29;
+
       config = ./conf/init.el;
       alwaysEnsure = false;
 

@@ -274,10 +274,10 @@
   (setq org-bullets-bullet-list '("◉" "◉" "⤷" "⤷"))
   (add-hook 'org-mode-hook #'org-bullets-mode))
 
-(use-package org-re-reveal
-  :ensure t
-  :custom
-  (org-re-reveal-revealjs-version "4"))
+;(use-package org-re-reveal
+;  :ensure t
+;  :custom
+;  (org-re-reveal-revealjs-version "4"))
 
 (use-package org-present
   :ensure t
