@@ -567,6 +567,39 @@
     ad-do-it
     (message "org-tangle took %f sec" (float-time (time-subtract (current-time) time)))))
 
+(use-package gptel
+  :ensure t
+  :config
+  (defvar gptel--atlas
+    (gptel-make-openai "atlas"
+                       :stream t
+                       :protocol "http"
+                       :host "10.100.0.3:8081")
+    "GPTel remote backend on atlas")
+  (setq-default gptel-backend gptel--atlas)
+  (setq-default gptel-max-tokens 4096)
+  (defvar gptel-quick--history nil)
+  (defun gptel-quick (&optional prompt)
+    (interactive)
+    (unless prompt
+      (if (use-region-p)
+          (setq prompt (buffer-substring-no-properties (region-beginning) (region-end)))
+        (setq prompt (read-string "AI: "))))
+    (when (string= prompt "") (user-error "Text selection or prompt is required."))
+    (gptel-request
+     prompt
+     :callback
+     (lambda (response info)
+       (if (not response)
+           (message "gptel-quick failed with message: %s" (plist-get info :status))
+         (with-current-buffer (get-buffer-create "*gptel-quick*")
+           (let ((inhibit-read-only t))
+             (erase-buffer)
+             (insert response))
+           (special-mode)
+           (switch-to-buffer "*gptel-quick*"))))))
+  (evil-leader/set-key "g" 'gptel-quick))
+
 (let ((mu4e-config "~/.emacs.d/email.el"))
  (when (file-exists-p mu4e-config)
    (load-file mu4e-config)))
