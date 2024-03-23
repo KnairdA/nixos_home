@@ -39,7 +39,7 @@ in {
       type = "environment";
       environment = mkShellDerivation "cpp-env" (with pkgs; [
         cmake
-        gcc10
+        gcc13
         gdb cgdb
         universal-ctags
       ]);
@@ -61,6 +61,7 @@ in {
       type = "environment";
       environment = mkShellDerivation "latex-env" (with pkgs; [
         texlive.combined.scheme-full
+        biber
       ]);
     };
 
