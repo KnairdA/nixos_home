@@ -31,6 +31,7 @@
     enable = true;
     package = pkgs.gitAndTools.gitFull;
     lfs.enable = true;
+    difftastic.enable = true;
 
     userName  = "Adrian Kummerlaender";
     userEmail = "adrian@kummerlaender.eu";
