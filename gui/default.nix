@@ -22,13 +22,6 @@
     iosevka
   ];
 
-  qt = {
-    enable = true;
-    platformTheme = "gtk";
-  };
-
-  services.gpg-agent.pinentryFlavor = "gtk2";
-
   home.sessionVariables = {
     QT_AUTO_SCREEN_SCALE_FACTOR = 0;
   };

@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-oldstable, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   programs.emacs = let
@@ -47,6 +47,10 @@
     enable = true;
 
     package = pkgs.emacsWithPackagesFromUsePackage {
+      override = final: prev: {
+        org = prev.org.overrideAttrs(old: { patches = []; } );
+      };
+
       package = pkgs.emacs29;
 
       config = ./conf/init.el;
@@ -60,9 +64,9 @@
       ]) ++ (with epkgs.nongnuPackages; [
         org-contrib
       ])++ [
+        epkgs.mu4e
         akr-color-theme
         custom-runtime-env
-        pkgs-oldstable.mu
       ];
     };
   };
@@ -87,9 +91,9 @@
 
   in with pkgs; [
     symbola
-    (iosevka-bin.override { variant = "aile"; })
-    (iosevka-bin.override { variant = "etoile"; })
-    pkgs-oldstable.mu
+    (iosevka-bin.override { variant = "Aile"; })
+    (iosevka-bin.override { variant = "Etoile"; })
+    mu
     org-protocol-shortcut
   ];
 

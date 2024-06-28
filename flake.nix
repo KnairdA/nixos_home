@@ -2,12 +2,11 @@
   description = "Computing environment of Adrian Kummerlaender";
 
   inputs = {
-    stable.url = github:NixOS/nixpkgs/nixos-23.11;
+    stable.url = github:NixOS/nixpkgs/nixos-24.05;
     unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
-    oldstable.url = github:NixOS/nixpkgs/nixos-22.11;
     personal.url = github:KnairdA/pkgs;
     home-manager = {
-      url = github:nix-community/home-manager/release-23.11;
+      url = github:nix-community/home-manager/release-24.05;
       inputs = { nixpkgs.follows = "stable"; };
     };
     emacs.url = github:nix-community/emacs-overlay/master;
@@ -15,7 +14,7 @@
   };
 
   outputs = {
-    self, stable, unstable, oldstable, personal, emacs, home-manager, jupyter, ...
+    self, stable, unstable, personal, emacs, home-manager, jupyter, ...
   }: let
     system = "x86_64-linux";
 
@@ -34,11 +33,6 @@
       config = { allowUnfree = true; };
     };
 
-    pkgs-oldstable = import oldstable {
-      inherit system;
-      config = { allowUnfree = true; };
-    };
-
     pkgs-personal = personal;
 
     config = hostname: home-manager.lib.homeManagerConfiguration {
@@ -46,7 +40,6 @@
 
       extraSpecialArgs = {
         inherit pkgs-unstable;
-        inherit pkgs-oldstable;
         inherit pkgs-personal;
         inherit hostname;
       };
