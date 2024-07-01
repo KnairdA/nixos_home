@@ -113,8 +113,6 @@ scratchpads host =
        (customFloating $ hideScreenBorder host dropDownLarge)
   , NS "thesaurus"     "artha"                                                 (className =? "Artha")
        (customFloating $ hideScreenBorder host sideBarLeft)
-  , NS "literature"    "zotero"                                                (className =? "Zotero")
-       (customFloating $ hideScreenBorder host dropDownLarge)
   , NS "calculator"    "qalculate-gtk"                                             (title =? "Qalculate!")
        (customFloating $ hideScreenBorder host sideBarLeft)
   , NS "messaging"     "telegram-desktop"                                      ((className =? "TelegramDesktop") <&&> (title /=? "Media viewer"))
