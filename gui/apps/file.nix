@@ -15,6 +15,7 @@
       custom-sxiv
       mpv
       gthumb
+      freecad
     # audio
       pulseaudio
       pavucontrol
