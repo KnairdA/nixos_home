@@ -51,7 +51,7 @@
         org = prev.org.overrideAttrs(old: { patches = []; } );
       };
 
-      package = pkgs.emacs29;
+      package = pkgs.emacs;
 
       config = ./conf/init.el;
       alwaysEnsure = false;

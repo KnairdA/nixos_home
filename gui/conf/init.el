@@ -1,9 +1,6 @@
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 
-(setq load-path (seq-filter (lambda (x) (not (string-match-p "org-202109" x)))
-                            load-path))
-
 (require 'package)
 (package-initialize)
 
@@ -120,7 +117,7 @@
   :after evil
   :ensure t
   :config
-  (setq evil-collection-mode-list '(dired eshell eww pdf magit ediff pdf))
+  (setq evil-collection-mode-list '(dired eshell eww pdf magit ediff pdf mu4e))
   (evil-collection-init))
 
 (use-package which-key
