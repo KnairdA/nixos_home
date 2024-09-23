@@ -59,8 +59,8 @@
                   (mu4e-compose-signature-auto-include . nil)
                   (mu4e-compose-signature . (concat "\n"
                                                     "Karlsruhe Institute of Technology (KIT)\n"
-                                                    "Institute for Mechanical Process Engineering and Mechanics (MVM)\n"
                                                     "Institute for Applied and Numerical Mathematics (IANM)\n"
+                                                    "Institute for Mechanical Process Engineering and Mechanics (MVM)\n"
                                                     "Lattice Boltzmann Research Group (LBRG)\n\n"
                                                     "M.Sc. Adrian Kummerländer\n"
                                                     "Research Associate\n\n"
