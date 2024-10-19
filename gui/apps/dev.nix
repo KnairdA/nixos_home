@@ -7,6 +7,7 @@
       hotspot
       kcachegrind
       paraview
+      blender
       meld
     # language utilities
       artha
