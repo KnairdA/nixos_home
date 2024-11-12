@@ -351,25 +351,6 @@
   :config
   (evil-leader/set-key "s" 'helm-swoop-without-pre-input))
 
-(use-package org-ref
-  :ensure t
-  :custom
-  (reftex-default-bibliography '("~/university/bib/lit.bib"))
-  (org-ref-bibliography-notes "~/org/literature.org")
-  (org-ref-default-bibliography '("~/university/bib/lit.bib"))
-  (org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex))
-
-(use-package helm-bibtex
-  :ensure t
-  :config
-  (setq bibtex-completion-bibliography '("~/university/bib/lit.bib"))
-  (setq bibtex-completion-pdf-field "file"))
-
-(use-package zotxt
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook 'org-zotxt-mode))
-
 (evil-define-key 'normal 'global
   "J" 'evil-forward-paragraph
   "K" 'evil-backward-paragraph)

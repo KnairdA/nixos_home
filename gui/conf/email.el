@@ -20,7 +20,7 @@
                          (:from . 22)
                          (:subject)))
   (mu4e-hide-index-messages t)
-  (mu4e-completing-read-function 'helm-comp-read)
+  (mu4e-completing-read-function 'completing-read)
   (shr-color-visible-luminance-min 80)
   (doom-modeline-mu4e t)
   (doom-modeline-gnus nil)
