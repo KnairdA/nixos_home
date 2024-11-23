@@ -17,8 +17,6 @@ import XMonad.Layout.Grid
 import XMonad.Layout.Groups.Examples
 import XMonad.Layout.Groups.Helpers
 
-import XMonad.Actions.PhysicalScreens
-
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Reflect
 import XMonad.Layout.MultiToggle
@@ -34,20 +32,26 @@ import XMonad.Util.Themes
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.Dmenu (menuMapArgs)
 
+import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.CycleWS
 import XMonad.Actions.WindowBringer
 import XMonad.Actions.GroupNavigation
 import XMonad.Actions.FloatKeys
 import XMonad.Actions.UpdatePointer
+import XMonad.Actions.DynamicWorkspaces
+
+import XMonad.Prompt
 
 import Data.Maybe
 import Control.Monad (when)
 import Data.Map (Map, fromList, member)
-import Data.List (unionBy)
+import Data.List (unionBy, isInfixOf)
 
 import System.Exit
 import System.Posix.Unistd
+
+import Graphics.X11.ExtraTypes
 
 workspaces :: [WorkspaceId]
 workspaces = map show [1 .. 9 :: Int]
@@ -132,11 +136,6 @@ windowBringerDmenuConfig = def { menuCommand  = "rofi"
                                , menuArgs     = [ "-p", "win", "-dmenu", "-i" ] }
 
 hostSpecificKeybindings host = case host of
-  "asterix" -> [ ("M-i b"   , showNotification "Battery"
-                                               "`acpi | cut -c 10-`")
-               , ("M-i c"   , showNotification "`acpi --thermal | awk '{print $4}'`°C"
-                                               "`cat /proc/acpi/ibm/fan | awk '/speed/{print $2}'` RPM")
-               , ("M-c n"   , spawn "networkmanager_dmenu") ]
   "athena"  -> [ ("M-i b" , showNotification "Battery"
                                              "`acpi | cut -c 10-`")
                , ("M-i c" , showNotification "`acpi --thermal | awk '{print $4}'`°C"
@@ -146,11 +145,7 @@ hostSpecificKeybindings host = case host of
                , ("<XF86MonBrightnessDown>" , spawn "brightnessctl s 5%-")
                , ("<XF86AudioRaiseVolume>"  , spawn "amixer sset Master 10%+")
                , ("<XF86AudioLowerVolume>"  , spawn "amixer sset Master 10%-")
-               , ("<XF86AudioMute>"         , spawn "amixer sset Master toggle")
-               , ("<Print>"                 , namedScratchpadAction (scratchpads host) "terminal")
-               , ("M-c p"                   , spawn "flameshot gui") ]
-  "obelix"  -> [ ("M-i g" , showNotification "GPU"
-                                             "`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`") ]
+               , ("<XF86AudioMute>"         , spawn "amixer sset Master toggle") ]
   "hephaestus" -> [ ("M-i g" , showNotification "GPU"
                                              "`nvidia-smi --query-gpu=name,temperature.gpu,utilization.gpu,utilization.memory --format=csv,noheader | awk -F',' '{print $1 \" running at\" $2 \"°C due to\" $3 \" load and\" $4 \" memory usage\"}'`") ]
   _         -> [ ]
@@ -165,6 +160,8 @@ commonKeybindings host =
   , ("M-<Space>"     , spawn "rofi -show combi")
   , ("M-<Return>"    , spawn "kitty")
   , ("M-S-<Return>"  , spawn "emacsclient --create-frame")
+
+  , ("M-c p"         , spawn "flameshot gui")
   , ("<Print>"       , spawn "flameshot gui")
 
 -- password management
@@ -180,6 +177,31 @@ commonKeybindings host =
   , ("M-k"           , focusUp)
   , ("M-S-j"         , swapDown)
   , ("M-S-k"         , swapUp)
+
+-- workspace selection
+  ] ++ [ (p ++ [k]   , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']
+                                      , (p, f) <- [ ("M-"   , S.view)
+                                                  , ("M-S-" , S.shift) ] ] ++
+  [ ("C-<Backspace>" , toggleWS' ["NSP"])
+
+-- workspace movement
+  , ("M-s j"         , moveTo  Next nonEmptyWS)
+  , ("M-s k"         , moveTo  Prev nonEmptyWS)
+  , ("M-S-s j"       , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
+  , ("M-S-s k"       , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
+
+-- physical screen change
+  , ("M-<Tab>"       , nextScreen)
+
+-- workspace layout management
+  , ("M-v"           , layoutMenu)
+  , ("M-s l"         , sendMessage NextLayout)
+  , ("M-s +"         , sendMessage $ IncMasterN   1)
+  , ("M-s -"         , sendMessage $ IncMasterN (-1))
+  , ("M-s y"         , sendMessage $ Toggle REFLECTY)
+  , ("M-s x"         , sendMessage $ Toggle REFLECTX)
+  , ("M-s f"         , sendMessage $ Toggle NBFULL)
+
 
 -- group control
   , ("M-h"           , bindOnLayout [ ("groups", focusGroupUp)
@@ -205,31 +227,10 @@ commonKeybindings host =
   , ("M-z"           , namedScratchpadAction (scratchpads host) "literature")
   , ("M-r"           , namedScratchpadAction (scratchpads host) "calculator")
   , ("M-m"           , namedScratchpadAction (scratchpads host) "messaging")
-  , ("M-n"           , namedScratchpadAction (scratchpads host) "notes") ] ++
+  , ("M-n"           , namedScratchpadAction (scratchpads host) "notes")
 
--- workspace selection
-  [ (p ++ [k]        , windows $ f i) | (i, k) <- zip Main.workspaces ['1' .. '9']
-                                      , (p, f) <- [ ("M-"   , S.view)
-                                                  , ("M-S-" , S.shift) ] ] ++
-  [ ("C-<Backspace>" , toggleWS' ["NSP"])
-
--- workspace movement
-  , ("M-s j"         , moveTo  Next nonEmptyWS)
-  , ("M-s k"         , moveTo  Prev nonEmptyWS)
-  , ("M-S-s j"       , shiftTo Next nonEmptyWS >> moveTo Next nonEmptyWS)
-  , ("M-S-s k"       , shiftTo Prev nonEmptyWS >> moveTo Prev nonEmptyWS)
-
--- physical screen change
-  , ("M-<Tab>"       , nextScreen)
-
--- workspace layout management
-  , ("M-v"           , layoutMenu)
-  , ("M-s l"         , sendMessage NextLayout)
-  , ("M-s +"         , sendMessage $ IncMasterN   1)
-  , ("M-s -"         , sendMessage $ IncMasterN (-1))
-  , ("M-s y"         , sendMessage $ Toggle REFLECTY)
-  , ("M-s x"         , sendMessage $ Toggle REFLECTX)
-  , ("M-s f"         , sendMessage $ Toggle NBFULL)
+-- allow selection of window to HUDify
+  , ("M-S-f"         , spawn "xdotool selectwindow set_window --name hud")
 
 -- floating placement
   , ("M-w t"         , withFocused $ windows . S.sink)
@@ -288,6 +289,19 @@ customStartupHook host = do
   checkKeymap def (customKeybindings host)
   setWMName "LG3D"
 
+promptConfig = def
+  { position = Bottom
+  , promptBorderWidth = 0
+  , defaultText = ""
+  , alwaysHighlight = True
+  , height = 32
+  , font = "xft:Iosevka Medium-12"
+  , fgColor  = "#909636"
+  , bgColor  = "#161616"
+  , bgHLight = "#909636"
+  , fgHLight = "#161616"
+  , searchPredicate = isInfixOf }
+
 main = do
   host <- fmap nodeName getSystemID
   xmonad $ ewmh
@@ -304,8 +318,14 @@ main = do
     , manageHook          = customManageHook host
     , logHook             = customLogHook
     , layoutHook          = customLayoutHook host }
+
     `additionalKeys`
-    [ ((noModMask, xK_Menu) , namedScratchpadAction (scratchpads host) "terminal") ]
+    [ ((noModMask, xK_Menu) , namedScratchpadAction (scratchpads host) "terminal")
+
+    -- dynamic workspace management
+    , ((mod4Mask, xK_dead_circumflex) , selectWorkspace promptConfig)
+    , ((mod4Mask, xK_dead_acute)      , removeWorkspace)
+    ]
 
 nonEmptyWS = WSIs $ return (\w -> nonNSP w && nonEmpty w)
   where nonNSP (S.Workspace tag _ _) = tag /= "NSP"
@@ -370,26 +390,18 @@ hideScreenBorder host (S.RationalRect x0 y0 w h) = S.RationalRect (x0-(bw/sw)) (
 screenWidthOn  host = case host of
   "hephaestus" -> 1920
   "atlas"      -> 1920
-  "obelix"     -> 1280
-  "asterix"    -> 1366
   "athena"     -> 1920
 screenHeightOn host = case host of
   "hephaestus" -> 1200
   "atlas"      -> 1080
-  "obelix"     -> 1024
-  "asterix"    -> 768
   "athena"     -> 1080
 borderWidthOn host = case host of
   "hephaestus" -> 3
   "atlas"      -> 3
-  "obelix"     -> 3
-  "asterix"    -> 3
   "athena"     -> 3
 decoHeightOn host = case host of
   "hephaestus" -> 20
   "atlas"      -> 20
-  "obelix"     -> 20
-  "asterix"    -> 20
   "athena"     -> 20
 
 -------------------------------------------------------------------------------
