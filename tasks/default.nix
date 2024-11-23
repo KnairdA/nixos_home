@@ -12,7 +12,6 @@ let
   mkPythonShellDerivation = n: ps: init: pkgs.stdenvNoCC.mkDerivation rec {
     name = n;
     buildInputs = [(pkgs.python3.withPackages (python-packages: with python-packages; ps ++ [
-      jupyterlab
       qtconsole
     ]))];
     shellHook = let
@@ -25,10 +24,6 @@ let
       export NIX_SHELL_NAME="${name}"
       export PYTHONSTARTUP=${startup}
     '';
-  };
-
-  mkJupyterEnv = kernel: pkgs.jupyterWith.jupyterlabWith {
-    kernels = [ kernel ];
   };
 
 in {
@@ -63,23 +58,6 @@ in {
         texlive.combined.scheme-full
         biber
       ]);
-    };
-
-    pymath_jupyter = {
-      description = "Python for mathematics @ Jupyter Lab";
-      directory = "~/";
-      type = "jupyter-lab";
-      environment = mkJupyterEnv (
-        pkgs.jupyterWith.kernels.iPythonWith {
-          name = "python";
-          packages = p: with p; [
-            numpy
-            sympy
-            scipy
-            matplotlib
-          ];
-        }
-      );
     };
   };
 }

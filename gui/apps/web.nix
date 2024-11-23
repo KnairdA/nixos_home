@@ -1,12 +1,13 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   home = {
     packages = [
       pkgs.tdesktop
-      pkgs.zotero
       pkgs.tigervnc
       pkgs.remmina
+
+      pkgs-unstable.zotero
     ];
   };
 

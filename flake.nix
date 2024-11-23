@@ -10,22 +10,17 @@
       inputs = { nixpkgs.follows = "stable"; };
     };
     emacs.url = github:nix-community/emacs-overlay/master;
-    jupyter.url = github:GTrunSec/jupyterWith/flakes;
   };
 
   outputs = {
-    self, stable, unstable, personal, emacs, home-manager, jupyter, ...
+    self, stable, unstable, personal, emacs, home-manager, ...
   }: let
     system = "x86_64-linux";
-
-    jupyter-overlay = (final: prev: {
-      jupyterWith = jupyter.defaultPackage."${final.system}";
-    });
 
     pkgs = import stable {
       inherit system;
       config = { allowUnfree = true; };
-      overlays = [ jupyter-overlay emacs.overlay ];
+      overlays = [ emacs.overlay ];
     };
 
     pkgs-unstable = import unstable {
