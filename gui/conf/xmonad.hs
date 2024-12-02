@@ -323,7 +323,8 @@ main = do
     [ ((noModMask, xK_Menu) , namedScratchpadAction (scratchpads host) "terminal")
 
     -- dynamic workspace management
-    , ((mod4Mask, xK_dead_circumflex) , selectWorkspace promptConfig)
+    , ((mod4Mask,               xK_dead_circumflex) , selectWorkspace promptConfig)
+    , ((mod4Mask .|. shiftMask, xK_dead_circumflex) , renameWorkspace promptConfig)
     , ((mod4Mask, xK_dead_acute)      , removeWorkspace)
     ]
 
