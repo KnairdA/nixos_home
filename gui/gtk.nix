@@ -58,7 +58,7 @@
   home.packages = [
   # enable persistent settings in e.g. file chooser dialogs
     pkgs.dconf
-    pkgs.gnome3.dconf-editor
+    pkgs.dconf-editor
   ];
 
   qt = {

@@ -6,6 +6,6 @@
   ];
 
   home.packages = with pkgs; [
-    gnome3.gnome-tweaks
+    gnome.gnome-tweaks
   ];
 }
