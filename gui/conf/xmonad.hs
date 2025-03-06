@@ -66,9 +66,9 @@ customTabTheme host = (theme xmonadTheme)
   , activeBorderColor   = "#909636"
   , inactiveBorderColor = "#161616" }
 
-customLayoutHook host = id
+customLayoutHook hud host = id
   . smartBorders
-  . ModifiedLayout (hudMonitor host)
+  . ModifiedLayout hud
   . mkToggle (single NBFULL)
   $ tiles ||| two ||| tabs ||| frame ||| bsp ||| grid ||| groups
   where
@@ -113,8 +113,6 @@ sideBarRight  = floatRectRight  $ 1/3
 scratchpads host =
   [ NS "terminal"      "kitty --class=scratchterm"                             (className =? "scratchterm")
        (customFloating $ hideScreenBorder host dropDown)
-  , NS "browser"       "env MOZ_USE_XINPUT2=1 firefox --no-remote -P scratchpad --class scratchfire" (className =? "scratchfire")
-       (customFloating $ hideScreenBorder host dropDownLarge)
   , NS "thesaurus"     "artha"                                                 (className =? "Artha")
        (customFloating $ hideScreenBorder host sideBarLeft)
   , NS "calculator"    "qalculate-gtk"                                             (title =? "Qalculate!")
@@ -129,7 +127,7 @@ hudMonitor host = monitor
   { prop = Title "hud"
   , XMonad.Layout.Monitor.name = "hud"
   , rect = Rectangle ((screenWidthOn host) - 530) ((screenHeightOn host) - 350) 480 300
-  , opacity    = 0.8
+  , opacity = 0.6
   , persistent = True }
 
 windowBringerDmenuConfig = def { menuCommand  = "rofi"
@@ -222,7 +220,6 @@ commonKeybindings host =
   , ("M-S-a"         , bringMenuConfig windowBringerDmenuConfig)
 
 -- scratchpads
-  , ("M-b"           , namedScratchpadAction (scratchpads host) "browser")
   , ("M-t"           , namedScratchpadAction (scratchpads host) "thesaurus")
   , ("M-z"           , namedScratchpadAction (scratchpads host) "literature")
   , ("M-r"           , namedScratchpadAction (scratchpads host) "calculator")
@@ -231,6 +228,7 @@ commonKeybindings host =
 
 -- allow selection of window to HUDify
   , ("M-S-f"         , spawn "xdotool selectwindow set_window --name hud")
+  , ("M-S-g"         , broadcastMessage ToggleMonitor >> refresh)
 
 -- floating placement
   , ("M-w t"         , withFocused $ windows . S.sink)
@@ -264,7 +262,7 @@ customEventHook = do
   handleEventHook def
   fullscreenEventHook
 
-customManageHook host = manageMonitor (hudMonitor host) <+> composeOne
+customManageHook host = composeOne
   [ hasRole "GtkFileChooserDialog" -?> doRectFloat $ hideScreenBorder host dropDown
   , isTeamsGarbage                 -?> doHideIgnore
   , isParaviewDialog               -?> doRectFloat $ hideScreenBorder host dropDown
@@ -304,6 +302,7 @@ promptConfig = def
 
 main = do
   host <- fmap nodeName getSystemID
+  let hud = hudMonitor host
   xmonad $ ewmh
          $ docks
          $ def
@@ -315,9 +314,9 @@ main = do
     , mouseBindings       = customMousebindings
     , startupHook         = customStartupHook host
     , handleEventHook     = customEventHook
-    , manageHook          = customManageHook host
+    , manageHook          = (customManageHook host) <> manageMonitor hud
     , logHook             = customLogHook
-    , layoutHook          = customLayoutHook host }
+    , layoutHook          = customLayoutHook hud host }
 
     `additionalKeys`
     [ ((noModMask, xK_Menu) , namedScratchpadAction (scratchpads host) "terminal")
