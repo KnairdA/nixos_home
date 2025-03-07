@@ -51,7 +51,7 @@
         org = prev.org.overrideAttrs(old: { patches = []; } );
       };
 
-      package = pkgs.emacs;
+      package = pkgs.emacs-unstable;
 
       config = ./conf/init.el;
       alwaysEnsure = false;
