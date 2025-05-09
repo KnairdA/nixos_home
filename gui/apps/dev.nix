@@ -6,13 +6,20 @@
     # UI dev utilities (language environments are maintained in project specific nix-shells)
       hotspot
       kcachegrind
-      paraview
-      blender
       meld
+
+    # Visualization and CAD
+      paraview
+      (blender.override { cudaSupport=true; })
+      freecad
+      meshlab
+
     # language utilities
       artha
+
     # calculator
       qalculate-gtk
+
     # ctag to override the emacs provided ones (placeholder)
       universal-ctags
       fzf
