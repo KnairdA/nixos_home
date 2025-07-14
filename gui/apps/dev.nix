@@ -5,12 +5,13 @@
     packages = with pkgs; [
     # UI dev utilities (language environments are maintained in project specific nix-shells)
       hotspot
-      kcachegrind
+      kdePackages.kcachegrind
       meld
 
     # Visualization and CAD
       paraview
-      (blender.override { cudaSupport=true; })
+      #(blender.override { cudaSupport=true; })
+      blender
       freecad
       meshlab
 

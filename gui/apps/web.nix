@@ -6,8 +6,7 @@
       pkgs.tdesktop
       pkgs.tigervnc
       pkgs.remmina
-
-      pkgs-unstable.zotero
+      pkgs.zotero
     ];
   };
 
