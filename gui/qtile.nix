@@ -27,8 +27,6 @@
   home.packages = [
   # wm
     pkgs-unstable.qtile
-  # lockscreen
-    pkgs.i3lock
   ];
 
   home.file.".config/qtile/config.py".source = ./conf/qtile.py;

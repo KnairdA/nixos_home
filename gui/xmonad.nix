@@ -29,8 +29,6 @@
 
   home.packages = with pkgs; [
     xdotool
-  # lockscreen
-    i3lock
   ];
 
   services.screen-locker = {
