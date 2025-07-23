@@ -90,7 +90,7 @@
     };
 
   in with pkgs; [
-    symbola
+    #symbola
     (iosevka-bin.override { variant = "Aile"; })
     (iosevka-bin.override { variant = "Etoile"; })
     mu
