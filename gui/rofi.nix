@@ -3,6 +3,7 @@
 {
   programs.rofi = {
     enable = true;
+    package = pkgs.rofi-wayland;
     location = "top";
     font = "Iosevka 12";
 

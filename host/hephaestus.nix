@@ -3,13 +3,12 @@
 {
   imports = [
     ../gui/default.nix
-    #../gui/xmonad.nix
-    #../gui/networkmanager.nix
-    #../gui/stalonetray.nix
+    ../gui/niri.nix
+    ../gui/networkmanager.nix
   ];
 
-  #services = {
-  #  kdeconnect.enable = true;
-  #  screen-locker.enable = pkgs.lib.mkForce false;
-  #};
+  services = {
+    kdeconnect.enable = true;
+    screen-locker.enable = pkgs.lib.mkForce false;
+  };
 }
