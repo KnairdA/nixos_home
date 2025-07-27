@@ -1,16 +1,12 @@
-// This config is in the KDL format: https://kdl.dev
-// "/-" comments out the following node.
-// Check the wiki for a full description of the configuration:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
+spawn-at-startup "xwayland-satellite"
 
 environment {
     QT_QPA_PLATFORM "wayland"
-    DISPLAY null
+    DISPLAY ":0"
 }
 
-// Input device configuration.
-// Find the full list of options on the wiki:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Input
+prefer-no-csd
+
 input {
     keyboard {
         xkb {
@@ -18,10 +14,7 @@ input {
         }
     }
 
-    // Next sections include libinput settings.
-    // Omitting settings disables them, or leaves them at their default values.
     touchpad {
-        // off
         tap
         // dwt
         // dwtp
@@ -36,10 +29,6 @@ input {
 
     mouse {
         // off
-        // natural-scroll
-        // accel-speed 0.2
-        // accel-profile "flat"
-        // scroll-method "no-scroll"
     }
 
     trackpoint {
@@ -51,13 +40,6 @@ input {
         // scroll-button 273
         // middle-emulation
     }
-
-    // Uncomment this to make the mouse warp to the center of newly focused windows.
-    // warp-mouse-to-focus
-
-    // Focus windows and outputs automatically when moving the mouse into them.
-    // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse max-scroll-amount="0%"
 }
 
 // You can configure outputs by their name, which you can find
@@ -129,10 +111,6 @@ layout {
     }
 }
 
-//spawn-at-startup "waybar"
-
-prefer-no-csd
-
 screenshot-path "~/screenshot_%Y_%m_%d_%H_%M_%S.png"
 
 // Animation settings.
@@ -162,9 +140,6 @@ window-rule {
 
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
 }

@@ -3,19 +3,17 @@
 {
   imports = [
     ./gtk.nix
+    ./dunst.nix
   ];
 
   home.pointerCursor = {
+    enable = true;
     package = pkgs.vanilla-dmz;
     name    = "Vanilla-DMZ-AA";
     size    = 16;
   };
 
   #home.file.".config/niri/config.kdl".source = config.lib.file.mkOutOfStoreSymlink ./conf/niri.kdl;
-
-  home.packages = with pkgs; [
-    swaylock
-  ];
 
   services.screen-locker = {
     enable  = true;
