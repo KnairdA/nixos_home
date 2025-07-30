@@ -3,16 +3,20 @@
 {
   imports = [
     ../gui/default.nix
-    ../gui/xmonad.nix
+    ../gui/niri.nix
     ../gui/networkmanager.nix
-    ../gui/stalonetray.nix
-    ../gui/redshift.nix
   ];
 
   home.packages = with pkgs; [
     acpi
     brightnessctl
-    arandr
     blueman
+    xwayland-satellite
   ];
+
+  home.sessionVariables = {
+    QT_QPA_PLATFORM = "wayland";
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+  };
 }

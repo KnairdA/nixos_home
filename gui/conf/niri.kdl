@@ -27,14 +27,10 @@ input {
         // disabled-on-external-mouse
     }
 
-    mouse {
-        // off
-    }
-
     trackpoint {
         // off
         // natural-scroll
-        // accel-speed 0.2
+        accel-speed 1.0
         // accel-profile "flat"
         // scroll-method "on-button-down"
         // scroll-button 273
