@@ -45,7 +45,7 @@ input {
 }
 
 layout {
-    gaps 8
+    gaps 16
 
     always-center-single-column
 
@@ -69,8 +69,20 @@ layout {
         active-color "#909636"
         inactive-color "#161616"
     }
+    struts {
+        left 16
+        right 16
+    }
+      
+    shadow {
+        on
+        softness 20
+        spread 5
+        offset x=0 y=5
+        color "#000"
+   }
 
-    background-color "#161616"
+    background-color "#666"
 }
 
 screenshot-path "~/university/screenshots/%Y-%m-%d_%H-%M.png"
@@ -81,6 +93,11 @@ animations {
 
 window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+window-rule {
+    match app-id=r#"ParaView"# title="^Open File.*"
     open-floating true
 }
 
