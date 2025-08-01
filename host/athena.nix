@@ -12,6 +12,7 @@
     brightnessctl
     blueman
     xwayland-satellite
+    moonlight-qt
   ];
 
   home.sessionVariables = {

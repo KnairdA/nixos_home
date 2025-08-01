@@ -4,11 +4,11 @@ let
   emumenu = pkgs.writeTextFile {
     name        = "emumenu";
     executable  = true;
-    destination = "/bin/dmenu";
+    destination = "/bin/dmenu-wl";
 
     text = ''
       #!/usr/bin/env bash
-      ${pkgs.rofi}/bin/rofi -dmenu -p "pass" "$@"
+      ${pkgs.rofi-wayland}/bin/rofi -dmenu -p "pass" "$@"
     '';
   };
 
@@ -27,6 +27,7 @@ let
 in {
   home.packages = [
     pkgs.pass
+    pkgs.ydotool
     passrofi
   ];
 }
