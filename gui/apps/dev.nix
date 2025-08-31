@@ -10,8 +10,7 @@
 
     # Visualization and CAD
       paraview
-      #(blender.override { cudaSupport=true; })
-      blender
+      pkgs-unstable.blender
       freecad
       meshlab
 

@@ -19,4 +19,9 @@
     enable  = true;
     lockCmd = "${pkgs.swaylock}/bin/swaylock -c #000000";
   };
+
+  home.packages = with pkgs; [
+    wdisplays
+    wayvnc
+  ];
 }
