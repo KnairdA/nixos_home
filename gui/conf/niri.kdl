@@ -87,7 +87,7 @@ layout {
     background-color "#666"
 }
 
-screenshot-path "~/university/screenshots/%Y-%m-%d_%H-%M.png"
+screenshot-path "~/university/screenshots/%Y-%m-%d_%H-%M-%S.png"
 
 animations {
     slowdown 0.5
@@ -101,6 +101,13 @@ window-rule {
 window-rule {
     match app-id=r#"ParaView"# title="^Open File.*"
     open-floating true
+}
+
+window-rule {
+    match app-id="^blender$"
+    match app-id="^gimp"
+
+    default-column-width { proportion 1.0; }
 }
 
 // Example: block out two password managers from screen capture.
